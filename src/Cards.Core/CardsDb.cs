@@ -6,10 +6,17 @@ using System.Text;
 
 namespace Cards.Core
 {
-    public class CardsDb
+    public class CardsDb : DbContext
     {
 
+        public CardsDb()
+            : base("CardsDB")
+        {
+
+        }
+
         public IDbSet<Area> Areas { get; set; }
+        public IDbSet<Card> Cards { get; set; }
 
     }
 }

@@ -28,7 +28,10 @@ namespace Cards.Core
             var db = DbFactory.Create();
             var area = new Area() { Name = name };
 
-            return db.Areas.Add(area);
+            area = db.Areas.Add(area);
+            db.SaveChanges();
+
+            return area;
         }
     }
 }
