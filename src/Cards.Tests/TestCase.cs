@@ -14,6 +14,7 @@ namespace Cards.Tests
         public TestCase()
         {
             Initialize();
+            Subject = Given();
         }
 
         protected virtual void Initialize()
