@@ -1,61 +1,89 @@
 ﻿body {
     font-size: .85em;
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
-    color: #232323;
-    background-color: #fff;
+    color: #000000;
+    background-color: #FFFFFF;
 }
 
-header, footer, nav, section {
-    display: block;
+#banner h1 {
+    font-family: 'Lily Script One', cursive;
+    background-color: rgb(13, 40, 87);
+    color: white;
+    font-size: 3em;
+    padding: 0.20em;
 }
 
-
-/* Styles for basic forms
------------------------------------------------------------*/
-fieldset {
-    border: 1px solid #ddd;
-    padding: 0 1.4em 1.4em 1.4em;
-    margin: 0 0 1.5em 0;
+footer p {
+    font-size: 0.80em;
+    font-style: italic;
+    text-align: center;
 }
 
-legend {
-    font-size: 1.2em;
+nav {
+    background-color: rgb(109, 146, 175);
+    color: white;
+    padding: 5px;
+}
+nav a {
+    text-decoration: none;
+    color: white;
+}
+
+nav ul li {
+    display: inline;
+    padding-right: 10px;
+}
+
+article {
+    border: 1px solid rgb(99, 96, 96);
+    margin: 5px;
+    float: left;
+    width: 200px;
+    padding: 5px;
+}
+
+article header h1 {
+    font-size: 1.20em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+article {
+    border: 1px solid rgb(99, 96, 96);
+    margin: 5px;
+    float: left;
+    width: 200px;
+    padding: 5px;
+    background-color: rgb(229, 235, 243);
+    
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    
+    -webkit-box-shadow: 1px 1px 1px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    1px 1px 1px rgba(50, 50, 50, 0.75);
+    box-shadow:         1px 1px 1px rgba(50, 50, 50, 0.75);
+}
+
+article ul li {
+    background-color: white;
+    border: 1px solid darkgray;
+    margin: 5px 0;
+    padding: 5px;
+    
+}
+
+article footer a {
+    text-decoration: none;
+    color: darkgray;
+    font-size: 1em;
     font-weight: bold;
 }
 
-textarea {
-    min-height: 75px;
-}
-
-.editor-label {
-    margin: 1em 0 0 0;
-}
-
-.editor-field {
-    margin: 0.5em 0 0 0;
-}
-
-
-/* Styles for validation helpers
------------------------------------------------------------*/
-.field-validation-error {
-    color: #f00;
-}
-
-.field-validation-valid {
-    display: none;
-}
-
-.input-validation-error {
-    border: 1px solid #f00;
-    background-color: #fee;
-}
-
-.validation-summary-errors {
-    font-weight: bold;
-    color: #f00;
-}
-
-.validation-summary-valid {
-    display: none;
+article footer textarea {
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-color: darkgray;
 }

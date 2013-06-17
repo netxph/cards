@@ -8,7 +8,12 @@ namespace Cards.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Repair()
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult About()
         {
             return View();
         }

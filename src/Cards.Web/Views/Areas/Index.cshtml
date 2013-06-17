@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Areas";
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/app")
+    @Scripts.Render("~/bundles/knockout")
+}
+
+<section data-bind="foreach: areas">
+    <article>
+        <header>
+            <h1 data-bind="text: Name"></h1>
+        </header>
+        <ul data-bind="foreach: Cards">
+            <li data-bind="text: Name"></li>
+        </ul>
+        <footer>
+            <a href="#">Add card...</a>
+            <div>
+                <textarea></textarea>
+                <button>Add</button>
+            </div>
+        </footer>
+    </article>
+</section>

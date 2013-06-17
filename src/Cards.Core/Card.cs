@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Cards.Core
@@ -14,6 +15,8 @@ namespace Cards.Core
 
         [Required]
         public string Name { get; set; }
+
+        [IgnoreDataMember]
         public Area Area { get; set; }
 
 

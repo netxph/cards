@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 
@@ -20,7 +22,7 @@ namespace Cards.Core
         {
             var db = DbFactory.Create();
 
-            return db.Areas.ToList();
+            return db.Areas.Include("Cards").ToList();
         }
 
         public static Area Create(string name)

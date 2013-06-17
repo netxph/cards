@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Cards.Tests
 {
-    public class FakeDbSet<T> : IDbSet<T>
+    public class FakeDbSet<T> : IDbSet<T>, IQueryable<T>
         where T : class
     {
         private HashSet<T> _data;
