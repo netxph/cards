@@ -8,8 +8,8 @@ namespace Cards.Web
         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/app").Include(
-                        "~/Scripts/app.js"));
+            bundles.Add(new ScriptBundle("~/bundles/areas").Include(
+                        "~/Scripts/areas.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/about").Include(
                         "~/Scripts/about.js"));

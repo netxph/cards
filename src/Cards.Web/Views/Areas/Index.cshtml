@@ -3,11 +3,11 @@
 }
 
 @section scripts {
-    @Scripts.Render("~/bundles/app")
     @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/areas")
 }
 
-<section data-bind="foreach: areas">
+<section data-bind="foreach: Areas">
     <article>
         <header>
             <h1 data-bind="text: Name"></h1>
