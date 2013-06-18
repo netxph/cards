@@ -54,7 +54,7 @@ article {
 
 article header h1 {
     font-size: 1.5em;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 article {
@@ -62,7 +62,7 @@ article {
     margin: 20px 5px;
     float: left;
     width: 250px;
-    padding: 5px;
+    padding: 10px;
     background-color: rgb(255, 255, 255);
        
     -webkit-box-shadow: 2px 2px 1px rgba(50, 50, 50, 0.1);
@@ -73,7 +73,7 @@ article {
 article ul li {
     background-color: white;
     border: 1px solid lightgray;
-    margin: 20px 0 10px 0;
+    margin: 10px 0 10px 0;
     padding: 10px 5px;
     
 }
@@ -91,3 +91,4 @@ article footer textarea {
     box-sizing: border-box;
     border-color: lightgray;
 }
+
