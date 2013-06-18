@@ -5,6 +5,13 @@
     background-color: rgb(238, 238, 238);
 }
 
+button {
+    border-style: none;
+    padding: 10px;
+    width: 75px;
+    font-size: 1em;
+}
+
 #banner {
     border-bottom: 1px solid lightgray;
 }
@@ -28,20 +35,19 @@ footer p {
 }
 
 nav {
-    background-color: rgb(255, 255, 255);
-    padding: 20px 5px 20px;
-    border-top: 1px solid lightgray;
-    display: none;
+    background-color: black;
+    padding: 15px 5px 15px;
 }
 nav a {
     text-decoration: none;
-    font-size: 1.3em;
-    color: rgb(209, 200, 200);
+    font-size: 1.5em;
+    color: lightgray;
 }
 
 nav ul li {
     display: inline;
     padding-right: 10px;
+    margin-left:  10px;
 }
 
 article {
