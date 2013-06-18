@@ -1,22 +1,26 @@
-﻿(function ($, ko, undefined) {
-    function AreasViewModel() {
-        this.Areas = [];
-    };
+﻿(function (Cards, $, ko, undefined) {
 
-    init = function () {
-        var viewModel = new AreasViewModel();
+    Cards.ViewModel = {};
 
-        $.getJSON("/api/areas", function (data) {
-            viewModel.Areas = data;
+    var AreasViewModel = function () {
+        self = this;
 
-            ko.applyBindings(viewModel);
-            $("article footer div").hide();
+        this.areas = [];
+        
+        this.init = function () {
+            $.getJSON("/api/areas", function (data) {
+                self.areas = data;
+                ko.applyBindings(self);
 
-            $("article footer a").on("click", function () {
-                $(this).parent().find("div").slideToggle();
+                $("article footer div").hide();
+
+                $("article footer a").on("click", function () {
+                    $(this).parent().find("div").fadeToggle();
+                });
             });
-        });
+        };
     };
 
-    $(document).ready(init());
-})($, ko);
+    Cards.ViewModel = new AreasViewModel();
+
+}(window.Cards = window.Cards || {}, $, ko));
