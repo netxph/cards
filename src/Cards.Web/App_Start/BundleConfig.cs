@@ -9,10 +9,10 @@ namespace Cards.Web
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
-                        "~/Scripts/app.js"));
+                        "~/Scripts/Coffee/app.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/areas").Include(
-                        "~/Scripts/areas.js"));
+                        "~/Scripts/Coffee/areas.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/about").Include(
                         "~/Scripts/about.js"));

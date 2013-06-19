@@ -194,10 +194,22 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\Coffee\app.coffee" />
+    <Content Include="Scripts\Coffee\areas.coffee" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\about.js" />
-    <Content Include="Scripts\app.js" />
-    <Content Include="Scripts\areas.js" />
+    <Content Include="Scripts\Coffee\app.js">
+      <DependentUpon>app.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\Coffee\app.min.js">
+      <DependentUpon>app.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\Coffee\areas.js">
+      <DependentUpon>areas.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\Coffee\areas.min.js">
+      <DependentUpon>areas.coffee</DependentUpon>
+    </Content>
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
