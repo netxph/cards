@@ -10,10 +10,15 @@ namespace Cards.Web.Controllers.Api
 {
     public class AreasController : ApiController
     {
-        // GET api/areas
-        public List<Area> Get()
+
+        public List<Area> GetAll()
         {
             return Area.GetAll();
+        }
+
+        public Area Create(Area area)
+        {
+            return Area.Create(area.Name);
         }
 
     }
