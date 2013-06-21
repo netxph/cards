@@ -15,15 +15,14 @@ namespace Cards.Core
 
         [Required]
         public string Name { get; set; }
+        
+        [Range(1, int.MaxValue)]
+        public int AreaID { get; set; }
 
-        [IgnoreDataMember]
-        public Area Area { get; set; }
-
-
-        public static Card Create(string name)
+        public static Card Create(string name, int areaId)
         {
             var db = DbFactory.Create();
-            var card = new Card() { Name = name };
+            var card = new Card() { Name = name, AreaID = areaId };
 
             card = db.Cards.Add(card);
             db.SaveChanges();

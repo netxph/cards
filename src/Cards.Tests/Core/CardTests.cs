@@ -39,7 +39,7 @@ namespace Cards.Tests.Core
             [Fact]
             public void ShouldAreaIsNull()
             {
-                Subject.Area.Should().BeNull();
+                Subject.AreaID.Should().Be(0);
             }
         }
 
@@ -55,7 +55,7 @@ namespace Cards.Tests.Core
 
                 new DbFactory(factory.Object);
 
-                return Card.Create("A sample task");
+                return Card.Create("A sample task", 1);
             }
 
             [Fact]
@@ -71,9 +71,9 @@ namespace Cards.Tests.Core
             }
         }
 
-        public class CreateMethod_Invalid : TestCase<Action>
+        public class CreateMethod_Invalid : TestCase
         {
-            protected override Action Given()
+            protected override void Initialize()
             {
                 var factory = new Mock<DbFactory>();
                 factory.Protected()
@@ -81,18 +81,24 @@ namespace Cards.Tests.Core
                     .Returns(new CardsDb() { Cards = new FakeDbSet<Card>() });
 
                 new DbFactory(factory.Object);
-
-                return () => Card.Create("");
             }
 
             [Fact]
-            public void ShouldThrowValidationError()
+            public void ShouldThrowValidationErrorWhenNameIsEmpty()
             {
-                Subject.ShouldThrow<ValidationException>();
+                Action createCard = () => Card.Create(string.Empty, 1);
+
+                createCard.ShouldThrow<ValidationException>();
+            }
+
+            [Fact]
+            public void ShouldThrowValidationErrorWhenAreaIsMissing()
+            {
+                Action createCard = () => Card.Create("Test", 0);
+
+                createCard.ShouldThrow<ValidationException>();
             }
         }
-
-
 
     }
 }
