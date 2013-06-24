@@ -7,9 +7,16 @@
 
 button {
     border-style: none;
-    padding: 10px;
+    padding: 5px 10px;
     width: 75px;
     font-size: 1em;
+}
+
+#new-area input {
+    font-size: 1.5em;
+    margin: 0 10px;
+    padding: 0 5px;
+    vertical-align: top;
 }
 
 #banner {
@@ -36,7 +43,7 @@ footer p {
 
 nav {
     background-color: black;
-    padding: 15px 5px 15px;
+    padding: 10px 5px 10px;
 }
 nav a {
     text-decoration: none;
@@ -48,14 +55,6 @@ nav ul li {
     display: inline;
     padding-right: 10px;
     margin-left:  10px;
-}
-
-article {
-    border: 1px solid rgb(99, 96, 96);
-    margin: 5px;
-    float: left;
-    width: 200px;
-    padding: 5px;
 }
 
 article header h1 {
@@ -98,3 +97,14 @@ article footer textarea {
     border-color: lightgray;
 }
 
+#repair {
+    padding: 10px;
+    text-align:center;
+    font-style: italic;
+}
+
+#repair h2 {
+    font-size: 1.5em;
+    padding-bottom: 10px;
+    font-weight: bold;
+}

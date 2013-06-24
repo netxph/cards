@@ -7,6 +7,18 @@
     @Scripts.Render("~/bundles/areas")
 }
 
+<nav>
+    <ul>
+        <li>
+            <a href="#" id="new-area-button">+ Area</a>
+            <span id="new-area">
+                <input type="text" id="area-name" />
+                <button>Add</button>
+            </span>
+        </li>
+    </ul>
+</nav>
+
 <section data-bind="foreach: areas">
     <article>
         <header>
