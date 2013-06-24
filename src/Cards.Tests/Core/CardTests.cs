@@ -9,6 +9,7 @@ using FluentAssertions;
 using Moq;
 using Moq.Protected;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.Validation;
 
 namespace Cards.Tests.Core
 {
@@ -40,6 +41,94 @@ namespace Cards.Tests.Core
             public void ShouldAreaIsNull()
             {
                 Subject.AreaID.Should().Be(0);
+            }
+        }
+
+        public class UpdateMethod : TestCase<Card>
+        {
+
+            protected override Card Given()
+            {
+                var cards = new FakeDbSet<Card>();
+                cards.Add(new Card()
+                {
+                    ID = 1,
+                    Name = "Original task",
+                    AreaID = 1
+                });
+
+                var factory = new Mock<DbFactory>();
+                factory.Protected()
+                    .Setup<CardsDb>("OnCreateDb")
+                    .Returns(new CardsDb() { Cards = cards });
+
+                return Card.Update(1, "Updated task", 2);
+            }
+
+            [Fact]
+            public void ShouldNotReturnNull()
+            {
+                Subject.Should().NotBeNull();
+            }
+
+            [Fact]
+            public void ShouldIDIs1()
+            {
+                Subject.ID.Should().Be(1);
+            }
+
+            [Fact]
+            public void ShouldNameIsUpdated()
+            {
+                Subject.Name.Should().Be("Updated task");
+            }
+
+            [Fact]
+            public void ShouldAreaIs2()
+            {
+                Subject.AreaID.Should().Be(2);
+            }
+        }
+
+        public class UpdateMethod_Invalid : TestCase
+        {
+            protected override void Initialize()
+            {
+                var cards = new FakeDbSet<Card>();
+                cards.Add(new Card()
+                {
+                    ID = 1,
+                    Name = "Original task",
+                    AreaID = 1
+                });
+
+                var factory = new Mock<DbFactory>();
+                factory.Protected()
+                    .Setup<CardsDb>("OnCreateDb")
+                    .Returns(new CardsDb() { Cards = cards });
+
+                new DbFactory(factory.Object);
+            }
+
+            [Fact]
+            public void ShouldReturnNullIfItemIsNotFound()
+            {
+                var card = Card.Update(99, "Not exist", 1);
+                card.Should().BeNull();
+            }
+
+            [Fact]
+            public void ShouldThrowValidationExceptionIfNameIsEmptyOrNull()
+            {
+                Action updateCard = () => Card.Update(1, string.Empty, 1);
+                updateCard.ShouldThrow<DbEntityValidationException>();
+            }
+
+            [Fact]
+            public void ShouldThrowValidationExceptionIfAreaIsMissing()
+            {
+                Action updateCard = () => Card.Update(1, "Valid", 0);
+                updateCard.ShouldThrow<DbEntityValidationException>();
             }
         }
 

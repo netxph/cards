@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -28,6 +29,26 @@ namespace Cards.Core
             db.SaveChanges();
 
             return card;
+        }
+
+        public static Card Update(int cardId, string name, int areaId)
+        {
+            var db = DbFactory.Create();
+            var card = db.Cards.FirstOrDefault(f => f.ID == cardId);
+
+            if (card != null)
+            {
+                db.Entry(card).State = EntityState.Modified;
+
+                card.Name = name;
+                card.AreaID = areaId;
+                
+                db.SaveChanges();
+
+                return card;
+            }
+
+            return null;
         }
     }
 }
