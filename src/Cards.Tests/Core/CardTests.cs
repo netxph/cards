@@ -62,6 +62,8 @@ namespace Cards.Tests.Core
                     .Setup<CardsDb>("OnCreateDb")
                     .Returns(new CardsDb() { Cards = cards });
 
+                new DbFactory(factory.Object);
+
                 return Card.Update(1, "Updated task", 2);
             }
 

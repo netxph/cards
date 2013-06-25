@@ -2,23 +2,26 @@
 ((Cards, $, ko) ->
     
     class AreaViewModel
-        areas: []
-        initViewModel: ->
-            $.getJSON "/api/areas", (data) ->
-                this.areas = data
-                ko.applyBindings this
 
-                $("article footer div").hide()
-                $("article footer a").on "click", ->
-                    $(this).parent().find("div").fadeToggle()
-                    return
+        self = this.prototype
 
+        areas: ko.observableArray([])
+
+        initAreaControls: ->
+            $("article footer div").hide()
+            $("article footer a").on "click", ->
+                $(this).parent().find("div").fadeToggle()
                 return
             return
-        init: ->
-            this.initViewModel()
 
-            $("#new-area").hide()
+        refresh: ->
+            $.getJSON "/api/areas", (data) ->
+                self.areas(data)
+                self.initAreaControls()
+                return
+            return
+
+        bindControls: ->
             $("#new-area-button").on "click", ->
                 $("#new-area").fadeToggle();
                 return
@@ -27,17 +30,23 @@
                 card = {}
                 card.Name = $("#area-name").val()
 
-                cardJson = JSON.stringify card
-
                 $.post "/api/areas", card, (data) ->
-                    this.initViewModel()
-                    console.log JSON.stringify(data)
+                    self.refresh()
                     return
 
                 return
-
             return
 
-    Cards.ViewModel = new AreaViewModel()
+        init: ->
+            $("#new-area").hide()
+
+            self.refresh()
+            self.bindControls()
+            return
+        
+        constructor: ->
+            self.init()        
+
+    Cards.ViewModel = AreaViewModel
     return
 ) window.Cards = window.Cards || {}, jQuery, ko

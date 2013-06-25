@@ -1,6 +1,8 @@
 ﻿
 (function(Cards, $, ko) {
-  if ((Cards.ViewModel != null) && (Cards.ViewModel.init != null)) {
-    $(document).ready(Cards.ViewModel.init());
+  if (Cards.ViewModel != null) {
+    $(document).ready(function() {
+      return ko.applyBindings(new Cards.ViewModel());
+    });
   }
 })(window.Cards = window.Cards || {}, jQuery, ko);
