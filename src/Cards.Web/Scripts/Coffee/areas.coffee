@@ -5,6 +5,8 @@
 
         self = this.prototype
 
+        newArea: ko.observable("")
+
         areas: ko.observableArray([])
 
         initAreaControls: ->
@@ -21,27 +23,41 @@
                 return
             return
 
-        bindControls: ->
-            $("#new-area-button").on "click", ->
-                $("#new-area").fadeToggle();
+        addCard: ->
+            areaId = this.ID
+            name = $("*[data-areaId=6]").find("textarea").val()
+
+            card = {}
+            card.AreaID = areaId
+            card.Name = name
+
+            $.post "/api/cards", card, (data) ->
+                self.refresh()
                 return
 
-            $("#new-area button").on "click", ->
-                card = {}
-                card.Name = $("#area-name").val()
+            return
 
-                $.post "/api/areas", card, (data) ->
-                    self.refresh()
-                    return
+        addArea: ->
+            area = {}
+            area.Name = self.newArea()
 
-                return
+            
+            $.post "/api/areas", area, (data) ->
+               self.refresh()
+               return
+
+            $("#new-area").fadeToggle()
+            self.newArea("")
+            return
+
+        showArea: ->
+            $("#new-area").fadeToggle();
             return
 
         init: ->
             $("#new-area").hide()
 
             self.refresh()
-            self.bindControls()
             return
         
         constructor: ->

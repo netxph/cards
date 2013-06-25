@@ -6,6 +6,8 @@
 
     self = AreaViewModel.prototype;
 
+    AreaViewModel.prototype.newArea = ko.observable("");
+
     AreaViewModel.prototype.areas = ko.observableArray([]);
 
     AreaViewModel.prototype.initAreaControls = function() {
@@ -22,24 +24,36 @@
       });
     };
 
-    AreaViewModel.prototype.bindControls = function() {
-      $("#new-area-button").on("click", function() {
-        $("#new-area").fadeToggle();
+    AreaViewModel.prototype.addCard = function() {
+      var areaId, card, name;
+      areaId = this.ID;
+      name = $("*[data-areaId=6]").find("textarea").val();
+      card = {};
+      card.AreaID = areaId;
+      card.Name = name;
+      $.post("/api/cards", card, function(data) {
+        self.refresh();
       });
-      $("#new-area button").on("click", function() {
-        var card;
-        card = {};
-        card.Name = $("#area-name").val();
-        $.post("/api/areas", card, function(data) {
-          self.refresh();
-        });
+    };
+
+    AreaViewModel.prototype.addArea = function() {
+      var area;
+      area = {};
+      area.Name = self.newArea();
+      $.post("/api/areas", area, function(data) {
+        self.refresh();
       });
+      $("#new-area").fadeToggle();
+      self.newArea("");
+    };
+
+    AreaViewModel.prototype.showArea = function() {
+      $("#new-area").fadeToggle();
     };
 
     AreaViewModel.prototype.init = function() {
       $("#new-area").hide();
       self.refresh();
-      self.bindControls();
     };
 
     function AreaViewModel() {

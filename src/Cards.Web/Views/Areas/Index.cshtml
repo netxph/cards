@@ -10,17 +10,17 @@
 <nav>
     <ul>
         <li>
-            <a href="#" id="new-area-button">+ Area</a>
+            <a href="#" data-bind="click: showArea">+ Area</a>
             <span id="new-area">
-                <input type="text" id="area-name" />
-                <button>Add</button>
+                <input type="text" data-bind="value: newArea"/>
+                <button data-bind="click: addArea">Add</button>
             </span>
         </li>
     </ul>
 </nav>
 
 <section data-bind="foreach: areas">
-    <article>
+    <article data-bind="attr: { 'data-areaid': ID }">
         <header>
             <h1 data-bind="text: Name"></h1>
         </header>
@@ -31,7 +31,7 @@
             <a href="#">Add card...</a>
             <div>
                 <textarea></textarea>
-                <button>Add</button>
+                <button data-bind="click: $parent.addCard">Add</button>
             </div>
         </footer>
     </article>
