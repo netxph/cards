@@ -26,7 +26,7 @@
         card.AreaID = areaId;
         card.Name = $(cardElement).text();
         $.ajax({
-          url: "/api/cards/" + card.ID,
+          url: "api/cards/" + card.ID,
           type: "PUT",
           data: card,
           success: function() {
@@ -48,7 +48,7 @@
     };
 
     AreaViewModel.prototype.refresh = function() {
-      $.getJSON("/api/areas", function(data) {
+      $.getJSON("api/areas", function(data) {
         self.areas(data);
         self.initAreaControls();
       });
@@ -61,7 +61,7 @@
       card = {};
       card.AreaID = areaId;
       card.Name = name;
-      $.post("/api/cards", card, function(data) {
+      $.post("api/cards", card, function(data) {
         self.refresh();
       });
     };
@@ -70,7 +70,7 @@
       var area;
       area = {};
       area.Name = self.newArea();
-      $.post("/api/areas", area, function(data) {
+      $.post("api/areas", area, function(data) {
         self.refresh();
       });
       $("#new-area").fadeToggle();

@@ -27,7 +27,7 @@
                 card.Name = $(cardElement).text()
                 
                 $.ajax
-                    url: "/api/cards/" + card.ID,
+                    url: "api/cards/" + card.ID,
                     type: "PUT",
                     data: card,
                     success: ->
@@ -49,7 +49,7 @@
             return
 
         refresh: ->
-            $.getJSON "/api/areas", (data) ->
+            $.getJSON "api/areas", (data) ->
                 self.areas(data)
                 self.initAreaControls()
                 return
@@ -63,7 +63,7 @@
             card.AreaID = areaId
             card.Name = name
 
-            $.post "/api/cards", card, (data) ->
+            $.post "api/cards", card, (data) ->
                 self.refresh()
                 return
 
@@ -74,7 +74,7 @@
             area.Name = self.newArea()
 
             
-            $.post "/api/areas", area, (data) ->
+            $.post "api/areas", area, (data) ->
                self.refresh()
                return
 
