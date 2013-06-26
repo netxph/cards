@@ -10,6 +10,38 @@
         areas: ko.observableArray([])
 
         initAreaControls: ->
+            $("#areas article").on "dragover", (event) ->
+                event.preventDefault()
+                return
+
+            $("#areas article").on "drop", (event) ->
+                event.preventDefault()
+                cardId = event.originalEvent.dataTransfer.getData("CardID", cardId)
+                cardElement =  $("*[data-cardid=" + cardId + "]")
+                areaElement = $(event.target).closest("#areas article")
+                areaId = $(areaElement).data("areaid")
+
+                card = {}
+                card.ID = cardId
+                card.AreaID = areaId
+                card.Name = $(cardElement).text()
+                
+                $.ajax
+                    url: "/api/cards/" + card.ID,
+                    type: "PUT",
+                    data: card,
+                    success: ->
+                        target = areaElement.find("ul")
+                        target.append(cardElement)        
+                        return
+                
+                return
+
+            $("#areas li").on "dragstart", (event) ->
+                cardId = $(event.target).data("cardid")
+                event.originalEvent.dataTransfer.setData("CardID", cardId)
+                return
+
             $("article footer div").hide()
             $("article footer a").on "click", ->
                 $(this).parent().find("div").fadeToggle()
@@ -25,7 +57,7 @@
 
         addCard: ->
             areaId = this.ID
-            name = $("*[data-areaId=6]").find("textarea").val()
+            name = $("*[data-areaid=" + areaId + "]").find("textarea").val()
 
             card = {}
             card.AreaID = areaId

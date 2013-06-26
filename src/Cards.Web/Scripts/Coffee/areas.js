@@ -11,6 +11,36 @@
     AreaViewModel.prototype.areas = ko.observableArray([]);
 
     AreaViewModel.prototype.initAreaControls = function() {
+      $("#areas article").on("dragover", function(event) {
+        event.preventDefault();
+      });
+      $("#areas article").on("drop", function(event) {
+        var areaElement, areaId, card, cardElement, cardId;
+        event.preventDefault();
+        cardId = event.originalEvent.dataTransfer.getData("CardID", cardId);
+        cardElement = $("*[data-cardid=" + cardId + "]");
+        areaElement = $(event.target).closest("#areas article");
+        areaId = $(areaElement).data("areaid");
+        card = {};
+        card.ID = cardId;
+        card.AreaID = areaId;
+        card.Name = $(cardElement).text();
+        $.ajax({
+          url: "/api/cards/" + card.ID,
+          type: "PUT",
+          data: card,
+          success: function() {
+            var target;
+            target = areaElement.find("ul");
+            target.append(cardElement);
+          }
+        });
+      });
+      $("#areas li").on("dragstart", function(event) {
+        var cardId;
+        cardId = $(event.target).data("cardid");
+        event.originalEvent.dataTransfer.setData("CardID", cardId);
+      });
       $("article footer div").hide();
       $("article footer a").on("click", function() {
         $(this).parent().find("div").fadeToggle();
@@ -27,7 +57,7 @@
     AreaViewModel.prototype.addCard = function() {
       var areaId, card, name;
       areaId = this.ID;
-      name = $("*[data-areaId=6]").find("textarea").val();
+      name = $("*[data-areaid=" + areaId + "]").find("textarea").val();
       card = {};
       card.AreaID = areaId;
       card.Name = name;
