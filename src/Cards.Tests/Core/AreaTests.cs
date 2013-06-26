@@ -47,13 +47,24 @@ namespace Cards.Tests.Core
         {
             protected override List<Area> Given()
             {
-                var areas = new FakeDbSet<Area>();
-                areas.Add(new Area() { ID = 1, Name = "Backlog" });
+                var areas = new List<Area>()
+                {
+                    new Area()
+                    {
+                        ID = 1,
+                        Name = "Area"
+                    }
+                };
+
+                var repository = new Mock<ICardRepository>();
+                repository
+                    .Setup(r => r.FindAllArea())
+                    .Returns(areas);
 
                 var factory = new Mock<DbFactory>();
                 factory.Protected()
-                    .Setup<CardsDb>("OnCreateDb")
-                    .Returns(new CardsDb() { Areas = areas });
+                    .Setup<ICardRepository>("OnCreateDb")
+                    .Returns(repository.Object);
 
                 new DbFactory(factory.Object);
 
@@ -83,14 +94,24 @@ namespace Cards.Tests.Core
         {
             protected override Area Given()
             {
+                var area = new Area()
+                {
+                    ID = 1,
+                    Name = "Area"
+                };
+
+                var repository = new Mock<ICardRepository>();
+                repository.Setup(r => r.CreateArea(It.IsAny<Area>()))
+                    .Returns(area);
+
                 var factory = new Mock<DbFactory>();
                 factory.Protected()
-                    .Setup<CardsDb>("OnCreateDb")
-                    .Returns(new CardsDb() { Areas = new FakeDbSet<Area>() });
+                    .Setup<ICardRepository>("OnCreateDb")
+                    .Returns(repository.Object);
 
                 new DbFactory(factory.Object);
 
-                return Area.Create("NewArea");
+                return Area.Create("Area");
             }
 
             [Fact]
@@ -102,7 +123,7 @@ namespace Cards.Tests.Core
             [Fact]
             public void ShouldNameIsNewArea()
             {
-                Subject.Name.Should().Be("NewArea");
+                Subject.Name.Should().Be("Area");
             }
             
         }
@@ -111,10 +132,18 @@ namespace Cards.Tests.Core
         {
             protected override Action Given()
             {
+                var repository = new Mock<ICardRepository>();
+                repository
+                    .Setup(r => r.CreateArea(It.IsAny<Area>()))
+                    .Callback<Area>(area =>
+                    {
+                        Validator.ValidateObject(area, new ValidationContext(area), true);
+                    });
+
                 var factory = new Mock<DbFactory>();
                 factory.Protected()
-                    .Setup<CardsDb>("OnCreateDb")
-                    .Returns(new CardsDb() { Areas = new FakeDbSet<Area>() });
+                    .Setup<ICardRepository>("OnCreateDb")
+                    .Returns(repository.Object);
 
                 new DbFactory(factory.Object);
 
@@ -127,8 +156,6 @@ namespace Cards.Tests.Core
                 Subject.ShouldThrow<ValidationException>();
             }
         }
-
-
 
     }
 }

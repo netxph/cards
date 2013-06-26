@@ -49,8 +49,10 @@
   <ItemGroup>
     <Compile Include="Area.cs" />
     <Compile Include="Card.cs" />
+    <Compile Include="CardRepository.cs" />
     <Compile Include="CardsDb.cs" />
     <Compile Include="DbFactory.cs" />
+    <Compile Include="ICardRepository.cs" />
     <Compile Include="IDbList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

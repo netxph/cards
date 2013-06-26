@@ -49,18 +49,22 @@ namespace Cards.Tests.Core
 
             protected override Card Given()
             {
-                var cards = new FakeDbSet<Card>();
-                cards.Add(new Card()
+                var card = new Card()
                 {
                     ID = 1,
-                    Name = "Original task",
+                    Name = "Card",
                     AreaID = 1
-                });
+                };
+
+                var repository = new Mock<ICardRepository>();
+                repository
+                    .Setup(r => r.FindCard(It.IsAny<int>()))
+                    .Returns(card);
 
                 var factory = new Mock<DbFactory>();
                 factory.Protected()
-                    .Setup<CardsDb>("OnCreateDb")
-                    .Returns(new CardsDb() { Cards = cards });
+                    .Setup<ICardRepository>("OnCreateDb")
+                    .Returns(repository.Object);
 
                 new DbFactory(factory.Object);
 
@@ -96,18 +100,28 @@ namespace Cards.Tests.Core
         {
             protected override void Initialize()
             {
-                var cards = new FakeDbSet<Card>();
-                cards.Add(new Card()
+                var card = new Card()
                 {
                     ID = 1,
-                    Name = "Original task",
+                    Name = "Card",
                     AreaID = 1
-                });
+                };
+
+                var repository = new Mock<ICardRepository>();
+                repository
+                    .Setup(r => r.UpdateCard(It.IsAny<Card>()))
+                    .Callback<Card>(c =>
+                    {
+                        Validator.ValidateObject(c, new ValidationContext(c), true);
+                    });
+                repository
+                    .Setup(r => r.FindCard(1))
+                    .Returns(card);
 
                 var factory = new Mock<DbFactory>();
                 factory.Protected()
-                    .Setup<CardsDb>("OnCreateDb")
-                    .Returns(new CardsDb() { Cards = cards });
+                    .Setup<ICardRepository>("OnCreateDb")
+                    .Returns(repository.Object);
 
                 new DbFactory(factory.Object);
             }
@@ -123,14 +137,14 @@ namespace Cards.Tests.Core
             public void ShouldThrowValidationExceptionIfNameIsEmptyOrNull()
             {
                 Action updateCard = () => Card.Update(1, string.Empty, 1);
-                updateCard.ShouldThrow<DbEntityValidationException>();
+                updateCard.ShouldThrow<ValidationException>();
             }
 
             [Fact]
             public void ShouldThrowValidationExceptionIfAreaIsMissing()
             {
                 Action updateCard = () => Card.Update(1, "Valid", 0);
-                updateCard.ShouldThrow<DbEntityValidationException>();
+                updateCard.ShouldThrow<ValidationException>();
             }
         }
 
@@ -139,14 +153,26 @@ namespace Cards.Tests.Core
 
             protected override Card Given()
             {
+                var card = new Card()
+                {
+                    ID = 1,
+                    Name = "Card",
+                    AreaID = 1
+                };
+
+                var repository = new Mock<ICardRepository>();
+                repository
+                    .Setup(r => r.CreateCard(It.IsAny<Card>()))
+                    .Returns(card);
+
                 var factory = new Mock<DbFactory>();
                 factory.Protected()
-                    .Setup<CardsDb>("OnCreateDb")
-                    .Returns(new CardsDb() { Cards = new FakeDbSet<Card>() });
+                    .Setup<ICardRepository>("OnCreateDb")
+                    .Returns(repository.Object);
 
                 new DbFactory(factory.Object);
 
-                return Card.Create("A sample task", 1);
+                return Card.Create("Card", 1);
             }
 
             [Fact]
@@ -158,7 +184,7 @@ namespace Cards.Tests.Core
             [Fact]
             public void ShouldNameIsASampleTask()
             {
-                Subject.Name.Should().Be("A sample task");
+                Subject.Name.Should().Be("Card");
             }
         }
 
@@ -166,10 +192,18 @@ namespace Cards.Tests.Core
         {
             protected override void Initialize()
             {
+                var repository = new Mock<ICardRepository>();
+                repository
+                    .Setup(r => r.CreateCard(It.IsAny<Card>()))
+                    .Callback<Card>(card =>
+                    {
+                        Validator.ValidateObject(card, new ValidationContext(card), true);
+                    });
+
                 var factory = new Mock<DbFactory>();
                 factory.Protected()
-                    .Setup<CardsDb>("OnCreateDb")
-                    .Returns(new CardsDb() { Cards = new FakeDbSet<Card>() });
+                    .Setup<ICardRepository>("OnCreateDb")
+                    .Returns(repository.Object);
 
                 new DbFactory(factory.Object);
             }

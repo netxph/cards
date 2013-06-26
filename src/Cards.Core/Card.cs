@@ -25,25 +25,20 @@ namespace Cards.Core
             var db = DbFactory.Create();
             var card = new Card() { Name = name, AreaID = areaId };
 
-            card = db.Cards.Add(card);
-            db.SaveChanges();
-
-            return card;
+            return db.CreateCard(card);
         }
 
         public static Card Update(int cardId, string name, int areaId)
         {
             var db = DbFactory.Create();
-            var card = db.Cards.FirstOrDefault(f => f.ID == cardId);
+            var card = db.FindCard(cardId);
 
             if (card != null)
             {
-                db.Entry(card).State = EntityState.Modified;
-
                 card.Name = name;
                 card.AreaID = areaId;
-                
-                db.SaveChanges();
+
+                db.UpdateCard(card);
 
                 return card;
             }

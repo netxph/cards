@@ -15,8 +15,8 @@ namespace Cards.Core
 
         }
 
-        public IDbSet<Area> Areas { get; set; }
-        public IDbSet<Card> Cards { get; set; }
+        public DbSet<Area> Areas { get; set; }
+        public DbSet<Card> Cards { get; set; }
 
     }
 }

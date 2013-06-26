@@ -31,14 +31,14 @@ namespace Cards.Core
             }
         }
 
-        public static CardsDb Create()
+        public static ICardRepository Create()
         {
             return Instance.OnCreateDb();
         }
 
-        protected virtual CardsDb OnCreateDb()
+        protected virtual ICardRepository OnCreateDb()
         {
-            return new CardsDb();
+            return new CardRepository();
         }
 
     }

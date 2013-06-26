@@ -22,7 +22,7 @@ namespace Cards.Core
         {
             var db = DbFactory.Create();
 
-            return db.Areas.Include("Cards").ToList();
+            return db.FindAllArea();
         }
 
         public static Area Create(string name)
@@ -30,10 +30,7 @@ namespace Cards.Core
             var db = DbFactory.Create();
             var area = new Area() { Name = name };
 
-            area = db.Areas.Add(area);
-            db.SaveChanges();
-
-            return area;
+            return db.CreateArea(area);
         }
     }
 }
