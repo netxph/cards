@@ -51,14 +51,33 @@
     <Compile Include="Card.cs" />
     <Compile Include="CardRepository.cs" />
     <Compile Include="CardsDb.cs" />
+    <Compile Include="DateProvider.cs" />
     <Compile Include="DbFactory.cs" />
     <Compile Include="ICardRepository.cs" />
+    <Compile Include="IDateProvider.cs" />
     <Compile Include="IDbList.cs" />
+    <Compile Include="Migrations\201306260430309_InitialCreate.cs" />
+    <Compile Include="Migrations\201306260430309_InitialCreate.Designer.cs">
+      <DependentUpon>201306260430309_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201306272352445_DB_Dates.cs" />
+    <Compile Include="Migrations\201306272352445_DB_Dates.Designer.cs">
+      <DependentUpon>201306272352445_DB_Dates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201306260430309_InitialCreate.resx">
+      <DependentUpon>201306260430309_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201306272352445_DB_Dates.resx">
+      <DependentUpon>201306272352445_DB_Dates.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

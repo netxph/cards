@@ -92,17 +92,24 @@ namespace Cards.Tests.Core
 
         public class CreateMethod : TestCase<Area>
         {
+            readonly DateTime NOW = new DateTime(2013, 12, 1);
+
             protected override Area Given()
             {
-                var area = new Area()
-                {
-                    ID = 1,
-                    Name = "Area"
-                };
+                Area area = null;
+
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider
+                    .Setup(date => date.UtcNow())
+                    .Returns(NOW);
+
+                Area.DateProvider = dateProvider.Object;
 
                 var repository = new Mock<ICardRepository>();
-                repository.Setup(r => r.CreateArea(It.IsAny<Area>()))
-                    .Returns(area);
+                repository
+                    .Setup(r => r.CreateArea(It.IsAny<Area>()))
+                    .Callback<Area>((a) => area = a)
+                    .Returns(() => area);
 
                 var factory = new Mock<DbFactory>();
                 factory.Protected()
@@ -124,6 +131,30 @@ namespace Cards.Tests.Core
             public void ShouldNameIsNewArea()
             {
                 Subject.Name.Should().Be("Area");
+            }
+
+            [Fact]
+            public void ShouldCreatedDateIsAfterMinValue()
+            {
+                Subject.CreatedDateUtc.Should().BeAfter(DateTime.MinValue);
+            }
+
+            [Fact]
+            public void ShouldCreatedDateIsUtcNow()
+            {
+                Subject.CreatedDateUtc.Should().Be(NOW);
+            }
+
+            [Fact]
+            public void ShouldModifiedDateIsAfterMinValue()
+            {
+                Subject.ModifiedDateUtc.Should().BeAfter(DateTime.MinValue);
+            }
+
+            [Fact]
+            public void ShouldModifiedDateIsUtcNow()
+            {
+                Subject.ModifiedDateUtc.Should().Be(NOW);
             }
             
         }

@@ -94,6 +94,7 @@ namespace Cards.Tests.Core
             {
                 Subject.AreaID.Should().Be(2);
             }
+
         }
 
         public class UpdateMethod_Invalid : TestCase
@@ -151,19 +152,24 @@ namespace Cards.Tests.Core
         public class CreateMethod : TestCase<Card>
         {
 
+            readonly DateTime NOW = new DateTime(2013, 12, 1);
+
             protected override Card Given()
             {
-                var card = new Card()
-                {
-                    ID = 1,
-                    Name = "Card",
-                    AreaID = 1
-                };
+                Card card = null;
+
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider
+                    .Setup(dp => dp.UtcNow())
+                    .Returns(NOW);
+
+                Card.DateProvider = dateProvider.Object;
 
                 var repository = new Mock<ICardRepository>();
                 repository
                     .Setup(r => r.CreateCard(It.IsAny<Card>()))
-                    .Returns(card);
+                    .Callback<Card>((c) => card = c)
+                    .Returns(() => card);
 
                 var factory = new Mock<DbFactory>();
                 factory.Protected()
@@ -185,6 +191,30 @@ namespace Cards.Tests.Core
             public void ShouldNameIsASampleTask()
             {
                 Subject.Name.Should().Be("Card");
+            }
+
+            [Fact]
+            public void ShouldCreatedDateIsAfterMinValue()
+            {
+                Subject.CreatedDateUtc.Should().BeAfter(DateTime.MinValue);
+            }
+
+            [Fact]
+            public void ShouldCreatedDateIsNow()
+            {
+                Subject.CreatedDateUtc.Should().Be(NOW);
+            }
+
+            [Fact]
+            public void ShouldModifiedDateIsAfterMinValue()
+            {
+                Subject.ModifiedDateUtc.Should().BeAfter(DateTime.MinValue);
+            }
+
+            [Fact]
+            public void ShouldModifiedDateIsNow()
+            {
+                Subject.ModifiedDateUtc.Should().Be(NOW);
             }
         }
 

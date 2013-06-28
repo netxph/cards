@@ -16,6 +16,25 @@ namespace Cards.Core
         [Required]
         public string Name { get; set; }
 
+        public DateTime CreatedDateUtc { get; set; }
+
+        public DateTime ModifiedDateUtc { get; set; }
+
+        static IDateProvider _dateProvider = null;
+        public static IDateProvider DateProvider 
+        { 
+            get 
+            {
+                if (_dateProvider == null)
+                {
+                    _dateProvider = new DateProvider();
+                }
+
+                return _dateProvider;
+            }
+            set { _dateProvider = value; }
+        }
+
         public List<Card> Cards { get; set; }
 
         public static List<Area> GetAll()
@@ -28,7 +47,12 @@ namespace Cards.Core
         public static Area Create(string name)
         {
             var db = DbFactory.Create();
-            var area = new Area() { Name = name };
+            var area = new Area() 
+            { 
+                Name = name,
+                CreatedDateUtc = DateProvider.UtcNow(),
+                ModifiedDateUtc = DateProvider.UtcNow()
+            };
 
             return db.CreateArea(area);
         }

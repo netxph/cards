@@ -16,14 +16,40 @@ namespace Cards.Core
 
         [Required]
         public string Name { get; set; }
-        
+
+        public DateTime CreatedDateUtc { get; set; }
+
+        public DateTime ModifiedDateUtc { get; set; }
+
+
+        static IDateProvider _dateProvider = null;
+        public static IDateProvider DateProvider
+        {
+            get
+            {
+                if (_dateProvider == null)
+                {
+                    _dateProvider = new DateProvider();
+                }
+
+                return _dateProvider;
+            }
+            set { _dateProvider = value; }
+        }
+
         [Range(1, int.MaxValue)]
         public int AreaID { get; set; }
 
         public static Card Create(string name, int areaId)
         {
             var db = DbFactory.Create();
-            var card = new Card() { Name = name, AreaID = areaId };
+            var card = new Card() 
+            { 
+                Name = name, 
+                AreaID = areaId,
+                CreatedDateUtc = DateProvider.UtcNow(),
+                ModifiedDateUtc = DateProvider.UtcNow()
+            };
 
             return db.CreateCard(card);
         }
