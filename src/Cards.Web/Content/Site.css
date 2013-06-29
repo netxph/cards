@@ -10,6 +10,7 @@ button {
     padding: 5px 10px;
     width: 75px;
     font-size: 1em;
+    vertical-align: bottom;
 }
 
 #new-area input {
@@ -44,11 +45,14 @@ footer p {
 nav {
     background-color: black;
     padding: 10px 5px 10px;
+    overflow: hidden;
+    height: 27px;
 }
 nav a {
     text-decoration: none;
     font-size: 1.5em;
     color: lightgray;
+    vertical-align: top;
 }
 
 nav ul li {
