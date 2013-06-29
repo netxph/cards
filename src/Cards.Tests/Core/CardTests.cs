@@ -47,6 +47,8 @@ namespace Cards.Tests.Core
         public class UpdateMethod : TestCase<Card>
         {
 
+            readonly DateTime NOW = new DateTime(2013, 12, 1);
+
             protected override Card Given()
             {
                 var card = new Card()
@@ -55,6 +57,13 @@ namespace Cards.Tests.Core
                     Name = "Card",
                     AreaID = 1
                 };
+
+                var date = new Mock<IDateProvider>();
+                date
+                    .Setup(d => d.UtcNow())
+                    .Returns(NOW);
+
+                Card.DateProvider = date.Object;
 
                 var repository = new Mock<ICardRepository>();
                 repository
@@ -93,6 +102,18 @@ namespace Cards.Tests.Core
             public void ShouldAreaIs2()
             {
                 Subject.AreaID.Should().Be(2);
+            }
+
+            [Fact]
+            public void ShouldModifiedDateIsNow()
+            {
+                Subject.ModifiedDateUtc.Should().Be(NOW);
+            }
+
+            [Fact]
+            public void ShouldCreatedDateNotIsNow()
+            {
+                Subject.CreatedDateUtc.Should().NotBe(NOW);
             }
 
         }

@@ -64,6 +64,8 @@ namespace Cards.Core
                 card.Name = name;
                 card.AreaID = areaId;
 
+                card.ModifiedDateUtc = DateProvider.UtcNow();
+
                 db.UpdateCard(card);
 
                 return card;
