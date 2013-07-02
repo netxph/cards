@@ -18,8 +18,17 @@ namespace Cards.Tests.Core
 
         public class InitializeCard : TestCase<Card>
         {
+            readonly DateTime NOW = new DateTime(2013, 12, 1);
+
             protected override Card Given()
             {
+                var date = new Mock<IDateProvider>();
+                date
+                    .Setup(d => d.UtcNow())
+                    .Returns(NOW);
+
+                Card.DateProvider = date.Object;
+
                 var card = new Card();
 
                 return card;
@@ -42,6 +51,24 @@ namespace Cards.Tests.Core
             {
                 Subject.AreaID.Should().Be(0);
             }
+
+            [Fact]
+            public void ShouldCreatedIsNow()
+            {
+                Subject.CreatedDateUtc.Should().Be(NOW);
+            }
+
+            [Fact]
+            public void ShouldModifiedIsNow()
+            {
+                Subject.ModifiedDateUtc.Should().Be(NOW);
+            }
+
+            [Fact]
+            public void ShouldBeActive()
+            {
+                Subject.IsActive.Should().BeTrue();
+            }
         }
 
         public class UpdateMethod : TestCase<Card>
@@ -55,7 +82,9 @@ namespace Cards.Tests.Core
                 {
                     ID = 1,
                     Name = "Card",
-                    AreaID = 1
+                    AreaID = 1,
+                    ModifiedDateUtc = DateTime.MinValue,
+                    CreatedDateUtc = DateTime.MinValue
                 };
 
                 var date = new Mock<IDateProvider>();
@@ -170,6 +199,87 @@ namespace Cards.Tests.Core
             }
         }
 
+        public class DeleteMethod : TestCase<Card>
+        {
+            readonly DateTime NOW = new DateTime(2013, 12, 1);
+
+            protected override Card Given()
+            {
+                var date = new Mock<IDateProvider>();
+                date
+                    .Setup(d => d.UtcNow())
+                    .Returns(NOW);
+
+                Card.DateProvider = date.Object;
+
+                var repository = new Mock<ICardRepository>();
+                repository
+                    .Setup(r => r.FindCard(1))
+                    .Returns(new Card()
+                    {
+                        ID = 1,
+                        AreaID = 1,
+                        CreatedDateUtc = DateTime.MinValue,
+                        ModifiedDateUtc = DateTime.MinValue,
+                        Name = "Card",
+                        IsActive = true
+                    });
+
+                Card card = null;
+                repository
+                    .Setup(r => r.UpdateCard(It.IsAny<Card>()))
+                    .Callback<Card>(c => card = c)
+                    .Returns(() => card);
+
+                var factory = new Mock<DbFactory>();
+                factory.Protected()
+                    .Setup<ICardRepository>("OnCreateDb")
+                    .Returns(repository.Object);
+
+                new DbFactory(factory.Object);
+
+                return Card.Delete(1);
+            }
+
+            [Fact]
+            public void ShouldNotBeNull()
+            {
+                Subject.Should().NotBeNull();
+            }
+
+            [Fact]
+            public void ShouldNotBeActive()
+            {
+                Subject.IsActive.Should().BeFalse();
+            }
+
+            [Fact]
+            public void ShouldIdIs1()
+            {
+                Subject.ID.Should().Be(1);
+            }
+
+            [Fact]
+            public void ShouldNameHasValue()
+            {
+                Subject.Name.Should().Be("Card");
+            }
+
+            [Fact]
+            public void ShouldCreatedDateIsNotNow()
+            {
+                Subject.CreatedDateUtc.Should().NotBe(NOW);
+            }
+
+            [Fact]
+            public void ShouldModifiedDateIsNow()
+            {
+                Subject.ModifiedDateUtc.Should().Be(NOW);
+            }
+
+        }
+
+
         public class CreateMethod : TestCase<Card>
         {
 
@@ -236,6 +346,12 @@ namespace Cards.Tests.Core
             public void ShouldModifiedDateIsNow()
             {
                 Subject.ModifiedDateUtc.Should().Be(NOW);
+            }
+
+            [Fact]
+            public void ShouldBeActive()
+            {
+                Subject.IsActive.Should().BeTrue();
             }
         }
 

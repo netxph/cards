@@ -24,7 +24,12 @@ namespace Cards.Core
         {
             using (var db = new CardsDb())
             {
-                return db.Areas.Include("Cards").Where(a => a.IsActive == true).ToList();
+                var areas = db.Areas.Include("Cards").Where(a => a.IsActive == true).ToList();
+                
+                //TODO find better solution
+                areas.ForEach(a => a.Cards.RemoveAll(c => !c.IsActive));
+
+                return areas;
             }
         }
 

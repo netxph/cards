@@ -11,6 +11,13 @@ namespace Cards.Core
     public class Card
     {
 
+        public Card()
+        {
+            IsActive = true;
+            ModifiedDateUtc = DateProvider.UtcNow();
+            CreatedDateUtc = DateProvider.UtcNow();
+        }
+
         [Key]
         public int ID { get; set; }
 
@@ -71,6 +78,23 @@ namespace Cards.Core
                 db.UpdateCard(card);
 
                 return card;
+            }
+
+            return null;
+        }
+
+        public static Card Delete(int id)
+        {
+            var db = DbFactory.Create();
+
+            var card = db.FindCard(id);
+
+            if (card != null)
+            {
+                card.IsActive = false;
+                card.ModifiedDateUtc = DateProvider.UtcNow();
+
+                return db.UpdateCard(card);
             }
 
             return null;

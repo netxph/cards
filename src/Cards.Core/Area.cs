@@ -69,10 +69,15 @@ namespace Cards.Core
             var db = DbFactory.Create();
             var area = db.FindArea(id);
 
-            area.IsActive = false;
-            area.ModifiedDateUtc = DateProvider.UtcNow();
+            if (area != null)
+            {
+                area.IsActive = false;
+                area.ModifiedDateUtc = DateProvider.UtcNow();
 
-            return db.UpdateArea(area);
+                return db.UpdateArea(area);
+            }
+
+            return null;
         }
     }
 }

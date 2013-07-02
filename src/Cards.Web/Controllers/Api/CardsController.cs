@@ -21,5 +21,10 @@ namespace Cards.Web.Controllers.Api
             return Card.Update(id, card.Name, card.AreaID);
         }
 
+        public Card Delete(int id)
+        {
+            return Card.Delete(id);
+        }
+
     }
 }
