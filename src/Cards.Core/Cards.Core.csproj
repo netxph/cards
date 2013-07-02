@@ -64,6 +64,10 @@
     <Compile Include="Migrations\201306272352445_DB_Dates.Designer.cs">
       <DependentUpon>201306272352445_DB_Dates.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201307021018180_AddColumnIsActiveToCardAndArea.cs" />
+    <Compile Include="Migrations\201307021018180_AddColumnIsActiveToCardAndArea.Designer.cs">
+      <DependentUpon>201307021018180_AddColumnIsActiveToCardAndArea.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -77,6 +81,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201306272352445_DB_Dates.resx">
       <DependentUpon>201306272352445_DB_Dates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201307021018180_AddColumnIsActiveToCardAndArea.resx">
+      <DependentUpon>201307021018180_AddColumnIsActiveToCardAndArea.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

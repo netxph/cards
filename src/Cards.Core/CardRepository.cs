@@ -24,7 +24,7 @@ namespace Cards.Core
         {
             using (var db = new CardsDb())
             {
-                return db.Areas.Include("Cards").ToList();
+                return db.Areas.Include("Cards").Where(a => a.IsActive == true).ToList();
             }
         }
 
@@ -55,6 +55,26 @@ namespace Cards.Core
             using (var db = new CardsDb())
             {
                 return db.Cards.FirstOrDefault(c => c.ID == id);
+            }
+        }
+
+
+        public Area FindArea(int id)
+        {
+            using (var db = new CardsDb())
+            {
+                return db.Areas.FirstOrDefault(a => a.ID == id);
+            }
+        }
+
+        public Area UpdateArea(Area area)
+        {
+            using (var db = new CardsDb())
+            {
+                db.Entry(area).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return area;
             }
         }
     }

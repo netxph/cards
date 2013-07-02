@@ -11,10 +11,12 @@ namespace Cards.Core
 
         Area CreateArea(Area area);
         List<Area> FindAllArea();
+        Area FindArea(int id);
+        Area UpdateArea(Area area);
 
         Card FindCard(int id);
         Card CreateCard(Card card);
         Card UpdateCard(Card card);
-
+        
     }
 }

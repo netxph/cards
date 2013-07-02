@@ -17,6 +17,8 @@ namespace Cards.Core
         [Required]
         public string Name { get; set; }
 
+        public bool IsActive { get; set; }
+
         public DateTime CreatedDateUtc { get; set; }
 
         public DateTime ModifiedDateUtc { get; set; }

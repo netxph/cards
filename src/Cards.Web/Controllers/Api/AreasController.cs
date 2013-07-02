@@ -21,5 +21,10 @@ namespace Cards.Web.Controllers.Api
             return Area.Create(area.Name);
         }
 
+        public Area Delete(int id)
+        {
+            return Area.Delete(id);
+        }
+
     }
 }

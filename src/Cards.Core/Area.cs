@@ -10,11 +10,20 @@ namespace Cards.Core
 {
     public class Area
     {
+        public Area()
+        {
+            IsActive = true;
+            CreatedDateUtc = DateProvider.UtcNow();
+            ModifiedDateUtc = DateProvider.UtcNow();
+        }
+
         [Key]
         public int ID { get; set; }
 
         [Required]
         public string Name { get; set; }
+
+        public bool IsActive { get; set; }
 
         public DateTime CreatedDateUtc { get; set; }
 
@@ -50,11 +59,20 @@ namespace Cards.Core
             var area = new Area() 
             { 
                 Name = name,
-                CreatedDateUtc = DateProvider.UtcNow(),
-                ModifiedDateUtc = DateProvider.UtcNow()
             };
 
             return db.CreateArea(area);
+        }
+
+        public static Area Delete(int id)
+        {
+            var db = DbFactory.Create();
+            var area = db.FindArea(id);
+
+            area.IsActive = false;
+            area.ModifiedDateUtc = DateProvider.UtcNow();
+
+            return db.UpdateArea(area);
         }
     }
 }
