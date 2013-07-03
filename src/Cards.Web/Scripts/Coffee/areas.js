@@ -83,6 +83,14 @@
 
     AreaViewModel.prototype.init = function() {
       $("#new-area").hide();
+      $("body").on({
+        ajaxStart: function() {
+          $(this).addClass("loading");
+        },
+        ajaxStop: function() {
+          $(this).removeClass("loading");
+        }
+      });
       self.refresh();
     };
 

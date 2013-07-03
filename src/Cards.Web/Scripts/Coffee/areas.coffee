@@ -83,12 +83,20 @@
             return
 
         showArea: ->
-            $("#new-area").fadeToggle();
+            $("#new-area").fadeToggle()
             return
 
         init: ->
             $("#new-area").hide()
-
+            
+            $("body").on 
+                ajaxStart: ->
+                    $(this).addClass "loading"
+                    return
+                ajaxStop: ->
+                    $(this).removeClass "loading"
+                    return
+                        
             self.refresh()
             return
         
