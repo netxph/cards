@@ -48,7 +48,7 @@
     };
 
     AreaViewModel.prototype.refresh = function() {
-      $.getJSON("api/areas", function(data) {
+      $.getJSON("api/areas").done(function(data) {
         self.areas(data);
         self.initAreaControls();
       });

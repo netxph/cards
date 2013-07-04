@@ -49,10 +49,11 @@
             return
 
         refresh: ->
-            $.getJSON "api/areas", (data) ->
-                self.areas(data)
-                self.initAreaControls()
-                return
+            $.getJSON("api/areas")
+                .done (data) ->
+                    self.areas(data)
+                    self.initAreaControls()
+                    return
             return
 
         addCard: ->
