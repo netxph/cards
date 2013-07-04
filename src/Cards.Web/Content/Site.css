@@ -1,7 +1,9 @@
-﻿body {
-    font-size: .85em;
+﻿@import url(http://fonts.googleapis.com/css?family=Lily+Script+One);
+
+body {
+    font-size: 15px;
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
-    color: #000000;
+    color: rgb(100, 100, 100);
     background-color: rgb(238, 238, 238);
 }
 
@@ -51,7 +53,7 @@ body.loading .load-modal {
     font-family: 'Lily Script One', cursive;
     background-color: rgb(255, 255, 255);
     color: rgb(100, 100, 100);
-    font-size: 2em;
+    font-size: 36px;
     padding: 20px;
 }
 
@@ -69,13 +71,14 @@ nav {
     background-color: black;
     padding: 10px 5px 10px;
     overflow: hidden;
-    height: 27px;
+    height: 30px;
 }
 nav a {
     text-decoration: none;
-    font-size: 1.5em;
+    font-size: 26px;
     color: lightgray;
     vertical-align: top;
+    font-family: "Segoe UI Light", Verdana, Helvetica, Sans-Serif;
 }
 
 nav ul li {
@@ -85,8 +88,9 @@ nav ul li {
 }
 
 article header h1 {
-    font-size: 1.5em;
+    font-size: 26px;
     margin-bottom: 20px;
+    font-family: "Segoe UI Light", Verdana, Helvetica, Sans-Serif;
 }
 
 article {
@@ -94,7 +98,7 @@ article {
     margin: 20px 5px;
     float: left;
     width: 250px;
-    padding: 10px;
+    padding: 12px;
     background-color: rgb(255, 255, 255);
        
     -webkit-box-shadow: 2px 2px 1px rgba(50, 50, 50, 0.1);
@@ -105,9 +109,10 @@ article {
 article ul li {
     background-color: white;
     border: 1px solid lightgray;
-    margin: 10px 0 10px 0;
-    padding: 10px 5px;
+    margin: 12px 0;
+    padding: 6px 12px;
     
+    line-height: 120%;
 }
 
 article footer a {
@@ -122,6 +127,7 @@ article footer textarea {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     border-color: lightgray;
+    margin: 6px 0;
 }
 
 #repair {
