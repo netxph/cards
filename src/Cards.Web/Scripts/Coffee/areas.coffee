@@ -54,6 +54,15 @@
                     self.areas(data)
                     self.initAreaControls()
                     return
+                .fail ->
+                    self.showError "Santa can't figured out what happened, can you try it again?"
+                    return
+
+            return
+
+        showError: (message) ->
+            $("#error-modal").show()
+            $("#error-modal span").text message
             return
 
         addCard: ->
@@ -89,9 +98,16 @@
 
         init: ->
             $("#new-area").hide()
+            $("#error-modal").hide()
             
+            $("#error-modal").on "click", (event) ->
+                $(this).fadeOut()
+                return
+
             $("body").on 
                 ajaxStart: ->
+                    $("#error-modal").hide()
+
                     $(this).addClass "loading"
                     return
                 ajaxStop: ->

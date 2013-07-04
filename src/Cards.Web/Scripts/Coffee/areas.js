@@ -51,7 +51,14 @@
       $.getJSON("api/areas").done(function(data) {
         self.areas(data);
         self.initAreaControls();
+      }).fail(function() {
+        self.showError("Santa can't figured out what happened, can you try it again?");
       });
+    };
+
+    AreaViewModel.prototype.showError = function(message) {
+      $("#error-modal").show();
+      $("#error-modal span").text(message);
     };
 
     AreaViewModel.prototype.addCard = function() {
@@ -83,8 +90,13 @@
 
     AreaViewModel.prototype.init = function() {
       $("#new-area").hide();
+      $("#error-modal").hide();
+      $("#error-modal").on("click", function(event) {
+        $(this).fadeOut();
+      });
       $("body").on({
         ajaxStart: function() {
+          $("#error-modal").hide();
           $(this).addClass("loading");
         },
         ajaxStop: function() {
