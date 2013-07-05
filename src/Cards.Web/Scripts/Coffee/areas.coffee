@@ -47,6 +47,11 @@
 
             $("article footer div").hide()
             $("article footer a").on "click", ->
+                articles = $("#areas article")
+                for article of articles then do (article) ->
+                    $(article).find("div").hide()
+                    return
+
                 $(this).parent().find("div").fadeToggle()
                 return
             return

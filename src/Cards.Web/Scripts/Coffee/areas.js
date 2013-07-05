@@ -44,6 +44,14 @@
       });
       $("article footer div").hide();
       $("article footer a").on("click", function() {
+        var article, articles, _fn;
+        articles = $("#areas article");
+        _fn = function(article) {
+          $(article).find("div").hide();
+        };
+        for (article in articles) {
+          _fn(article);
+        }
         $(this).parent().find("div").fadeToggle();
       });
     };
