@@ -26,13 +26,16 @@
                 card.AreaID = areaId
                 card.Name = $(cardElement).text()
                 
-                $.ajax
+                $.ajax(
                     url: "api/cards/" + card.ID,
                     type: "PUT",
-                    data: card,
-                    success: ->
+                    data: card)
+                    .done ->
                         target = areaElement.find("ul")
                         target.append(cardElement)        
+                        return
+                    .fail ->
+                        self.showError "Santa can't figured out what happened, can you try it again?"
                         return
                 
                 return
@@ -73,9 +76,13 @@
             card.AreaID = areaId
             card.Name = name
 
-            $.post "api/cards", card, (data) ->
-                self.refresh()
-                return
+            $.post("api/cards", card)
+                .done ->
+                    self.refresh()
+                    return
+                .fail ->
+                    self.showError "Santa can't figured out what happened, can you try it again?"
+                    return
 
             return
 
@@ -84,9 +91,13 @@
             area.Name = self.newArea()
 
             
-            $.post "api/areas", area, (data) ->
-               self.refresh()
-               return
+            $.post("api/areas", area)
+                .done ->
+                    self.refresh()
+                    return
+                .fail ->
+                    self.showError "Santa can't figured out what happened, can you try it again?"
+                    return
 
             $("#new-area").fadeToggle()
             self.newArea("")

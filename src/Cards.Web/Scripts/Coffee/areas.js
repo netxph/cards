@@ -28,12 +28,13 @@
         $.ajax({
           url: "api/cards/" + card.ID,
           type: "PUT",
-          data: card,
-          success: function() {
-            var target;
-            target = areaElement.find("ul");
-            target.append(cardElement);
-          }
+          data: card
+        }).done(function() {
+          var target;
+          target = areaElement.find("ul");
+          target.append(cardElement);
+        }).fail(function() {
+          self.showError("Santa can't figured out what happened, can you try it again?");
         });
       });
       $("#areas li").on("dragstart", function(event) {
@@ -68,8 +69,10 @@
       card = {};
       card.AreaID = areaId;
       card.Name = name;
-      $.post("api/cards", card, function(data) {
+      $.post("api/cards", card).done(function() {
         self.refresh();
+      }).fail(function() {
+        self.showError("Santa can't figured out what happened, can you try it again?");
       });
     };
 
@@ -77,8 +80,10 @@
       var area;
       area = {};
       area.Name = self.newArea();
-      $.post("api/areas", area, function(data) {
+      $.post("api/areas", area).done(function() {
         self.refresh();
+      }).fail(function() {
+        self.showError("Santa can't figured out what happened, can you try it again?");
       });
       $("#new-area").fadeToggle();
       self.newArea("");
