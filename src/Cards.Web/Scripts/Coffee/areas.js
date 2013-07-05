@@ -10,7 +10,19 @@
 
     AreaViewModel.prototype.areas = ko.observableArray([]);
 
+    AreaViewModel.prototype.resize = function() {
+      var width, windowWidth;
+      windowWidth = $(window).width();
+      width = ($("#areas article").outerWidth() + 12) * 5;
+      if (windowWidth < width) {
+        $("body").width(width);
+      } else {
+        $("body").width(windowWidth);
+      }
+    };
+
     AreaViewModel.prototype.initAreaControls = function() {
+      self.resize();
       $("#areas article").on("dragover", function(event) {
         event.preventDefault();
       });
@@ -109,7 +121,10 @@
     AreaViewModel.prototype.init = function() {
       $("#new-area").hide();
       $("#error-modal").hide();
-      $("#error-modal").on("click", function(event) {
+      $(window).resize(function(event) {
+        self.resize();
+      });
+      $("#error-modal").live("click", function(event) {
         $(this).fadeOut();
       });
       $("body").on({

@@ -9,7 +9,22 @@
 
         areas: ko.observableArray([])
 
+        resize: ->
+            windowWidth = $(window).width()
+            width = ($("#areas article").outerWidth() + 12) * 5
+
+            if windowWidth < width
+                $("body").width(width)
+            else
+                $("body").width(windowWidth)
+
+            return
+
         initAreaControls: ->
+            self.resize()
+
+            #transfer these items in jquery live
+
             $("#areas article").on "dragover", (event) ->
                 event.preventDefault()
                 return
@@ -123,7 +138,11 @@
             $("#new-area").hide()
             $("#error-modal").hide()
             
-            $("#error-modal").on "click", (event) ->
+            $(window).resize (event) ->
+                self.resize()
+                return
+
+            $("#error-modal").live "click", (event) ->
                 $(this).fadeOut()
                 return
 
