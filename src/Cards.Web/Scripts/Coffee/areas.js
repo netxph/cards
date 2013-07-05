@@ -42,9 +42,9 @@
         cardId = $(event.target).data("cardid");
         event.originalEvent.dataTransfer.setData("CardID", cardId);
       });
-      $("article footer div").hide();
-      $("article footer a").on("click", function() {
-        var article, articles, _fn;
+      $("#areas article footer div").hide();
+      $("#areas article footer a").on("click", function() {
+        var article, articles, currentArea, _fn;
         articles = $("#areas article");
         _fn = function(article) {
           $(article).find("div").hide();
@@ -52,7 +52,12 @@
         for (article in articles) {
           _fn(article);
         }
-        $(this).parent().find("div").fadeToggle();
+        currentArea = $(this).parent();
+        currentArea.find("div").fadeToggle();
+        currentArea.find("textarea").focus();
+      });
+      $("#areas textarea").live("focusout", function(event) {
+        $(this).closest("article").find("div").fadeOut();
       });
     };
 

@@ -45,17 +45,24 @@
                 event.originalEvent.dataTransfer.setData("CardID", cardId)
                 return
 
-            $("article footer div").hide()
-            $("article footer a").on "click", ->
+            $("#areas article footer div").hide()
+            $("#areas article footer a").on "click", ->
                 articles = $("#areas article")
                 for article of articles then do (article) ->
                     $(article).find("div").hide()
                     return
 
-                $(this).parent().find("div").fadeToggle()
+                currentArea = $(this).parent()
+                currentArea.find("div").fadeToggle()
+                currentArea.find("textarea").focus()
+                
                 return
-            return
 
+            $("#areas textarea").live "focusout", (event) ->
+                $(this).closest("article").find("div").fadeOut()
+                return
+
+            return
         refresh: ->
             $.getJSON("api/areas")
                 .done (data) ->
