@@ -138,6 +138,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\images\cards.ico" />
+    <Content Include="Content\images\cards.png" />
+    <Content Include="Content\images\load.gif" />
     <Content Include="Content\Reset.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -197,6 +200,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\Coffee\app.coffee" />
     <Content Include="Scripts\Coffee\areas.coffee" />
+    <Content Include="Content\images\cards.psd" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\about.js" />
     <Content Include="Scripts\Coffee\app.js">

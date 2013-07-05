@@ -11,9 +11,10 @@
     AreaViewModel.prototype.areas = ko.observableArray([]);
 
     AreaViewModel.prototype.resize = function() {
-      var width, windowWidth;
+      var areaCount, width, windowWidth;
       windowWidth = $(window).width();
-      width = ($("#areas article").outerWidth() + 12) * 5;
+      areaCount = $("#areas article").length;
+      width = ($("#areas article").outerWidth() + 12) * areaCount;
       if (windowWidth < width) {
         $("body").width(width);
       } else {
