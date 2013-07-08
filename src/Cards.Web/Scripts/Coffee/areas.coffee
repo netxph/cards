@@ -79,7 +79,20 @@
                 
                 return
 
-            $("#areas textarea").live "focusout", (event) ->
+            $("#areas textarea").on "keypress", (event) ->
+                if event.which == 13
+                    return false
+                
+                return true
+
+            $("#areas textarea").on "keyup", (event) ->
+                if event.which == 13
+                    event.preventDefault()
+                    $(this).closest("#areas article").find("button").click()
+
+                return
+                
+            $("#areas textarea").on "focusout", (event) ->
                 $(this).closest("article").find("div").fadeOut()
                 return
 
@@ -101,7 +114,7 @@
             $("#error-modal span").text message
             return
 
-        addCard: ->
+        addCard: (item, event) ->
             areaId = this.ID
             name = $("*[data-areaid=" + areaId + "]").find("textarea").val()
 

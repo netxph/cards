@@ -74,7 +74,19 @@
         currentArea.find("div").fadeToggle();
         currentArea.find("textarea").focus();
       });
-      $("#areas textarea").live("focusout", function(event) {
+      $("#areas textarea").on("keypress", function(event) {
+        if (event.which === 13) {
+          return false;
+        }
+        return true;
+      });
+      $("#areas textarea").on("keyup", function(event) {
+        if (event.which === 13) {
+          event.preventDefault();
+          $(this).closest("#areas article").find("button").click();
+        }
+      });
+      $("#areas textarea").on("focusout", function(event) {
         $(this).closest("article").find("div").fadeOut();
       });
     };
@@ -93,7 +105,7 @@
       $("#error-modal span").text(message);
     };
 
-    AreaViewModel.prototype.addCard = function() {
+    AreaViewModel.prototype.addCard = function(item, event) {
       var areaId, card, name;
       areaId = this.ID;
       name = $("*[data-areaid=" + areaId + "]").find("textarea").val();
