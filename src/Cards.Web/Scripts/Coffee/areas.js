@@ -28,31 +28,36 @@
         event.preventDefault();
       });
       $("#areas article").on("drop", function(event) {
-        var areaElement, areaId, card, cardElement, cardId;
+        var areaElement, areaId, card, cardElement, cardId, sourceAreaId;
         event.preventDefault();
-        cardId = event.originalEvent.dataTransfer.getData("CardID", cardId);
+        sourceAreaId = parseInt(event.originalEvent.dataTransfer.getData("AreaID"));
+        cardId = event.originalEvent.dataTransfer.getData("CardID");
         cardElement = $("*[data-cardid=" + cardId + "]");
         areaElement = $(event.target).closest("#areas article");
         areaId = $(areaElement).data("areaid");
-        card = {};
-        card.ID = cardId;
-        card.AreaID = areaId;
-        card.Name = $(cardElement).text();
-        $.ajax({
-          url: "api/cards/" + card.ID,
-          type: "PUT",
-          data: card
-        }).done(function() {
-          var target;
-          target = areaElement.find("ul");
-          target.append(cardElement);
-        }).fail(function() {
-          self.showError("Santa can't figured out what happened, can you try it again?");
-        });
+        if (sourceAreaId !== areaId) {
+          card = {};
+          card.ID = cardId;
+          card.AreaID = areaId;
+          card.Name = $(cardElement).text();
+          $.ajax({
+            url: "api/cards/" + card.ID,
+            type: "PUT",
+            data: card
+          }).done(function() {
+            var target;
+            target = areaElement.find("ul");
+            target.append(cardElement);
+          }).fail(function() {
+            self.showError("Santa can't figured out what happened, can you try it again?");
+          });
+        }
       });
       $("#areas li").on("dragstart", function(event) {
-        var cardId;
+        var areaId, cardId;
+        areaId = $(event.target).closest("#areas article").data("areaid");
         cardId = $(event.target).data("cardid");
+        event.originalEvent.dataTransfer.setData("AreaID", areaId);
         event.originalEvent.dataTransfer.setData("CardID", cardId);
       });
       $("#areas article footer div").hide();

@@ -33,32 +33,36 @@
 
             $("#areas article").on "drop", (event) ->
                 event.preventDefault()
-                cardId = event.originalEvent.dataTransfer.getData("CardID", cardId)
+                sourceAreaId = parseInt(event.originalEvent.dataTransfer.getData("AreaID"))
+                cardId = event.originalEvent.dataTransfer.getData("CardID")
                 cardElement =  $("*[data-cardid=" + cardId + "]")
                 areaElement = $(event.target).closest("#areas article")
                 areaId = $(areaElement).data("areaid")
 
-                card = {}
-                card.ID = cardId
-                card.AreaID = areaId
-                card.Name = $(cardElement).text()
+                if sourceAreaId != areaId
+                    card = {}
+                    card.ID = cardId
+                    card.AreaID = areaId
+                    card.Name = $(cardElement).text()
                 
-                $.ajax(
-                    url: "api/cards/" + card.ID,
-                    type: "PUT",
-                    data: card)
-                    .done ->
-                        target = areaElement.find("ul")
-                        target.append(cardElement)        
-                        return
-                    .fail ->
-                        self.showError "Santa can't figured out what happened, can you try it again?"
-                        return
+                    $.ajax(
+                        url: "api/cards/" + card.ID,
+                        type: "PUT",
+                        data: card)
+                        .done ->
+                            target = areaElement.find("ul")
+                            target.append(cardElement)        
+                            return
+                        .fail ->
+                            self.showError "Santa can't figured out what happened, can you try it again?"
+                            return
                 
                 return
 
             $("#areas li").on "dragstart", (event) ->
+                areaId = $(event.target).closest("#areas article").data("areaid")
                 cardId = $(event.target).data("cardid")
+                event.originalEvent.dataTransfer.setData("AreaID", areaId)
                 event.originalEvent.dataTransfer.setData("CardID", cardId)
                 return
 
