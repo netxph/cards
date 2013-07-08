@@ -151,12 +151,20 @@
 
         showArea: ->
             $("#new-area").fadeToggle()
+            $("#new-area input[type=text]").focus()
+
             return
 
         init: ->
             $("#new-area").hide()
             $("#error-modal").hide()
             
+            $("#new-area input[type=text]").on "keyup", (event) ->
+                event.preventDefault()
+                if event.which == 13
+                    $("#new-area button").click()
+                return
+
             $(window).resize (event) ->
                 self.resize()
                 return

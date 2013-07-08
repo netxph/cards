@@ -134,11 +134,18 @@
 
     AreaViewModel.prototype.showArea = function() {
       $("#new-area").fadeToggle();
+      $("#new-area input[type=text]").focus();
     };
 
     AreaViewModel.prototype.init = function() {
       $("#new-area").hide();
       $("#error-modal").hide();
+      $("#new-area input[type=text]").on("keyup", function(event) {
+        event.preventDefault();
+        if (event.which === 13) {
+          $("#new-area button").click();
+        }
+      });
       $(window).resize(function(event) {
         self.resize();
       });
