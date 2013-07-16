@@ -26,7 +26,9 @@
     <div id="load-modal"></div>
 
     @Scripts.Render("~/bundles/jquery")
-    @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/knockout")
     @Scripts.Render("~/bundles/app")
+    @RenderSection("scripts", required: false)
+    
 </body>
 </html>

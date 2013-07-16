@@ -1,16 +1,11 @@
 ﻿
-(function(Cards, $, ko) {
-  var AreaViewModel;
-  AreaViewModel = (function() {
+(function(cards, $, ko) {
+  cards.Class.AreasViewModel = function() {
     var self;
-
-    self = AreaViewModel.prototype;
-
-    AreaViewModel.prototype.newArea = ko.observable("");
-
-    AreaViewModel.prototype.areas = ko.observableArray([]);
-
-    AreaViewModel.prototype.resize = function() {
+    self = this;
+    self.newArea = ko.observable("");
+    self.areas = ko.observableArray([]);
+    self.resize = function() {
       var areaCount, width, windowWidth;
       windowWidth = $(window).width();
       areaCount = $("#areas article").length;
@@ -21,8 +16,7 @@
         $("body").width(windowWidth);
       }
     };
-
-    AreaViewModel.prototype.initAreaControls = function() {
+    self.initAreaControls = function() {
       self.resize();
       $("#areas article").on("dragover", function(event) {
         event.preventDefault();
@@ -90,8 +84,7 @@
         $(this).closest("article").find("div").fadeOut();
       });
     };
-
-    AreaViewModel.prototype.refresh = function() {
+    self.refresh = function() {
       $.getJSON("api/areas").done(function(data) {
         self.areas(data);
         self.initAreaControls();
@@ -99,13 +92,11 @@
         self.showError("Santa can't figured out what happened, can you try it again?");
       });
     };
-
-    AreaViewModel.prototype.showError = function(message) {
+    self.showError = function(message) {
       $("#error-modal").show();
       $("#error-modal span").text(message);
     };
-
-    AreaViewModel.prototype.addCard = function(item, event) {
+    self.addCard = function(item, event) {
       var areaId, card, name;
       areaId = this.ID;
       name = $("*[data-areaid=" + areaId + "]").find("textarea").val();
@@ -118,8 +109,7 @@
         self.showError("Santa can't figured out what happened, can you try it again?");
       });
     };
-
-    AreaViewModel.prototype.addArea = function() {
+    self.addArea = function() {
       var area;
       area = {};
       area.Name = self.newArea();
@@ -131,13 +121,12 @@
       $("#new-area").fadeToggle();
       self.newArea("");
     };
-
-    AreaViewModel.prototype.showArea = function() {
+    self.showArea = function() {
       $("#new-area").fadeToggle();
       $("#new-area input[type=text]").focus();
     };
-
-    AreaViewModel.prototype.init = function() {
+    self.onReady = function() {
+      ko.applyBindings(self);
       $("#new-area").hide();
       $("#error-modal").hide();
       $("#new-area input[type=text]").on("keyup", function(event) {
@@ -163,13 +152,7 @@
       });
       self.refresh();
     };
-
-    function AreaViewModel() {
-      self.init();
-    }
-
-    return AreaViewModel;
-
-  })();
-  Cards.ViewModel = AreaViewModel;
-})(window.Cards = window.Cards || {}, jQuery, ko);
+    return self;
+  };
+  cards.createObject("AreasViewModel");
+})(window.cards, jQuery, ko);

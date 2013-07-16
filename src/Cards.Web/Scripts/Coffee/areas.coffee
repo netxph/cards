@@ -1,15 +1,15 @@
 ﻿# CoffeeScript
-((Cards, $, ko) ->
+((cards, $, ko) ->
     
-    class AreaViewModel
+    cards.Class.AreasViewModel = ->
 
-        self = this.prototype
+        self = this
 
-        newArea: ko.observable("")
+        self.newArea = ko.observable("")
 
-        areas: ko.observableArray([])
+        self.areas = ko.observableArray([])
 
-        resize: ->
+        self.resize = ->
             windowWidth = $(window).width()
 
             areaCount = $("#areas article").length
@@ -22,7 +22,7 @@
 
             return
 
-        initAreaControls: ->
+        self.initAreaControls = ->
             self.resize()
 
             #transfer these items in jquery live
@@ -97,7 +97,7 @@
                 return
 
             return
-        refresh: ->
+        self.refresh = ->
             $.getJSON("api/areas")
                 .done (data) ->
                     self.areas(data)
@@ -109,12 +109,12 @@
 
             return
 
-        showError: (message) ->
+        self.showError = (message) ->
             $("#error-modal").show()
             $("#error-modal span").text message
             return
 
-        addCard: (item, event) ->
+        self.addCard = (item, event) ->
             areaId = this.ID
             name = $("*[data-areaid=" + areaId + "]").find("textarea").val()
 
@@ -132,7 +132,7 @@
 
             return
 
-        addArea: ->
+        self.addArea = ->
             area = {}
             area.Name = self.newArea()
 
@@ -149,13 +149,15 @@
             self.newArea("")
             return
 
-        showArea: ->
+        self.showArea = ->
             $("#new-area").fadeToggle()
             $("#new-area input[type=text]").focus()
 
             return
 
-        init: ->
+        self.onReady = ->
+            ko.applyBindings self
+
             $("#new-area").hide()
             $("#error-modal").hide()
             
@@ -185,10 +187,9 @@
                         
             self.refresh()
             return
-        
-        constructor: ->
-            self.init()        
+        return self
 
-    Cards.ViewModel = AreaViewModel
+    cards.createObject "AreasViewModel"
     return
-) window.Cards = window.Cards || {}, jQuery, ko
+    
+) window.cards, jQuery, ko
