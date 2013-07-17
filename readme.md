@@ -21,3 +21,5 @@ Task will be managed within GitHub. Feel free to assign a task to you.
 ## Notes
 I switched to CoffeeScript from JavaScript. This requires Web Essentials so that it will auto compile with the project. For those who still prefer JavaScript, you can still add them in the normal Scripts folder.
 
+## License
+Cards is released under the [MIT License](http://www.opensource.org/licenses/MIT).
