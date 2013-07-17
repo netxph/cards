@@ -1,5 +1,5 @@
 ﻿
-(function(cards, $, ko) {
+(function(cards, window, $, ko) {
   cards.Class.AreasViewModel = function() {
     var self;
     self = this;
@@ -16,12 +16,11 @@
         $("body").width(windowWidth);
       }
     };
-    self.initAreaControls = function() {
+    self.initControls = function() {
       self.resize();
-      $("#areas article").on("dragover", function(event) {
+      $("#areas").on("dragover", "article", function(event) {
         event.preventDefault();
-      });
-      $("#areas article").on("drop", function(event) {
+      }).on("drop", "article", function(event) {
         var areaElement, areaId, card, cardElement, cardId, sourceAreaId;
         event.preventDefault();
         sourceAreaId = parseInt(event.originalEvent.dataTransfer.getData("AreaID"));
@@ -46,16 +45,13 @@
             self.showError("Santa can't figured out what happened, can you try it again?");
           });
         }
-      });
-      $("#areas li").on("dragstart", function(event) {
+      }).on("dragstart", "article", function(event) {
         var areaId, cardId;
         areaId = $(event.target).closest("#areas article").data("areaid");
         cardId = $(event.target).data("cardid");
         event.originalEvent.dataTransfer.setData("AreaID", areaId);
         event.originalEvent.dataTransfer.setData("CardID", cardId);
-      });
-      $("#areas article footer div").hide();
-      $("#areas article footer a").on("click", function() {
+      }).on("click", "article footer a", function() {
         var article, articles, currentArea, _fn;
         articles = $("#areas article");
         _fn = function(article) {
@@ -67,27 +63,45 @@
         currentArea = $(this).parent();
         currentArea.find("div").fadeToggle();
         currentArea.find("textarea").focus();
-      });
-      $("#areas textarea").on("keypress", function(event) {
+      }).on("keypress", "textarea", function(event) {
         if (event.which === 13) {
           return false;
         }
         return true;
-      });
-      $("#areas textarea").on("keyup", function(event) {
+      }).on("keyup", "textarea", function(event) {
         if (event.which === 13) {
           event.preventDefault();
           $(this).closest("#areas article").find("button").click();
         }
-      });
-      $("#areas textarea").on("focusout", function(event) {
+      }).on("focusout", "textarea", function(event) {
         $(this).closest("article").find("div").fadeOut();
+      });
+      $("#new-area input[type=text]").on("keyup", function(event) {
+        event.preventDefault();
+        if (event.which === 13) {
+          $("#new-area button").click();
+        }
+      });
+      $(window).resize(function(event) {
+        self.resize();
+      });
+      $("#error-modal").live("click", function(event) {
+        $(this).fadeOut();
+      });
+      $("body").on({
+        ajaxStart: function() {
+          $("#error-modal").hide();
+          $(this).addClass("loading");
+        },
+        ajaxStop: function() {
+          $(this).removeClass("loading");
+        }
       });
     };
     self.refresh = function() {
       $.getJSON("api/areas").done(function(data) {
         self.areas(data);
-        self.initAreaControls();
+        self.resize();
       }).fail(function() {
         self.showError("Santa can't figured out what happened, can you try it again?");
       });
@@ -127,32 +141,10 @@
     };
     self.onReady = function() {
       ko.applyBindings(self);
-      $("#new-area").hide();
-      $("#error-modal").hide();
-      $("#new-area input[type=text]").on("keyup", function(event) {
-        event.preventDefault();
-        if (event.which === 13) {
-          $("#new-area button").click();
-        }
-      });
-      $(window).resize(function(event) {
-        self.resize();
-      });
-      $("#error-modal").live("click", function(event) {
-        $(this).fadeOut();
-      });
-      $("body").on({
-        ajaxStart: function() {
-          $("#error-modal").hide();
-          $(this).addClass("loading");
-        },
-        ajaxStop: function() {
-          $(this).removeClass("loading");
-        }
-      });
+      self.initControls();
       self.refresh();
     };
     return self;
   };
   cards.createObject("AreasViewModel");
-})(window.cards, jQuery, ko);
+})(window.cards, window, jQuery, ko);

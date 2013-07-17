@@ -1,12 +1,11 @@
 ﻿# CoffeeScript
-((cards, $, ko) ->
+((cards, window, $, ko) ->
     
     cards.Class.AreasViewModel = ->
 
         self = this
 
         self.newArea = ko.observable("")
-
         self.areas = ko.observableArray([])
 
         self.resize = ->
@@ -22,86 +21,105 @@
 
             return
 
-        self.initAreaControls = ->
+        self.initControls = ->
             self.resize()
 
-            #transfer these items in jquery live
+            $("#areas")
+                .on "dragover", "article", (event) ->
+                    event.preventDefault()
+                    return
+                .on "drop", "article", (event) ->
+                    event.preventDefault()
+                    sourceAreaId = parseInt(event.originalEvent.dataTransfer.getData("AreaID"))
+                    cardId = event.originalEvent.dataTransfer.getData("CardID")
+                    cardElement =  $("*[data-cardid=" + cardId + "]")
+                    areaElement = $(event.target).closest("#areas article")
+                    areaId = $(areaElement).data("areaid")
 
-            $("#areas article").on "dragover", (event) ->
-                event.preventDefault()
-                return
-
-            $("#areas article").on "drop", (event) ->
-                event.preventDefault()
-                sourceAreaId = parseInt(event.originalEvent.dataTransfer.getData("AreaID"))
-                cardId = event.originalEvent.dataTransfer.getData("CardID")
-                cardElement =  $("*[data-cardid=" + cardId + "]")
-                areaElement = $(event.target).closest("#areas article")
-                areaId = $(areaElement).data("areaid")
-
-                if sourceAreaId != areaId
-                    card = {}
-                    card.ID = cardId
-                    card.AreaID = areaId
-                    card.Name = $(cardElement).text()
+                    if sourceAreaId != areaId
+                        card = {}
+                        card.ID = cardId
+                        card.AreaID = areaId
+                        card.Name = $(cardElement).text()
                 
-                    $.ajax(
-                        url: "api/cards/" + card.ID,
-                        type: "PUT",
-                        data: card)
-                        .done ->
-                            target = areaElement.find("ul")
-                            target.append(cardElement)        
-                            return
-                        .fail ->
-                            self.showError "Santa can't figured out what happened, can you try it again?"
-                            return
+                        $.ajax(
+                            url: "api/cards/" + card.ID,
+                            type: "PUT",
+                            data: card)
+                            .done ->
+                                target = areaElement.find("ul")
+                                target.append(cardElement)        
+                                return
+                            .fail ->
+                                self.showError "Santa can't figured out what happened, can you try it again?"
+                                return
+                    return
+                .on "dragstart", "article", (event) ->
+                    areaId = $(event.target).closest("#areas article").data("areaid")
+                    cardId = $(event.target).data("cardid")
+                    event.originalEvent.dataTransfer.setData("AreaID", areaId)
+                    event.originalEvent.dataTransfer.setData("CardID", cardId)
+                    return
+                .on "click", "article footer a", ->
+                    articles = $("#areas article")
+                    for article of articles then do (article) ->
+                        $(article).find("div").hide()
+                        return
+
+                    currentArea = $(this).parent()
+                    currentArea.find("div").fadeToggle()
+                    currentArea.find("textarea").focus()
                 
-                return
+                    return
+                .on "keypress", "textarea", (event) ->
+                    if event.which == 13
+                        return false
+                
+                    return true
+                .on "keyup", "textarea", (event) ->
+                    if event.which == 13
+                        event.preventDefault()
+                        $(this).closest("#areas article").find("button").click()
 
-            $("#areas li").on "dragstart", (event) ->
-                areaId = $(event.target).closest("#areas article").data("areaid")
-                cardId = $(event.target).data("cardid")
-                event.originalEvent.dataTransfer.setData("AreaID", areaId)
-                event.originalEvent.dataTransfer.setData("CardID", cardId)
-                return
-
-            $("#areas article footer div").hide()
-            $("#areas article footer a").on "click", ->
-                articles = $("#areas article")
-                for article of articles then do (article) ->
-                    $(article).find("div").hide()
+                    return
+                .on "focusout", "textarea", (event) ->
+                    $(this).closest("article").find("div").fadeOut()
                     return
 
-                currentArea = $(this).parent()
-                currentArea.find("div").fadeToggle()
-                currentArea.find("textarea").focus()
-                
-                return
 
-            $("#areas textarea").on "keypress", (event) ->
+            $("#new-area input[type=text]").on "keyup", (event) ->
+                event.preventDefault()
                 if event.which == 13
-                    return false
-                
-                return true
-
-            $("#areas textarea").on "keyup", (event) ->
-                if event.which == 13
-                    event.preventDefault()
-                    $(this).closest("#areas article").find("button").click()
-
+                    $("#new-area button").click()
                 return
-                
-            $("#areas textarea").on "focusout", (event) ->
-                $(this).closest("article").find("div").fadeOut()
+
+            $(window).resize (event) ->
+                self.resize()
                 return
+
+            $("#error-modal").live "click", (event) ->
+                $(this).fadeOut()
+                return
+
+            $("body").on 
+                ajaxStart: ->
+                    $("#error-modal").hide()
+
+                    $(this).addClass "loading"
+                    return
+                ajaxStop: ->
+                    $(this).removeClass "loading"
+                    return
+                        
 
             return
+
         self.refresh = ->
             $.getJSON("api/areas")
                 .done (data) ->
                     self.areas(data)
-                    self.initAreaControls()
+                    self.resize()
+                    
                     return
                 .fail ->
                     self.showError "Santa can't figured out what happened, can you try it again?"
@@ -158,33 +176,9 @@
         self.onReady = ->
             ko.applyBindings self
 
-            $("#new-area").hide()
-            $("#error-modal").hide()
-            
-            $("#new-area input[type=text]").on "keyup", (event) ->
-                event.preventDefault()
-                if event.which == 13
-                    $("#new-area button").click()
-                return
+            self.initControls()
 
-            $(window).resize (event) ->
-                self.resize()
-                return
 
-            $("#error-modal").live "click", (event) ->
-                $(this).fadeOut()
-                return
-
-            $("body").on 
-                ajaxStart: ->
-                    $("#error-modal").hide()
-
-                    $(this).addClass "loading"
-                    return
-                ajaxStop: ->
-                    $(this).removeClass "loading"
-                    return
-                        
             self.refresh()
             return
         return self
@@ -192,4 +186,4 @@
     cards.createObject "AreasViewModel"
     return
     
-) window.cards, jQuery, ko
+) window.cards, window, jQuery, ko

@@ -15,6 +15,18 @@ button {
     vertical-align: bottom;
 }
 
+#areas article footer div {
+    display: none;
+}
+
+#new-area {
+    display: none;
+}
+
+#error-modal {
+    display: none;
+}
+
 #new-area input {
     font-size: 1.5em;
     margin: 0 10px;
