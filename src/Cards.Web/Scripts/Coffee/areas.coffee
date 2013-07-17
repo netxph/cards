@@ -132,7 +132,7 @@
             $("#error-modal span").text message
             return
 
-        self.addCard = (item, event) ->
+        self.addCard = ->
             areaId = this.ID
             name = $("*[data-areaid=" + areaId + "]").find("textarea").val()
 

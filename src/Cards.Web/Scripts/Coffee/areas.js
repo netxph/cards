@@ -110,7 +110,7 @@
       $("#error-modal").show();
       $("#error-modal span").text(message);
     };
-    self.addCard = function(item, event) {
+    self.addCard = function() {
       var areaId, card, name;
       areaId = this.ID;
       name = $("*[data-areaid=" + areaId + "]").find("textarea").val();
