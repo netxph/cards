@@ -23,6 +23,7 @@
     <article data-bind="attr: { 'data-areaid': ID }">
         <header>
             <h1 data-bind="text: Name"></h1>
+            <a data-bind="attr: { 'href': 'Areas/Edit/' + ID }">Edit</a>
         </header>
         <ul data-bind="foreach: Cards">
             <li data-bind="text: Name, attr: { 'data-cardid': ID }" draggable="true"></li>

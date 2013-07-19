@@ -52,17 +52,12 @@
         event.originalEvent.dataTransfer.setData("AreaID", areaId);
         event.originalEvent.dataTransfer.setData("CardID", cardId);
       }).on("click", "article footer a", function() {
-        var article, articles, currentArea, _fn;
-        articles = $("#areas article");
-        _fn = function(article) {
-          $(article).find("div").hide();
-        };
-        for (article in articles) {
-          _fn(article);
+        var currentArea;
+        currentArea = $(this).parent().find("div");
+        if (!currentArea.is(":visible")) {
+          currentArea.fadeToggle();
+          currentArea.find("textarea").focus();
         }
-        currentArea = $(this).parent();
-        currentArea.find("div").fadeToggle();
-        currentArea.find("textarea").focus();
       }).on("keypress", "textarea", function(event) {
         if (event.which === 13) {
           return false;

@@ -9,6 +9,7 @@ using Moq.Protected;
 using Moq;
 using System.ComponentModel.DataAnnotations;
 using Cards.Core;
+using Speculous;
 
 namespace Cards.Tests.Core
 {
@@ -19,7 +20,7 @@ namespace Cards.Tests.Core
         {
             readonly DateTime NOW = new DateTime(2013, 12, 1);
 
-            protected override Area Given()
+            protected override Func<Area> Given()
             {
                 var date = new Mock<IDateProvider>();
                 date
@@ -30,49 +31,92 @@ namespace Cards.Tests.Core
 
                 var area = new Area();
 
-                return area;
+                return () => area;
             }
 
             [Fact]
             public void ShouldIDIsZero()
             {
-                Subject.ID.Should().Be(0);
+                Its.ID.Should().Be(0);
             }
 
             [Fact]
             public void ShouldNameIsNull()
             {
-                Subject.Name.Should().BeNull();
+                Its.Name.Should().BeNull();
             }
 
             [Fact]
             public void ShouldCardsIsNull()
             {
-                Subject.Cards.Should().BeNull();
+                Its.Cards.Should().BeNull();
             }
 
             [Fact]
             public void ShouldBeActive()
             {
-                Subject.IsActive.Should().BeTrue();
+                Its.IsActive.Should().BeTrue();
             }
 
             [Fact]
             public void ShouldCreateDateIsNow()
             {
-                Subject.CreatedDateUtc.Should().Be(NOW);
+                Its.CreatedDateUtc.Should().Be(NOW);
             }
 
             [Fact]
             public void ShouldModifiedDateIsNow()
             {
-                Subject.ModifiedDateUtc.Should().Be(NOW);
+                Its.ModifiedDateUtc.Should().Be(NOW);
             }
         }
 
+        public class GetMethod : TestCase<Area>
+        {
+            protected override Func<Area> Given()
+            {
+                var repository = new Mock<ICardRepository>();
+                repository
+                    .Setup(r => r.FindArea(1))
+                    .Returns(new Area()
+                    {
+                        ID = 1,
+                        Name = "IceBox"
+                    });
+
+                var factory = new Mock<DbFactory>();
+                factory.Protected()
+                    .Setup<ICardRepository>("OnCreateDb")
+                    .Returns(repository.Object);
+
+                new DbFactory(factory.Object);
+
+                return () => Area.Get(1);
+            }
+
+            [Fact]
+            public void ShouldNotReturnNull()
+            {
+                Subject().Should().NotBeNull();
+            }
+
+            [Fact]
+            public void ShouldIDNotZero()
+            {
+                Its.ID.Should().Be(1);
+            }
+
+            [Fact]
+            public void ShouldNameHasValue()
+            {
+                Its.Name.Should().Be("IceBox");
+            }
+        }
+
+
         public class GetAllMethod : TestCase<List<Area>>
         {
-            protected override List<Area> Given()
+            protected override Func<List<Area>> Given()
             {
                 var areas = new List<Area>()
                 {
@@ -95,33 +139,122 @@ namespace Cards.Tests.Core
 
                 new DbFactory(factory.Object);
 
-                return Area.GetAll();
+                return () => Area.GetAll();
             }
 
             [Fact]
             public void ShouldNotReturnNull()
             {
-                Subject.Should().NotBeNull();
+                Subject().Should().NotBeNull();
             }
 
             [Fact]
             public void ShouldNotBeEmpty()
             { 
-                Subject.Should().NotBeEmpty();
+                Subject().Should().NotBeEmpty();
             }
 
             [Fact]
             public void ShouldContainOneItem()
             {
-                Subject.Count.Should().Be(1);
+                Its.Count.Should().Be(1);
             }
         }
 
-        public class CreateMethod : TestCase<Area>
+        public class PutMethod : TestCase<Area>
         {
             readonly DateTime NOW = new DateTime(2013, 12, 1);
 
-            protected override Area Given()
+            protected override Func<Area> Given()
+            {
+                Area area = null;
+
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider
+                    .Setup(date => date.UtcNow())
+                    .Returns(NOW);
+
+                Area.DateProvider = dateProvider.Object;
+
+                var repository = new Mock<ICardRepository>();
+                repository
+                    .Setup(r => r.FindArea(1))
+                    .Returns(() => new Area()
+                    {
+                        ID = 1,
+                        Name = "Backlog",
+                        CreatedDateUtc = DateTime.MinValue,
+                        ModifiedDateUtc = DateTime.MinValue
+                    });
+                repository
+                    .Setup(r => r.UpdateArea(It.IsAny<Area>()))
+                    .Callback<Area>((a) => area = a)
+                    .Returns(() => area);
+
+                var factory = new Mock<DbFactory>();
+                factory.Protected()
+                    .Setup<ICardRepository>("OnCreateDb")
+                    .Returns(repository.Object);
+
+                new DbFactory(factory.Object);
+
+                return () => Area.Update(1, "Updated");
+            }
+
+            [Fact]
+            public void ShouldNotReturnNull()
+            {
+                Subject().Should().NotBeNull();
+            }
+
+            [Fact]
+            public void ShouldIDHasValue()
+            {
+                Its.ID.Should().Be(1);
+            }
+
+            [Fact]
+            public void ShouldNameHasValue()
+            {
+                Its.Name.Should().Be("Updated");
+            }
+
+            [Fact]
+            public void ShouldCreatedDateShouldNotChange()
+            {
+                Its.CreatedDateUtc.Should().Be(DateTime.MinValue);  
+            }
+
+            [Fact]
+            public void ShouldModifiedDateIsNow()
+            {
+                Its.ModifiedDateUtc.Should().Be(NOW);
+            }
+
+            public class Invalid : TestCase<Area>
+            {
+                protected override Func<Area> Given()
+                {
+                    return () => Area.Update(99, "Invalid");
+                }
+
+                [Fact]
+                public void ShouldReturnNull()
+                {
+                    Subject().Should().BeNull();
+                }
+
+            }
+
+
+        }
+
+
+        public class PostMethod : TestCase<Area>
+        {
+            readonly DateTime NOW = new DateTime(2013, 12, 1);
+
+            protected override Func<Area> Given()
             {
                 Area area = null;
 
@@ -145,54 +278,54 @@ namespace Cards.Tests.Core
 
                 new DbFactory(factory.Object);
 
-                return Area.Create("Area");
+                return () => Area.Create("Area");
             }
 
             [Fact]
             public void ShouldAddNotReturnNull()
             {
-                Subject.Should().NotBeNull();
+                Subject().Should().NotBeNull();
             }
 
             [Fact]
             public void ShouldNameIsNewArea()
             {
-                Subject.Name.Should().Be("Area");
+                Its.Name.Should().Be("Area");
             }
 
             [Fact]
             public void ShouldBeActive()
             {
-                Subject.IsActive.Should().BeTrue();
+                Its.IsActive.Should().BeTrue();
             }
 
             [Fact]
             public void ShouldCreatedDateIsAfterMinValue()
             {
-                Subject.CreatedDateUtc.Should().BeAfter(DateTime.MinValue);
+                Its.CreatedDateUtc.Should().BeAfter(DateTime.MinValue);
             }
 
             [Fact]
             public void ShouldCreatedDateIsUtcNow()
             {
-                Subject.CreatedDateUtc.Should().Be(NOW);
+                Its.CreatedDateUtc.Should().Be(NOW);
             }
 
             [Fact]
             public void ShouldModifiedDateIsAfterMinValue()
             {
-                Subject.ModifiedDateUtc.Should().BeAfter(DateTime.MinValue);
+                Its.ModifiedDateUtc.Should().BeAfter(DateTime.MinValue);
             }
 
             [Fact]
             public void ShouldModifiedDateIsUtcNow()
             {
-                Subject.ModifiedDateUtc.Should().Be(NOW);
+                Its.ModifiedDateUtc.Should().Be(NOW);
             }
             
         }
 
-        public class CreateMethod_Invalid : TestCase<Action>
+        public class CreateMethod_Invalid : TestCase
         {
             protected override Action Given()
             {
@@ -225,7 +358,7 @@ namespace Cards.Tests.Core
         {
             readonly DateTime NOW = new DateTime(2013, 12, 1);
 
-            protected override Area Given()
+            protected override Func<Area> Given()
             {
                 var date = new Mock<IDateProvider>();
                 date
@@ -259,43 +392,43 @@ namespace Cards.Tests.Core
 
                 new DbFactory(factory.Object);
 
-                return Area.Delete(1);
+                return () => Area.Delete(1);
             }
 
             [Fact]
             public void ShouldNotBeNull()
             {
-                Subject.Should().NotBeNull();
+                Subject().Should().NotBeNull();
             }
 
             [Fact]
             public void ShouldIDIs1()
             {
-                Subject.ID.Should().Be(1);
+                Its.ID.Should().Be(1);
             }
 
             [Fact]
             public void ShouldNameHasValue()
             {
-                Subject.Name.Should().Be("Area");
+                Its.Name.Should().Be("Area");
             }
 
             [Fact]
             public void ShouldNotBeActive()
             {
-                Subject.IsActive.Should().BeFalse();
+                Its.IsActive.Should().BeFalse();
             }
 
             [Fact]
             public void ShouldCreatedIsNotNow()
             {
-                Subject.CreatedDateUtc.Should().NotBe(NOW);
+                Its.CreatedDateUtc.Should().NotBe(NOW);
             }
 
             [Fact]
             public void ShouldModifiedIsNow()
             {
-                Subject.ModifiedDateUtc.Should().Be(NOW);
+                Its.ModifiedDateUtc.Should().Be(NOW);
             }
         }
 

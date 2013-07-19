@@ -1,5 +1,5 @@
 ﻿# CoffeeScript
-(($, ko) ->
+(($) ->
     
     cards = window.cards = (->
         
@@ -31,4 +31,4 @@
         return
 
     return
-) jQuery, ko
+) jQuery

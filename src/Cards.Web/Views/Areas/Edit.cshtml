@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Edit";
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/area-edit")
+}
+
+<section id="area-edit" data-areaid="@ViewBag.AreaID" data-bind="with: area" >
+    <input type="text" data-bind="value: Name" />
+    <button data-bind="click: $root.updateArea">Save</button>
+</section>
+

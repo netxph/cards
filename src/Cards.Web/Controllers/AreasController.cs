@@ -17,5 +17,12 @@ namespace Cards.Web.Controllers
             return View();
         }
 
+        public ActionResult Edit(int id = 0)
+        {
+            ViewBag.AreaID = id;
+
+            return View();
+        }
+
     }
 }

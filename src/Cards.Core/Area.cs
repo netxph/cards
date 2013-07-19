@@ -79,5 +79,30 @@ namespace Cards.Core
 
             return null;
         }
+
+        public static Area Get(int id)
+        {
+            var db = DbFactory.Create();
+            var area = db.FindArea(id);
+
+            return area;
+        }
+
+        public static Area Update(int id, string name)
+        {
+            var db = DbFactory.Create();
+            var area = db.FindArea(id);
+
+            if (area != null)
+            {
+                area.Name = name;
+                area.ModifiedDateUtc = DateProvider.UtcNow();
+                db.UpdateArea(area);
+
+                return area;
+            }
+
+            return null;
+        }
     }
 }

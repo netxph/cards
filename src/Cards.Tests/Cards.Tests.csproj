@@ -41,6 +41,9 @@
     <Reference Include="Moq">
       <HintPath>..\..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="Speculous">
+      <HintPath>..\..\lib\Speculous.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -58,7 +61,6 @@
     <Compile Include="Core\AreaTests.cs" />
     <Compile Include="Core\CardTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestCase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

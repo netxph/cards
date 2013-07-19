@@ -16,9 +16,19 @@ namespace Cards.Web.Controllers.Api
             return Area.GetAll();
         }
 
-        public Area Create(Area area)
+        public Area Get(int id)
+        {
+            return Area.Get(id);
+        }
+
+        public Area Post(Area area)
         {
             return Area.Create(area.Name);
+        }
+
+        public Area Put(int id, Area area)
+        {
+            return Area.Update(id, area.Name);
         }
 
         public Area Delete(int id)

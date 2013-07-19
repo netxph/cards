@@ -10,6 +10,7 @@ using Moq;
 using Moq.Protected;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Validation;
+using Speculous;
 
 namespace Cards.Tests.Core
 {
@@ -20,7 +21,7 @@ namespace Cards.Tests.Core
         {
             readonly DateTime NOW = new DateTime(2013, 12, 1);
 
-            protected override Card Given()
+            protected override Func<Card> Given()
             {
                 var date = new Mock<IDateProvider>();
                 date
@@ -31,43 +32,43 @@ namespace Cards.Tests.Core
 
                 var card = new Card();
 
-                return card;
+                return () => card;
             }
 
             [Fact]
             public void ShouldIDIsZero()
             {
-                Subject.ID.Should().Be(0);
+                Its.ID.Should().Be(0);
             }
 
             [Fact]
             public void ShouldNameIsNull()
             {
-                Subject.Name.Should().BeNull();
+                Its.Name.Should().BeNull();
             }
 
             [Fact]
             public void ShouldAreaIsNull()
             {
-                Subject.AreaID.Should().Be(0);
+                Its.AreaID.Should().Be(0);
             }
 
             [Fact]
             public void ShouldCreatedIsNow()
             {
-                Subject.CreatedDateUtc.Should().Be(NOW);
+                Its.CreatedDateUtc.Should().Be(NOW);
             }
 
             [Fact]
             public void ShouldModifiedIsNow()
             {
-                Subject.ModifiedDateUtc.Should().Be(NOW);
+                Its.ModifiedDateUtc.Should().Be(NOW);
             }
 
             [Fact]
             public void ShouldBeActive()
             {
-                Subject.IsActive.Should().BeTrue();
+                Its.IsActive.Should().BeTrue();
             }
         }
 
@@ -76,7 +77,7 @@ namespace Cards.Tests.Core
 
             readonly DateTime NOW = new DateTime(2013, 12, 1);
 
-            protected override Card Given()
+            protected override Func<Card> Given()
             {
                 var card = new Card()
                 {
@@ -106,43 +107,43 @@ namespace Cards.Tests.Core
 
                 new DbFactory(factory.Object);
 
-                return Card.Update(1, "Updated task", 2);
+                return () => Card.Update(1, "Updated task", 2);
             }
 
             [Fact]
             public void ShouldNotReturnNull()
             {
-                Subject.Should().NotBeNull();
+                Subject().Should().NotBeNull();
             }
 
             [Fact]
             public void ShouldIDIs1()
             {
-                Subject.ID.Should().Be(1);
+                Its.ID.Should().Be(1);
             }
 
             [Fact]
             public void ShouldNameIsUpdated()
             {
-                Subject.Name.Should().Be("Updated task");
+                Its.Name.Should().Be("Updated task");
             }
 
             [Fact]
             public void ShouldAreaIs2()
             {
-                Subject.AreaID.Should().Be(2);
+                Its.AreaID.Should().Be(2);
             }
 
             [Fact]
             public void ShouldModifiedDateIsNow()
             {
-                Subject.ModifiedDateUtc.Should().Be(NOW);
+                Its.ModifiedDateUtc.Should().Be(NOW);
             }
 
             [Fact]
             public void ShouldCreatedDateNotIsNow()
             {
-                Subject.CreatedDateUtc.Should().NotBe(NOW);
+                Its.CreatedDateUtc.Should().NotBe(NOW);
             }
 
         }
@@ -177,6 +178,11 @@ namespace Cards.Tests.Core
                 new DbFactory(factory.Object);
             }
 
+            protected override Action Given()
+            {
+                return null;
+            }
+
             [Fact]
             public void ShouldReturnNullIfItemIsNotFound()
             {
@@ -197,13 +203,14 @@ namespace Cards.Tests.Core
                 Action updateCard = () => Card.Update(1, "Valid", 0);
                 updateCard.ShouldThrow<ValidationException>();
             }
+
         }
 
         public class DeleteMethod : TestCase<Card>
         {
             readonly DateTime NOW = new DateTime(2013, 12, 1);
 
-            protected override Card Given()
+            protected override Func<Card> Given()
             {
                 var date = new Mock<IDateProvider>();
                 date
@@ -238,43 +245,43 @@ namespace Cards.Tests.Core
 
                 new DbFactory(factory.Object);
 
-                return Card.Delete(1);
+                return () => Card.Delete(1);
             }
 
             [Fact]
             public void ShouldNotBeNull()
             {
-                Subject.Should().NotBeNull();
+                Subject().Should().NotBeNull();
             }
 
             [Fact]
             public void ShouldNotBeActive()
             {
-                Subject.IsActive.Should().BeFalse();
+                Its.IsActive.Should().BeFalse();
             }
 
             [Fact]
             public void ShouldIdIs1()
             {
-                Subject.ID.Should().Be(1);
+                Its.ID.Should().Be(1);
             }
 
             [Fact]
             public void ShouldNameHasValue()
             {
-                Subject.Name.Should().Be("Card");
+                Its.Name.Should().Be("Card");
             }
 
             [Fact]
             public void ShouldCreatedDateIsNotNow()
             {
-                Subject.CreatedDateUtc.Should().NotBe(NOW);
+                Its.CreatedDateUtc.Should().NotBe(NOW);
             }
 
             [Fact]
             public void ShouldModifiedDateIsNow()
             {
-                Subject.ModifiedDateUtc.Should().Be(NOW);
+                Its.ModifiedDateUtc.Should().Be(NOW);
             }
 
         }
@@ -285,7 +292,7 @@ namespace Cards.Tests.Core
 
             readonly DateTime NOW = new DateTime(2013, 12, 1);
 
-            protected override Card Given()
+            protected override Func<Card> Given()
             {
                 Card card = null;
 
@@ -309,49 +316,49 @@ namespace Cards.Tests.Core
 
                 new DbFactory(factory.Object);
 
-                return Card.Create("Card", 1);
+                return () => Card.Create("Card", 1);
             }
 
             [Fact]
             public void ShouldNotReturnNull()
             {
-                Subject.Should().NotBeNull();
+                Subject().Should().NotBeNull();
             }
 
             [Fact]
             public void ShouldNameIsASampleTask()
             {
-                Subject.Name.Should().Be("Card");
+                Its.Name.Should().Be("Card");
             }
 
             [Fact]
             public void ShouldCreatedDateIsAfterMinValue()
             {
-                Subject.CreatedDateUtc.Should().BeAfter(DateTime.MinValue);
+                Its.CreatedDateUtc.Should().BeAfter(DateTime.MinValue);
             }
 
             [Fact]
             public void ShouldCreatedDateIsNow()
             {
-                Subject.CreatedDateUtc.Should().Be(NOW);
+                Its.CreatedDateUtc.Should().Be(NOW);
             }
 
             [Fact]
             public void ShouldModifiedDateIsAfterMinValue()
             {
-                Subject.ModifiedDateUtc.Should().BeAfter(DateTime.MinValue);
+                Its.ModifiedDateUtc.Should().BeAfter(DateTime.MinValue);
             }
 
             [Fact]
             public void ShouldModifiedDateIsNow()
             {
-                Subject.ModifiedDateUtc.Should().Be(NOW);
+                Its.ModifiedDateUtc.Should().Be(NOW);
             }
 
             [Fact]
             public void ShouldBeActive()
             {
-                Subject.IsActive.Should().BeTrue();
+                Its.IsActive.Should().BeTrue();
             }
         }
 
@@ -389,6 +396,11 @@ namespace Cards.Tests.Core
                 Action createCard = () => Card.Create("Test", 0);
 
                 createCard.ShouldThrow<ValidationException>();
+            }
+
+            protected override Action Given()
+            {
+                return null;
             }
         }
 

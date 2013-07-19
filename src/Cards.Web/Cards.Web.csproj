@@ -199,8 +199,15 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\Coffee\app.coffee" />
+    <Content Include="Scripts\Coffee\area-edit.js">
+      <DependentUpon>area-edit.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\Coffee\area-edit.min.js">
+      <DependentUpon>area-edit.coffee</DependentUpon>
+    </Content>
     <Content Include="Scripts\Coffee\areas.coffee" />
     <Content Include="Content\images\cards.psd" />
+    <Content Include="Scripts\Coffee\area-edit.coffee" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\about.js" />
     <Content Include="Scripts\Coffee\app.js">
@@ -228,6 +235,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
+    <Content Include="Scripts\knockout.mapping-latest.debug.js" />
+    <Content Include="Scripts\knockout.mapping-latest.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
@@ -244,6 +253,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Areas\Index.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Areas\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

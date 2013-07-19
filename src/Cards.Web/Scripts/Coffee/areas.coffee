@@ -61,14 +61,11 @@
                     event.originalEvent.dataTransfer.setData("CardID", cardId)
                     return
                 .on "click", "article footer a", ->
-                    articles = $("#areas article")
-                    for article of articles then do (article) ->
-                        $(article).find("div").hide()
-                        return
+                    currentArea = $(this).parent().find("div")
 
-                    currentArea = $(this).parent()
-                    currentArea.find("div").fadeToggle()
-                    currentArea.find("textarea").focus()
+                    if !currentArea.is(":visible")
+                        currentArea.fadeToggle()
+                        currentArea.find("textarea").focus()
                 
                     return
                 .on "keypress", "textarea", (event) ->

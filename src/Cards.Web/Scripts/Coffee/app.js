@@ -1,5 +1,5 @@
 ﻿
-(function($, ko) {
+(function($) {
   var cards;
   cards = window.cards = (function() {
     var self;
@@ -29,4 +29,4 @@
   $(document).ready(function() {
     cards.runEvent("onReady");
   });
-})(jQuery, ko);
+})(jQuery);
