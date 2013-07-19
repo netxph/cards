@@ -48,7 +48,7 @@
       }).on("dragstart", "article", function(event) {
         var areaId, cardId;
         areaId = $(event.target).closest("#areas article").data("areaid");
-        cardId = $(event.target).data("cardid");
+        cardId = $(event.target).closest("li").data("cardid");
         event.originalEvent.dataTransfer.setData("AreaID", areaId);
         event.originalEvent.dataTransfer.setData("CardID", cardId);
       }).on("click", "article footer a", function() {

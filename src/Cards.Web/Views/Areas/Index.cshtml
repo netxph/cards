@@ -26,7 +26,7 @@
             <a data-bind="attr: { 'href': 'Areas/Edit/' + ID }">Edit</a>
         </header>
         <ul data-bind="foreach: Cards">
-            <li data-bind="text: Name, attr: { 'data-cardid': ID }" draggable="true"></li>
+            <li data-bind="attr: { 'data-cardid': ID }" draggable="true"><a data-bind="    text: Name, attr: { 'href': 'Cards/Edit/' + ID }"></a></li>
         </ul>
         <footer>
             <a href="#">Add card...</a>

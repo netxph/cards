@@ -99,5 +99,12 @@ namespace Cards.Core
 
             return null;
         }
+
+        public static Card Get(int id)
+        {
+            var db = DbFactory.Create();
+
+            return db.FindCard(id);
+        }
     }
 }

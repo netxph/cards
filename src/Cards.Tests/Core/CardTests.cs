@@ -72,6 +72,71 @@ namespace Cards.Tests.Core
             }
         }
 
+        public class GetCard : TestCase<Card>
+        {
+            protected override Func<Card> Given()
+            {
+                var repository = new Mock<ICardRepository>();
+                repository
+                    .Setup(r => r.FindCard(1))
+                    .Returns(new Card()
+                    {
+                        ID = 1,
+                        Name = "Sample task",
+                        AreaID = 1,
+                        ModifiedDateUtc = DateTime.MinValue,
+                        CreatedDateUtc = DateTime.MinValue
+                    });
+
+                var factory = new Mock<DbFactory>();
+                factory.Protected()
+                    .Setup<ICardRepository>("OnCreateDb")
+                    .Returns(repository.Object);
+
+                new DbFactory(factory.Object);
+
+                return () => Card.Get(1);
+            }
+
+            [Fact]
+            public void ShouldNotBeNull()
+            {
+                Subject().Should().NotBeNull();
+            }
+
+            [Fact]
+            public void ShouldIDHasValue()
+            {
+                Its.ID.Should().Be(1);
+            }
+
+            [Fact]
+            public void ShouldNameHasValue()
+            {
+                Its.Name.Should().Be("Sample task");
+            }
+
+            [Fact]
+            public void ShouldAreaIDHasValue()
+            {
+                Its.AreaID.Should().Be(1);
+            }
+
+            [Fact]
+            public void ShouldModifiedDateHasValue()
+            {
+                Its.ModifiedDateUtc.Should().Be(DateTime.MinValue);
+            }
+
+            [Fact]
+            public void ShouldCreatedDateHasValue()
+            {
+                Its.CreatedDateUtc.Should().Be(DateTime.MinValue);
+            }
+
+        }
+
+
         public class UpdateMethod : TestCase<Card>
         {
 

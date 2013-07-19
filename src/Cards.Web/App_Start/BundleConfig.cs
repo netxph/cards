@@ -14,8 +14,11 @@ namespace Cards.Web
             bundles.Add(new ScriptBundle("~/bundles/areas").Include(
                         "~/Scripts/Coffee/areas.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/area-edit").Include(
-                        "~/Scripts/Coffee/area-edit.js"));
+            bundles.Add(new ScriptBundle("~/bundles/editcard").Include(
+                        "~/Scripts/Coffee/editcard.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/editarea").Include(
+                        "~/Scripts/Coffee/editarea.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/about").Include(
                         "~/Scripts/about.js"));

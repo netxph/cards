@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Edit";
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/editcard")
+}
+
+<section id="card-edit" data-cardid="@ViewBag.CardID" data-bind="with: card" >
+    <textarea data-bind="value: Name" ></textarea>
+    <button data-bind="click: $root.updateCard">Save</button>
+</section>
