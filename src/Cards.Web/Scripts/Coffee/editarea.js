@@ -5,6 +5,24 @@
     self = this;
     self.rootUrl = "../../";
     self.area = {};
+    self.showError = function(message) {
+      $("#error-modal").show();
+      $("#error-modal span").text(message);
+    };
+    self.initControls = function() {
+      $("#error-modal").live("click", function(event) {
+        $(this).fadeOut();
+      });
+      $("body").on({
+        ajaxStart: function() {
+          $("#error-modal").hide();
+          $(this).addClass("loading");
+        },
+        ajaxStop: function() {
+          $(this).removeClass("loading");
+        }
+      });
+    };
     self.updateArea = function() {
       var area;
       area = ko.mapping.toJS(self.area);
@@ -13,18 +31,21 @@
         type: "PUT",
         data: area
       }).done(function() {
-        return window.location.href = self.rootUrl + "areas";
+        window.location.href = self.rootUrl + "areas";
       });
     };
     self.getArea = function() {
       var id;
       id = $(".edit-section").data("areaid");
-      $.getJSON(self.rootUrl + 'api/areas/' + id, function(data) {
+      $.getJSON(self.rootUrl + 'api/areas/' + id).done(function(data) {
         self.area = ko.mapping.fromJS(data);
         ko.applyBindings(self);
+      }).fail(function() {
+        self.showError("Santa can't figured out what happened, can you try it again");
       });
     };
     self.onReady = function() {
+      self.initControls();
       self.getArea();
     };
     return self;
