@@ -15,6 +15,10 @@ button {
     vertical-align: bottom;
 }
 
+#areas article footer {
+    margin-top: 15px;
+}
+
 #areas article footer div {
     display: none;
 }
@@ -141,6 +145,18 @@ article header h1 {
     font-size: 26px;
     margin-bottom: 20px;
     font-family: "Segoe UI Light", Verdana, Helvetica, Sans-Serif;
+    display: inline;
+}
+
+article header a {
+    text-decoration: none;
+    color: lightgray;
+    float: right;
+}
+
+article ul li a {
+    text-decoration: none;
+    color: black;
 }
 
 article {
