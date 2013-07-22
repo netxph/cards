@@ -21,7 +21,7 @@
             return
 
         self.getCard = ->
-            id = $("#card-edit").data("cardid")
+            id = $(".edit-section").data("cardid")
             
             $.getJSON self.rootUrl + 'api/cards/' + id, (data) ->
                 self.card = ko.mapping.fromJS(data)

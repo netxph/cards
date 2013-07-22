@@ -15,7 +15,7 @@ button {
     vertical-align: bottom;
 }
 
-#area-edit {
+.edit-section {
     margin: 15px;
 }
 
@@ -23,13 +23,21 @@ button {
     margin: 0 0 15px 0;
 }
 
-#area-edit header h1 {
+.edit-form header h1 {
     font-family: "Segoe UI Light", Verdana, Helvetica, Sans-Serif;
     font-size: 26px;
     font-weight: bold;
 }
 
-#area-edit header input[type="text"] {
+.edit-form header textarea {
+    font-family: "Segoe UI Light", Verdana, Helvetica, Sans-Serif;
+    font-size: 26px;
+    border: none;
+    border-bottom: 1px solid black;
+    width: 100%;
+}
+
+.edit-form header input[type="text"] {
     font-family: "Segoe UI Light", Verdana, Helvetica, Sans-Serif;
     font-size: 26px;
     border: none;

@@ -7,22 +7,13 @@
     @Scripts.Render("~/bundles/editarea")
 }
 
-<section id="area-edit" data-areaid="@ViewBag.AreaID" data-bind="with: area" >
+<section class="edit-section" data-areaid="@ViewBag.AreaID" data-bind="with: area" >
     <section class="edit-form">
         <header>
             <h1>
                 <input type="text" data-bind="value: Name" />
             </h1>
         </header>
-        <div class="edit-details">
-            Area ID: <span data-bind="text: ID"></span>
-        </div>
-        <div class="edit-details">
-            Modified Date (UTC): <span data-bind="text: ModifiedDateUtc"></span>
-        </div>
-        <div class="edit-details">
-            Created Date (UTC): <span data-bind="text: CreatedDateUtc"></span>
-        </div>
         <button data-bind="click: $root.updateArea">Save</button>
     </section>
 </section>

@@ -7,7 +7,13 @@
     @Scripts.Render("~/bundles/editcard")
 }
 
-<section id="card-edit" data-cardid="@ViewBag.CardID" data-bind="with: card" >
-    <textarea data-bind="value: Name" ></textarea>
-    <button data-bind="click: $root.updateCard">Save</button>
+<section class="edit-section" data-cardid="@ViewBag.CardID" data-bind="with: card" >
+    <section class="edit-form">
+        <header>
+            <h1>
+                <textarea data-bind="value: Name" ></textarea>
+            </h1>
+        </header>
+        <button data-bind="click: $root.updateCard">Save</button>
+    </section>
 </section>

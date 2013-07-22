@@ -18,7 +18,7 @@
     };
     self.getArea = function() {
       var id;
-      id = $("#area-edit").data("areaid");
+      id = $(".edit-section").data("areaid");
       $.getJSON(self.rootUrl + 'api/areas/' + id, function(data) {
         self.area = ko.mapping.fromJS(data);
         ko.applyBindings(self);

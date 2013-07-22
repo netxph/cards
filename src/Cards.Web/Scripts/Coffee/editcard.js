@@ -18,7 +18,7 @@
     };
     self.getCard = function() {
       var id;
-      id = $("#card-edit").data("cardid");
+      id = $(".edit-section").data("cardid");
       $.getJSON(self.rootUrl + 'api/cards/' + id, function(data) {
         self.card = ko.mapping.fromJS(data);
         ko.applyBindings(self);

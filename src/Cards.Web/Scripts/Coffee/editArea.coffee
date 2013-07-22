@@ -20,7 +20,7 @@
             return
 
         self.getArea = ->
-            id = $("#area-edit").data("areaid")
+            id = $(".edit-section").data("areaid")
             
             $.getJSON self.rootUrl + 'api/areas/' + id, (data) ->
                 self.area = ko.mapping.fromJS(data)
