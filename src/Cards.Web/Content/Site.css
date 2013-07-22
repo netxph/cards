@@ -15,6 +15,31 @@ button {
     vertical-align: bottom;
 }
 
+#area-edit {
+    margin: 15px;
+}
+
+#area-edit header {
+    margin: 0 0 15px 0;
+}
+
+#area-edit header h1 {
+    font-family: "Segoe UI Light", Verdana, Helvetica, Sans-Serif;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+#area-edit header input[type="text"] {
+    font-family: "Segoe UI Light", Verdana, Helvetica, Sans-Serif;
+    font-size: 26px;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+#area-edit button {
+    margin-top: 15px;
+}
+
 #areas article footer {
     margin-top: 15px;
 }
@@ -170,6 +195,41 @@ article {
     -webkit-box-shadow: 2px 2px 1px rgba(50, 50, 50, 0.1);
     -moz-box-shadow:    2px 2px 1px rgba(50, 50, 50, 0.1);
     box-shadow:         2px 2px 1px rgba(50, 50, 50, 0.1);
+}
+
+.edit-details {
+    font-family: "Segoe UI Light", Verdana, Helvetica, Sans-Serif;
+    font-weight: bold;
+    font-size: 16px;
+    width: 100%;
+    text-align: right;
+}
+
+.edit-details span {
+    font-weight: normal;
+}
+
+.edit-form {
+    width: 50%;
+    margin: 0 auto;
+    padding: 15px;
+    border: 1px solid lightgray;
+    
+    -webkit-box-shadow: 2px 2px 1px rgba(50, 50, 50, 0.1);
+    -moz-box-shadow:    2px 2px 1px rgba(50, 50, 50, 0.1);
+    box-shadow:         2px 2px 1px rgba(50, 50, 50, 0.1);
+}
+
+.edit-form table {
+    float: right;
+}
+
+.edit-form table td {
+    padding: 10px;
+}
+
+.edit-form input[type="text"] {
+    width: 100%;
 }
 
 article ul li {
