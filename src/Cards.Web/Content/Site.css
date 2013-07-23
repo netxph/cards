@@ -15,6 +15,15 @@ button {
     vertical-align: bottom;
 }
 
+.action-buttons {
+    margin-top: 15px;
+    float: right;
+}
+
+.clear {
+    clear: both;
+}
+
 .edit-section {
     margin: 15px;
 }

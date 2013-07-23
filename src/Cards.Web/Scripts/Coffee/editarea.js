@@ -23,6 +23,18 @@
         }
       });
     };
+    self.deleteArea = function() {
+      var area;
+      area = ko.mapping.toJS(self.area);
+      $.ajax({
+        url: self.rootUrl + "api/areas/" + area.ID,
+        type: "DELETE"
+      }).done(function() {
+        window.location.href = self.rootUrl + "areas";
+      }).fail(function() {
+        self.showError("Santa can't figured out what happened, can you try it again");
+      });
+    };
     self.updateArea = function() {
       var area;
       area = ko.mapping.toJS(self.area);
@@ -32,6 +44,8 @@
         data: area
       }).done(function() {
         window.location.href = self.rootUrl + "areas";
+      }).fail(function() {
+        self.showError("Santa can't figured out what happened, can you try it again");
       });
     };
     self.getArea = function() {

@@ -23,6 +23,18 @@
         }
       });
     };
+    self.deleteCard = function() {
+      var card;
+      card = ko.mapping.toJS(self.card);
+      $.ajax({
+        url: self.rootUrl + "api/cards/" + card.ID,
+        type: "DELETE"
+      }).done(function() {
+        window.location.href = self.rootUrl + "areas";
+      }).fail(function() {
+        self.showError("Santa can't figured out what happened, can you try it again");
+      });
+    };
     self.updateCard = function() {
       var card;
       card = ko.mapping.toJS(self.card);
@@ -31,7 +43,9 @@
         type: "PUT",
         data: card
       }).done(function() {
-        return window.location.href = self.rootUrl + "areas";
+        window.location.href = self.rootUrl + "areas";
+      }).fail(function() {
+        self.showError("Santa can't figured out what happened, can you try it again");
       });
     };
     self.getCard = function() {

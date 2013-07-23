@@ -29,6 +29,20 @@
                     return
             return
 
+        self.deleteCard = ->
+            card = ko.mapping.toJS(self.card)
+
+            $.ajax(
+                url: self.rootUrl + "api/cards/" + card.ID,
+                type: "DELETE")
+                .done ->
+                    window.location.href = self.rootUrl + "areas"        
+                    return
+                .fail ->
+                    self.showError "Santa can't figured out what happened, can you try it again"
+                    return
+            return
+
         self.updateCard = ->
             card = ko.mapping.toJS(self.card)
 
@@ -38,7 +52,10 @@
                 data: card)
                 .done ->
                     window.location.href = self.rootUrl + "areas"        
-            
+                    return
+                .fail ->
+                    self.showError "Santa can't figured out what happened, can you try it again"
+                    return
             return
 
         self.getCard = ->

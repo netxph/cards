@@ -14,6 +14,10 @@
                 <textarea data-bind="value: Name" ></textarea>
             </h1>
         </header>
-        <button data-bind="click: $root.updateCard">Save</button>
+        <div class="action-buttons">
+            <button data-bind="click: $root.updateCard">Save</button>
+            <button data-bind="click: $root.deleteCard">Delete</button>
+        </div>
+        <div class="clear" ></div>
     </section>
 </section>

@@ -28,6 +28,21 @@
                     return
             return
 
+        self.deleteArea = ->
+            area = ko.mapping.toJS(self.area)
+
+            $.ajax(
+                url: self.rootUrl + "api/areas/" + area.ID,
+                type: "DELETE")
+                .done ->
+                    window.location.href = self.rootUrl + "areas"        
+                    return
+                .fail ->
+                    self.showError "Santa can't figured out what happened, can you try it again"
+                    return
+
+            return
+
         self.updateArea = ->
             area = ko.mapping.toJS(self.area)
 
@@ -37,6 +52,9 @@
                 data: area)
                 .done ->
                     window.location.href = self.rootUrl + "areas"        
+                    return
+                .fail ->
+                    self.showError "Santa can't figured out what happened, can you try it again"
                     return
             return
 
