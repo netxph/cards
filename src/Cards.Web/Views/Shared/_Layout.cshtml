@@ -3,9 +3,12 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
+
+    <meta name="cards-baseurl" content="@HttpContext.Current.Request.ApplicationPath" />
+
     <title>@ViewBag.Title - Cards v1.0</title>
     <link rel="icon" href="Content/images/cards.ico" type="image/x-icon" />
-    <link rel="shortcut icon" href="Content/images/cards.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="@Url.Content("~/Content/images/cards.ico")" type="image/x-icon" />
     
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")

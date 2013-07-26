@@ -15,8 +15,8 @@
                 event()
             return
 
-        self.createObject = (objectType) ->
-            obj = new cards.Class[objectType]()
+        self.createObject = (objectType, json) ->
+            obj = $.extend new cards.Class[objectType](), json
 
             for event of self.events
                 self.events[event].push obj[event]

@@ -3,7 +3,7 @@
   cards.Class.AreaViewModel = function() {
     var self;
     self = this;
-    self.rootUrl = "../../";
+    self.rootUrl = $("meta[name=cards-baseurl]").attr("content");
     self.area = {};
     self.showError = function(message) {
       $("#error-modal").show();

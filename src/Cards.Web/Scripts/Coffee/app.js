@@ -16,9 +16,9 @@
         event();
       }
     };
-    self.createObject = function(objectType) {
+    self.createObject = function(objectType, json) {
       var event, obj;
-      obj = new cards.Class[objectType]();
+      obj = $.extend(new cards.Class[objectType](), json);
       for (event in self.events) {
         self.events[event].push(obj[event]);
       }

@@ -5,6 +5,8 @@
 
         self = this
 
+        self.rootUrl = $("meta[name=cards-baseurl]").attr("content")
+
         self.newArea = ko.observable("")
         self.areas = ko.observableArray([])
 
@@ -43,7 +45,7 @@
                         card.Name = $(cardElement).text()
                 
                         $.ajax(
-                            url: "api/cards/" + card.ID,
+                            url: self.rootUrl + "api/cards/" + card.ID,
                             type: "PUT",
                             data: card)
                             .done ->
@@ -112,7 +114,7 @@
             return
 
         self.refresh = ->
-            $.getJSON("api/areas")
+            $.getJSON(self.rootUrl + "api/areas")
                 .done (data) ->
                     self.areas(data)
                     self.resize()
@@ -137,7 +139,7 @@
             card.AreaID = areaId
             card.Name = name
 
-            $.post("api/cards", card)
+            $.post(self.rootUrl + "api/cards", card)
                 .done ->
                     self.refresh()
                     return
@@ -152,7 +154,7 @@
             area.Name = self.newArea()
 
             
-            $.post("api/areas", area)
+            $.post(self.rootUrl + "api/areas", area)
                 .done ->
                     self.refresh()
                     return

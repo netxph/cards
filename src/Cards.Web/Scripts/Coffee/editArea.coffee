@@ -3,7 +3,7 @@
     cards.Class.AreaViewModel = ->
         self = this
 
-        self.rootUrl = "../../"
+        self.rootUrl = $("meta[name=cards-baseurl]").attr("content")
 
         self.area = {}
 

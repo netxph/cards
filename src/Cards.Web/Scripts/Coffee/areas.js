@@ -3,6 +3,7 @@
   cards.Class.AreasViewModel = function() {
     var self;
     self = this;
+    self.rootUrl = $("meta[name=cards-baseurl]").attr("content");
     self.newArea = ko.observable("");
     self.areas = ko.observableArray([]);
     self.resize = function() {
@@ -34,7 +35,7 @@
           card.AreaID = areaId;
           card.Name = $(cardElement).text();
           $.ajax({
-            url: "api/cards/" + card.ID,
+            url: self.rootUrl + "api/cards/" + card.ID,
             type: "PUT",
             data: card
           }).done(function() {
@@ -94,7 +95,7 @@
       });
     };
     self.refresh = function() {
-      $.getJSON("api/areas").done(function(data) {
+      $.getJSON(self.rootUrl + "api/areas").done(function(data) {
         self.areas(data);
         self.resize();
       }).fail(function() {
@@ -112,7 +113,7 @@
       card = {};
       card.AreaID = areaId;
       card.Name = name;
-      $.post("api/cards", card).done(function() {
+      $.post(self.rootUrl + "api/cards", card).done(function() {
         self.refresh();
       }).fail(function() {
         self.showError("Santa can't figured out what happened, can you try it again?");
@@ -122,7 +123,7 @@
       var area;
       area = {};
       area.Name = self.newArea();
-      $.post("api/areas", area).done(function() {
+      $.post(self.rootUrl + "api/areas", area).done(function() {
         self.refresh();
       }).fail(function() {
         self.showError("Santa can't figured out what happened, can you try it again?");
