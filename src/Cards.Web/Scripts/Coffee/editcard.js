@@ -3,7 +3,7 @@
   cards.Class.CardViewModel = function() {
     var self;
     self = this;
-    self.rootUrl = $("meta[name=cards-baseurl]").attr("content");
+    self.rootUrl = $("meta[name=cards-baseurl]").attr("content") + '/';
     self.card = {};
     self.showError = function(message) {
       $("#error-modal").show();
