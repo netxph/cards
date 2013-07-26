@@ -3,7 +3,7 @@
   cards.Class.AreasViewModel = function() {
     var self;
     self = this;
-    self.rootUrl = $("meta[name=cards-baseurl]").attr("content")(+'/');
+    self.rootUrl = $("meta[name=cards-baseurl]").attr("content");
     self.newArea = ko.observable("");
     self.areas = ko.observableArray([]);
     self.resize = function() {
