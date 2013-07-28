@@ -74,8 +74,18 @@ namespace Cards.Tests.Core
 
         public class GetCard : TestCase<Card>
         {
+            DateTime NOW = new DateTime(2013, 12, 1);
+            DateTime DATE = new DateTime(2013, 11, 1);
+
             protected override Func<Card> Given()
             {
+                var date = new Mock<IDateProvider>();
+                date
+                    .Setup(d => d.UtcNow())
+                    .Returns(NOW);
+
+                Card.DateProvider = date.Object;
+
                 var repository = new Mock<ICardRepository>();
                 repository
                     .Setup(r => r.FindCard(1))
@@ -84,8 +94,8 @@ namespace Cards.Tests.Core
                         ID = 1,
                         Name = "Sample task",
                         AreaID = 1,
-                        ModifiedDateUtc = DateTime.MinValue,
-                        CreatedDateUtc = DateTime.MinValue
+                        ModifiedDateUtc = DATE,
+                        CreatedDateUtc = DATE
                     });
 
                 var factory = new Mock<DbFactory>();
@@ -125,13 +135,19 @@ namespace Cards.Tests.Core
             [Fact]
             public void ShouldModifiedDateHasValue()
             {
-                Its.ModifiedDateUtc.Should().Be(DateTime.MinValue);
+                Its.ModifiedDateUtc.Should().Be(DATE);
             }
 
             [Fact]
             public void ShouldCreatedDateHasValue()
             {
-                Its.CreatedDateUtc.Should().Be(DateTime.MinValue);
+                Its.CreatedDateUtc.Should().Be(DATE);
+            }
+
+            [Fact]
+            public void ShouldAgeHasValue()
+            {
+                Its.Age.Should().Be(30);
             }
 
         }
