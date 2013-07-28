@@ -26,7 +26,10 @@
             <a data-bind="attr: { 'href': 'Areas/Edit/' + ID }">Edit</a>
         </header>
         <ul data-bind="foreach: Cards">
-            <li data-bind="attr: { 'data-cardid': ID }" draggable="true"><a data-bind="    text: Name, attr: { 'href': 'Cards/Edit/' + ID }"></a></li>
+            <li data-bind="attr: { 'data-cardid': ID }" draggable="true">
+                <a data-bind="text: Name, attr: { 'href': 'Cards/Edit/' + ID }"></a>
+                <span class="card-bubble" data-bind="text: Age"></span>
+            </li>
         </ul>
         <footer>
             <a href="#">Add card...</a>

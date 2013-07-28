@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -26,10 +27,20 @@ namespace Cards.Core
 
         public bool IsActive { get; set; }
 
+        [NotMapped]
+        public long Age
+        {
+            get { return getAge(); }
+        }
+
         public DateTime CreatedDateUtc { get; set; }
 
         public DateTime ModifiedDateUtc { get; set; }
 
+        private long getAge()
+        {
+            return (DateProvider.UtcNow().Date - CreatedDateUtc.Date).Days;
+        }
 
         static IDateProvider _dateProvider = null;
         public static IDateProvider DateProvider
