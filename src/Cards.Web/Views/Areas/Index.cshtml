@@ -27,7 +27,7 @@
         </header>
         <ul data-bind="foreach: Cards">
             <li data-bind="attr: { 'data-cardid': ID }" draggable="true">
-                <a data-bind="text: Name, attr: { 'href': 'Cards/Edit/' + ID }"></a>
+                <a data-bind="text: Name, attr: { 'href': 'Cards/Edit/' + ID }" draggable="false"></a>
                 <span class="card-bubble" data-bind="text: Age"></span>
             </li>
         </ul>
