@@ -33,7 +33,7 @@
           card = {};
           card.ID = cardId;
           card.AreaID = areaId;
-          card.Name = $(cardElement).text();
+          card.Name = $(cardElement).find("a").text();
           $.ajax({
             url: self.rootUrl + "api/cards/" + card.ID,
             type: "PUT",
