@@ -37,8 +37,6 @@ namespace Cards.Core
 
         public DateTime ModifiedDateUtc { get; set; }
 
-        public List<Activity> Activities { get; set; }
-
         private long getAge()
         {
             return (DateProvider.UtcNow().Date - CreatedDateUtc.Date).Days;
@@ -73,7 +71,11 @@ namespace Cards.Core
                 ModifiedDateUtc = DateProvider.UtcNow()
             };
 
-            return db.CreateCard(card);
+            card = db.CreateCard(card);
+
+            Activity.Create(card.ID, areaId, CardChangeType.Transfer, null);
+
+            return card;
         }
 
         public static Card Update(int cardId, string name, int areaId)
@@ -85,10 +87,12 @@ namespace Cards.Core
             {
                 card.Name = name;
                 card.AreaID = areaId;
-
                 card.ModifiedDateUtc = DateProvider.UtcNow();
 
+                //TODO: db update card does not return card
                 db.UpdateCard(card);
+
+                Activity.Create(cardId, areaId, CardChangeType.Transfer, null);
 
                 return card;
             }

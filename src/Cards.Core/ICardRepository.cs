@@ -18,5 +18,7 @@ namespace Cards.Core
         Card CreateCard(Card card);
         Card UpdateCard(Card card);
         
+        Activity CreateActivity(Activity activity);
+
     }
 }

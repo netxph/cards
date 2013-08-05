@@ -82,5 +82,16 @@ namespace Cards.Core
                 return area;
             }
         }
+
+        public Activity CreateActivity(Activity activity)
+        {
+            using (var db = new CardsDb())
+            {
+                db.Activities.Add(activity);
+                db.SaveChanges();
+
+                return activity;
+            }
+        }
     }
 }

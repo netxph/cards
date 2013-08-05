@@ -71,11 +71,6 @@ namespace Cards.Tests.Core
                 Its.IsActive.Should().BeTrue();
             }
 
-            [Fact]
-            public void ShouldHistoryIsNull()
-            {
-                Its.Activities.Should().BeNull();
-            }
         }
 
         public class GetCard : TestCase<Card>
@@ -195,6 +190,7 @@ namespace Cards.Tests.Core
                 new DbFactory(factory.Object);
 
                 return () => Card.Update(1, "Updated task", 2);
+
             }
 
             [Fact]
@@ -231,6 +227,69 @@ namespace Cards.Tests.Core
             public void ShouldCreatedDateNotIsNow()
             {
                 Its.CreatedDateUtc.Should().NotBe(NOW);
+            }
+
+            public class AutoUpdateActivity : TestCase<Card>
+            {
+                readonly DateTime NOW = new DateTime(2013, 12, 1);
+
+                protected override Func<Card> Given()
+                {
+                    var dateProvider = new Mock<IDateProvider>();
+                    dateProvider
+                        .Setup(dp => dp.UtcNow())
+                        .Returns(NOW);
+
+                    Activity.DateProvider = dateProvider.Object;
+
+                    return () => Card.Update(1, "Updated task", 2);
+                }
+
+                [Fact]
+                public void ShouldCreateActivity()
+                {
+                    Subject();
+
+                    Mock.Get(DbFactory.Create())
+                        .Verify(d => d.CreateActivity(It.IsAny<Activity>()), Times.Once());
+                }
+
+                [Fact]
+                public void ShouldActivityCardIDHasValue()
+                {
+                    Subject();
+
+                    Mock.Get(DbFactory.Create())
+                        .Verify(d => d.CreateActivity(It.Is<Activity>(a => a.CardID == 1)), Times.Once());
+                }
+
+                [Fact]
+                public void ShouldActivityAreaIDHasValue()
+                {
+                    Subject();
+
+                    Mock.Get(DbFactory.Create())
+                        .Verify(d => d.CreateActivity(It.Is<Activity>(a => a.CurrentAreaID == 2)), Times.Once());
+                }
+
+                [Fact]
+                public void ShouldActivityChangeTypeIsTransfer()
+                {
+                    Subject();
+
+                    Mock.Get(DbFactory.Create())
+                        .Verify(d => d.CreateActivity(It.Is<Activity>(a => a.ChangeType == CardChangeType.Transfer)), Times.Once());
+                }
+
+                [Fact]
+                public void ShouldActivityStampDateIsNow()
+                {
+                    Subject();
+
+                    Mock.Get(DbFactory.Create())
+                        .Verify(d => d.CreateActivity(It.Is<Activity>(a => a.StampDate == NOW)), Times.Once());
+                }
+
             }
 
         }
@@ -446,6 +505,59 @@ namespace Cards.Tests.Core
             public void ShouldBeActive()
             {
                 Its.IsActive.Should().BeTrue();
+            }
+
+            public class AutoCreateActivity : TestCase<Card>
+            {
+                readonly DateTime NOW = new DateTime(2013, 12, 1);
+
+                protected override Func<Card> Given()
+                {
+                    var dateProvider = new Mock<IDateProvider>();
+                    dateProvider
+                        .Setup(dp => dp.UtcNow())
+                        .Returns(NOW);
+
+                    Activity.DateProvider = dateProvider.Object;
+
+                    return () => Card.Create("Card", 1);
+                }
+
+                [Fact]
+                public void ShouldCreateActivity()
+                {
+                    Subject();
+
+                    Mock.Get(DbFactory.Create())
+                        .Verify(d => d.CreateActivity(It.IsAny<Activity>()), Times.Once());
+                }
+
+                [Fact]
+                public void ShouldActivityAreaIDIs1()
+                {
+                    Subject();
+
+                    Mock.Get(DbFactory.Create())
+                        .Verify(d => d.CreateActivity(It.Is<Activity>(a => a.CurrentAreaID == 1)), Times.Once());
+                }
+
+                [Fact]
+                public void ShouldActivityChangeTypeIsTransfer()
+                {
+                    Subject();
+
+                    Mock.Get(DbFactory.Create())
+                        .Verify(d => d.CreateActivity(It.Is<Activity>(a => a.ChangeType == CardChangeType.Transfer)), Times.Once());
+                }
+
+                [Fact]
+                public void ShouldActivityStampDateIsNow()
+                {
+                    Subject();
+
+                    Mock.Get(DbFactory.Create())
+                        .Verify(d => d.CreateActivity(It.Is<Activity>(a => a.StampDate == NOW)), Times.Once());
+                }
             }
 
         }

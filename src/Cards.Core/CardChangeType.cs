@@ -8,7 +8,8 @@ namespace Cards.Core
     public enum CardChangeType
     {
 
-        Modify
+        Modify,
+        Transfer
 
     }
 }
