@@ -70,6 +70,12 @@ namespace Cards.Tests.Core
             {
                 Its.IsActive.Should().BeTrue();
             }
+
+            [Fact]
+            public void ShouldHistoryIsNull()
+            {
+                Its.Activities.Should().BeNull();
+            }
         }
 
         public class GetCard : TestCase<Card>
@@ -441,6 +447,7 @@ namespace Cards.Tests.Core
             {
                 Its.IsActive.Should().BeTrue();
             }
+
         }
 
         public class CreateMethod_Invalid : TestCase

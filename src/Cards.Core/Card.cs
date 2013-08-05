@@ -37,6 +37,8 @@ namespace Cards.Core
 
         public DateTime ModifiedDateUtc { get; set; }
 
+        public List<Activity> Activities { get; set; }
+
         private long getAge()
         {
             return (DateProvider.UtcNow().Date - CreatedDateUtc.Date).Days;
