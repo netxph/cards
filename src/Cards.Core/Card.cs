@@ -111,7 +111,11 @@ namespace Cards.Core
                 card.IsActive = false;
                 card.ModifiedDateUtc = DateProvider.UtcNow();
 
-                return db.UpdateCard(card);
+                db.UpdateCard(card);
+
+                Activity.Create(id, card.AreaID, CardChangeType.Delete, null);
+
+                return card;
             }
 
             return null;

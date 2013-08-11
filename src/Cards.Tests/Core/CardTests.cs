@@ -229,7 +229,7 @@ namespace Cards.Tests.Core
                 Its.CreatedDateUtc.Should().NotBe(NOW);
             }
 
-            public class AutoUpdateActivity : TestCase<Card>
+            public class UpdateActivity : TestCase<Card>
             {
                 readonly DateTime NOW = new DateTime(2013, 12, 1);
 
@@ -430,6 +430,71 @@ namespace Cards.Tests.Core
                 Its.ModifiedDateUtc.Should().Be(NOW);
             }
 
+            public class DeleteActivity : TestCase<Card>
+            {
+                readonly DateTime NOW = new DateTime(2013, 12, 1);
+
+                protected override Func<Card> Given()
+                {
+                    var dateProvider = new Mock<IDateProvider>();
+                    dateProvider
+                        .Setup(dp => dp.UtcNow())
+                        .Returns(NOW);
+
+                    Activity.DateProvider = dateProvider.Object;
+
+                    return () => Card.Delete(1);
+                }
+
+                [Fact]
+                public void ShouldCreateActivity()
+                {
+                    Subject();
+
+                    Mock.Get(DbFactory.Create())
+                        .Verify(d => d.CreateActivity(It.IsAny<Activity>()), Times.Once());
+                }
+
+                [Fact]
+                public void ShouldCardIDIs1()
+                {
+                    Subject();
+
+                    Mock.Get(DbFactory.Create())
+                        .Verify(d => d.CreateActivity(It.Is<Activity>(a => a.CardID == 1)), Times.Once());
+                }
+
+                [Fact]
+                public void ShouldAreaIDIs1()
+                {
+                    Subject();
+
+                    Mock.Get(DbFactory.Create())
+                        .Verify(d => d.CreateActivity(It.Is<Activity>(a => a.CurrentAreaID == 1)), Times.Once());
+                }
+
+                [Fact]
+                public void ShouldChangeTypeIsDelete()
+                {
+                    Subject();
+
+                    Mock.Get(DbFactory.Create())
+                        .Verify(d => d.CreateActivity(It.Is<Activity>(a => a.ChangeType == CardChangeType.Delete)), Times.Once());
+                }
+
+                [Fact]
+                public void ShouldStampDateIsNow()
+                {
+                    Subject();
+
+                    Mock.Get(DbFactory.Create())
+                        .Verify(d => d.CreateActivity(It.Is<Activity>(a => a.StampDate == NOW)), Times.Once());
+
+                }
+
+            }
+
+
         }
 
 
@@ -507,7 +572,7 @@ namespace Cards.Tests.Core
                 Its.IsActive.Should().BeTrue();
             }
 
-            public class AutoCreateActivity : TestCase<Card>
+            public class CreateActivity : TestCase<Card>
             {
                 readonly DateTime NOW = new DateTime(2013, 12, 1);
 

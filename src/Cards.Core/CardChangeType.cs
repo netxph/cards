@@ -9,7 +9,8 @@ namespace Cards.Core
     {
 
         Modify,
-        Transfer
+        Transfer,
+        Delete
 
     }
 }
