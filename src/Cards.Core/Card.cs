@@ -80,11 +80,17 @@ namespace Cards.Core
 
         public static Card Update(int cardId, string name, int areaId)
         {
+            var changeType = CardChangeType.Transfer;
             var db = DbFactory.Create();
             var card = db.FindCard(cardId);
 
             if (card != null)
             {
+                if (areaId == card.AreaID)
+                {
+                    changeType = CardChangeType.Modify;
+                }
+
                 card.Name = name;
                 card.AreaID = areaId;
                 card.ModifiedDateUtc = DateProvider.UtcNow();
@@ -92,7 +98,7 @@ namespace Cards.Core
                 //TODO: db update card does not return card
                 db.UpdateCard(card);
 
-                Activity.Create(cardId, areaId, CardChangeType.Transfer, null);
+                Activity.Create(cardId, areaId, changeType, null);
 
                 return card;
             }

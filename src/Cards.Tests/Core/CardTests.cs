@@ -292,6 +292,33 @@ namespace Cards.Tests.Core
 
             }
 
+            public class UpdateActivityModify : TestCase<Card>
+            {
+                readonly DateTime NOW = new DateTime(2013, 12, 1);
+
+                protected override Func<Card> Given()
+                {
+                    var dateProvider = new Mock<IDateProvider>();
+                    dateProvider
+                        .Setup(dp => dp.UtcNow())
+                        .Returns(NOW);
+
+                    Activity.DateProvider = dateProvider.Object;
+
+                    return () => Card.Update(1, "Some update", 1);
+                }
+
+                [Fact]
+                public void ShouldChangeTypeIsModify()
+                {
+                    Subject();
+
+                    Mock.Get(DbFactory.Create())
+                        .Verify(d => d.CreateActivity(It.Is<Activity>(a => a.ChangeType == CardChangeType.Modify)), Times.Once());
+
+                }
+            }
+
         }
 
         public class UpdateMethod_Invalid : TestCase
