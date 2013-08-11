@@ -70,6 +70,10 @@
     <Compile Include="Migrations\201307021018180_AddColumnIsActiveToCardAndArea.Designer.cs">
       <DependentUpon>201307021018180_AddColumnIsActiveToCardAndArea.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201308111132526_CreateActivity.cs" />
+    <Compile Include="Migrations\201308111132526_CreateActivity.Designer.cs">
+      <DependentUpon>201308111132526_CreateActivity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScriptHelper.cs" />
@@ -87,6 +91,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201307021018180_AddColumnIsActiveToCardAndArea.resx">
       <DependentUpon>201307021018180_AddColumnIsActiveToCardAndArea.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201308111132526_CreateActivity.resx">
+      <DependentUpon>201308111132526_CreateActivity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
