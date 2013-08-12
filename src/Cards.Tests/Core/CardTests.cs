@@ -153,7 +153,6 @@ namespace Cards.Tests.Core
 
         }
 
-
         public class UpdateMethod : TestCase<Card>
         {
 
@@ -524,7 +523,6 @@ namespace Cards.Tests.Core
 
         }
 
-
         public class CreateMethod : TestCase<Card>
         {
 
@@ -694,6 +692,70 @@ namespace Cards.Tests.Core
             {
                 return null;
             }
+        }
+
+        public class GetViewMethod : TestCase<CardView>
+        {
+
+            readonly DateTime NOW = new DateTime(2013, 1, 6);
+
+            protected override Func<CardView> Given()
+            {
+                var dateProvider = new Mock<IDateProvider>();
+                dateProvider
+                    .Setup(d => d.UtcNow())
+                    .Returns(NOW);
+
+                Card.DateProvider = dateProvider.Object;
+
+                var card = new Card()
+                {
+                    AreaID = 1,
+                    ID = 1,
+                    IsActive = true,
+                    Name = "Sample card",
+                    CreatedDateUtc = new DateTime(2013, 1, 1),
+                };
+                
+                return () => card.GetView();
+            }
+
+            [Fact]
+            public void ShouldNotBeNull()
+            {
+                Subject().Should().NotBeNull();
+            }
+
+            [Fact]
+            public void ShouldAreaIDHasValue()
+            {
+                Its.AreaID.Should().Be(1);
+            }
+
+            [Fact]
+            public void ShouldIDHasValue()
+            {
+                Its.ID.Should().Be(1);
+            }
+
+            [Fact]
+            public void ShouldIsActiveIsTrue()
+            {
+                Its.IsActive.Should().BeTrue();
+            }
+
+            [Fact]
+            public void ShouldNameHasValue()
+            {
+                Its.Name.Should().Be("Sample card");
+            }
+
+            [Fact]
+            public void ShouldAgeHasValue()
+            {
+                Its.Age.Should().Be(5);
+            }
+
         }
 
     }

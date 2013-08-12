@@ -52,6 +52,7 @@
     <Compile Include="CardChangeType.cs" />
     <Compile Include="CardRepository.cs" />
     <Compile Include="CardsDb.cs" />
+    <Compile Include="CardView.cs" />
     <Compile Include="DateProvider.cs" />
     <Compile Include="DbFactory.cs" />
     <Compile Include="Activity.cs" />

@@ -133,5 +133,17 @@ namespace Cards.Core
 
             return db.FindCard(id);
         }
+        
+        public CardView GetView()
+        {
+            return new CardView()
+            {
+                AreaID = this.AreaID,
+                ID = this.ID,
+                IsActive = this.IsActive,
+                Name = this.Name,
+                Age = getAge()
+            };
+        }
     }
 }
