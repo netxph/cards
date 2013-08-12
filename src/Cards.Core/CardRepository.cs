@@ -29,6 +29,9 @@ namespace Cards.Core
                 //TODO find better solution
                 areas.ForEach(a => a.Cards.RemoveAll(c => !c.IsActive));
 
+                //sort
+                areas.ForEach(a => a.Cards = a.Cards.OrderBy(c => c.CreatedDateUtc).ToList());
+
                 return areas;
             }
         }
