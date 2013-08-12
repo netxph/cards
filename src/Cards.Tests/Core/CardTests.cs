@@ -750,6 +750,60 @@ namespace Cards.Tests.Core
                 Its.Age.Should().Be(5);
             }
 
+            [Fact]
+            public void ShouldAgeTextHasValue()
+            {
+                Its.AgeText.Should().Be("5");
+            }
+
+            public class GetViewMethod_AgeText : TestCase<CardView>
+            {
+                protected override Func<CardView> Given()
+                {
+                    return null;
+                }
+
+                [Fact]
+                public void ShouldReturnNew()
+                {
+                    Card.DateProvider = new DateProvider();
+
+                    var card = new Card()
+                    {
+                        CreatedDateUtc = DateTime.UtcNow
+                    };
+
+                    card.GetView().AgeText.Should().Be("new");
+                }
+
+                [Fact]
+                public void ShouldReturnOld()
+                {
+                    Card.DateProvider = new DateProvider();
+
+                    var card = new Card()
+                    {
+                        CreatedDateUtc = DateTime.UtcNow.AddDays(-30)
+                    };
+
+                    card.GetView().AgeText.Should().Be("aged");
+                }
+
+                [Fact]
+                public void ShouldReturnNumber()
+                {
+                    Card.DateProvider = new DateProvider();                    
+
+                    var card = new Card()
+                    {
+                        CreatedDateUtc = DateTime.UtcNow.AddDays(-5)
+                    };
+
+                    card.GetView().AgeText.Should().Be("5");
+                }
+
+            }
+            
         }
 
     }

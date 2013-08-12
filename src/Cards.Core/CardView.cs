@@ -18,5 +18,7 @@ namespace Cards.Core
 
         public long Age { get; set; }
 
+        public string AgeText { get; set; }
+
     }
 }

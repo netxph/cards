@@ -12,6 +12,10 @@ namespace Cards.Core
     public class Card
     {
 
+        //TODO: Transfer this to settings
+        const int NEW_AGE = 0;
+        const int OLD_AGE = 30;
+
         public Card()
         {
             IsActive = true;
@@ -130,7 +134,7 @@ namespace Cards.Core
         
         public CardView GetView()
         {
-            return new CardView()
+            var card = new CardView()
             {
                 AreaID = this.AreaID,
                 ID = this.ID,
@@ -138,6 +142,26 @@ namespace Cards.Core
                 Name = this.Name,
                 Age = getAge()
             };
+
+            card.AgeText = getAgeText(card.Age);
+
+            return card;
+        }
+
+        private string getAgeText(long age)
+        {
+            if (age <= NEW_AGE)
+            {
+                return "new";
+            }
+            else if (age >= OLD_AGE)
+            {
+                return "aged";
+            }
+            else
+            {
+                return age.ToString();
+            }
         }
     }
 }
