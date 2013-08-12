@@ -145,12 +145,6 @@ namespace Cards.Tests.Core
                 Its.CreatedDateUtc.Should().Be(DATE);
             }
 
-            [Fact]
-            public void ShouldAgeHasValue()
-            {
-                Its.Age.Should().Be(30);
-            }
-
         }
 
         public class UpdateMethod : TestCase<Card>

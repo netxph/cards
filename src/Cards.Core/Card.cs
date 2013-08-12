@@ -27,12 +27,6 @@ namespace Cards.Core
 
         public bool IsActive { get; set; }
 
-        [NotMapped]
-        public long Age
-        {
-            get { return getAge(); }
-        }
-
         public DateTime CreatedDateUtc { get; set; }
 
         public DateTime ModifiedDateUtc { get; set; }

@@ -104,5 +104,21 @@ namespace Cards.Core
 
             return null;
         }
+
+        public AreaView GetView()
+        {
+            return new AreaView()
+            {
+                ID = this.ID,
+                Name = this.Name,
+                IsActive = this.IsActive,
+                Cards = this.Cards.ConvertAll(c => c.GetView())
+            };
+        }
+
+        public static List<AreaView> GetViews()
+        {
+            return GetAll().ConvertAll(a => a.GetView());
+        }
     }
 }

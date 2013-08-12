@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Area.cs" />
+    <Compile Include="AreaView.cs" />
     <Compile Include="Card.cs" />
     <Compile Include="CardChangeType.cs" />
     <Compile Include="CardRepository.cs" />

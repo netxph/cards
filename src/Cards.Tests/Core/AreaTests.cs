@@ -150,7 +150,7 @@ namespace Cards.Tests.Core
 
             [Fact]
             public void ShouldNotBeEmpty()
-            { 
+            {
                 Subject().Should().NotBeEmpty();
             }
 
@@ -222,7 +222,7 @@ namespace Cards.Tests.Core
             [Fact]
             public void ShouldCreatedDateShouldNotChange()
             {
-                Its.CreatedDateUtc.Should().Be(DateTime.MinValue);  
+                Its.CreatedDateUtc.Should().Be(DateTime.MinValue);
             }
 
             [Fact]
@@ -322,7 +322,7 @@ namespace Cards.Tests.Core
             {
                 Its.ModifiedDateUtc.Should().Be(NOW);
             }
-            
+
         }
 
         public class CreateMethod_Invalid : TestCase
@@ -377,7 +377,7 @@ namespace Cards.Tests.Core
                         CreatedDateUtc = DateTime.MinValue,
                         ModifiedDateUtc = DateTime.MinValue
                     });
-                
+
                 Area area = null;
 
                 repository
@@ -432,6 +432,62 @@ namespace Cards.Tests.Core
             }
         }
 
+        public class GetViewMethod : TestCase<AreaView>
+        {
+
+            protected override Func<AreaView> Given()
+            {
+                var area = new Area()
+                {
+                    ID = 1,
+                    Name = "Backlog",
+                    IsActive = true,
+                    Cards = new List<Card>() 
+                    {
+                        new Card()
+                        {
+                            ID = 1,
+                            AreaID = 1,
+                            IsActive = true,
+                            Name = "Sample card"
+                        }
+                    }
+                };
+
+                return () => area.GetView();
+            }
+
+            [Fact]
+            public void ShouldNotReturnNull()
+            {
+                Subject().Should().NotBeNull();
+            }
+
+            [Fact]
+            public void ShouldIDIs1()
+            {
+                Its.ID.Should().Be(1);
+            }
+
+            [Fact]
+            public void ShouldNameHasValue()
+            {
+                Its.Name.Should().Be("Backlog");
+            }
+            
+            [Fact]
+            public void ShouldIsActiveIsTrue()
+            {
+                Its.IsActive.Should().BeTrue();
+            }
+
+            [Fact]
+            public void ShouldCardsNotNull()
+            {
+                Its.Cards.Should().NotBeNull();
+            }
+
+        }
 
     }
 }
