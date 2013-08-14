@@ -63,7 +63,8 @@
                     event.originalEvent.dataTransfer.setData("AreaID", areaId)
                     event.originalEvent.dataTransfer.setData("CardID", cardId)
                     return
-                .on "click", "article footer a", ->
+                .on "click", "article footer a", (event) ->
+                    event.preventDefault()
                     currentArea = $(this).parent().find("div")
 
                     if !currentArea.is(":visible")
