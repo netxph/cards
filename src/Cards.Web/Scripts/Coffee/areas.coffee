@@ -25,6 +25,7 @@
 
         self.initControls = ->
             self.resize()
+            $().dragScroll()
 
             $("#areas")
                 .on "dragover", "article", (event) ->
@@ -174,7 +175,7 @@
 
         self.onReady = ->
             ko.applyBindings self
-
+            
             self.initControls()
 
 

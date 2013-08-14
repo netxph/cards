@@ -19,6 +19,7 @@
     };
     self.initControls = function() {
       self.resize();
+      $().dragScroll();
       $("#areas").on("dragover", "article", function(event) {
         event.preventDefault();
       }).on("drop", "article", function(event) {
