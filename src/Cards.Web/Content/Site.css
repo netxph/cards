@@ -58,14 +58,23 @@ button {
     top: -6px;
     right:-6px;
     padding:1px 2px 1px 2px;
-    background-color:red;
-    color:white;
+    background-color: lightblue;
+    color: white;
     font-weight:bold;
     font-size: 10px;
     
     -webkit-box-shadow: 1px 1px 1px gray;
     -moz-box-shadow:    1px 1px 1px gray;
     box-shadow:         1px 1px 1px gray;
+}
+
+span[data-age=new] {
+    background-color: yellow;
+    color: gray;
+}
+
+span[data-age=aged] {
+    background-color: gray;
 }
 
 #area-edit button {

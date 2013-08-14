@@ -29,7 +29,7 @@
         <ul data-bind="foreach: Cards">
             <li data-bind="attr: { 'data-cardid': ID }" draggable="true">
                 <a data-bind="text: Name, attr: { 'href': 'Cards/Edit/' + ID }" draggable="false"></a>
-                <span class="card-bubble" data-bind="text: AgeText"></span>
+                <span class="card-bubble" data-bind="text: AgeText, attr: { 'data-age': AgeText }"></span>
             </li>
         </ul>
         <footer>
