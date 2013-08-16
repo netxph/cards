@@ -60,6 +60,7 @@
     <Compile Include="ICardRepository.cs" />
     <Compile Include="IDateProvider.cs" />
     <Compile Include="IDbList.cs" />
+    <Compile Include="Label.cs" />
     <Compile Include="Migrations\201306260430309_InitialCreate.cs" />
     <Compile Include="Migrations\201306260430309_InitialCreate.Designer.cs">
       <DependentUpon>201306260430309_InitialCreate.cs</DependentUpon>
@@ -75,6 +76,10 @@
     <Compile Include="Migrations\201308111132526_CreateActivity.cs" />
     <Compile Include="Migrations\201308111132526_CreateActivity.Designer.cs">
       <DependentUpon>201308111132526_CreateActivity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201308161035177_AddTableLabel.cs" />
+    <Compile Include="Migrations\201308161035177_AddTableLabel.Designer.cs">
+      <DependentUpon>201308161035177_AddTableLabel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -96,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201308111132526_CreateActivity.resx">
       <DependentUpon>201308111132526_CreateActivity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201308161035177_AddTableLabel.resx">
+      <DependentUpon>201308161035177_AddTableLabel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

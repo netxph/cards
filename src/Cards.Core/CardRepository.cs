@@ -96,5 +96,16 @@ namespace Cards.Core
                 return activity;
             }
         }
+
+        public Label CreateLabel(Label label)
+        {
+            using (var db = new CardsDb())
+            {
+                label = db.Labels.Add(label);
+                db.SaveChanges();
+
+                return label;
+            }
+        }
     }
 }

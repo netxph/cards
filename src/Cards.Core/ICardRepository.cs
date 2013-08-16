@@ -20,5 +20,6 @@ namespace Cards.Core
         
         Activity CreateActivity(Activity activity);
 
+        Label CreateLabel(Label label);
     }
 }

@@ -130,6 +130,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Api\AreasController.cs" />
     <Compile Include="Controllers\Api\CardsController.cs" />
+    <Compile Include="Controllers\Api\LabelsController.cs" />
     <Compile Include="Controllers\AreasController.cs" />
     <Compile Include="Controllers\CardsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

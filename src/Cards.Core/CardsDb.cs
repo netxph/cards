@@ -18,6 +18,8 @@ namespace Cards.Core
         public DbSet<Area> Areas { get; set; }
         public DbSet<Card> Cards { get; set; }
         public DbSet<Activity> Activities { get; set; }
+        public DbSet<Label> Labels { get; set; }
+
 
     }
 }

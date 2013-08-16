@@ -61,6 +61,7 @@
     <Compile Include="Core\AreaTests.cs" />
     <Compile Include="Core\CardTests.cs" />
     <Compile Include="Core\ActivityTests.cs" />
+    <Compile Include="Core\LabelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
