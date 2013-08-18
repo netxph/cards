@@ -709,6 +709,7 @@ namespace Cards.Tests.Core
                     IsActive = true,
                     Name = "Sample card",
                     CreatedDateUtc = new DateTime(2013, 1, 1),
+                    ModifiedDateUtc = new DateTime(2013, 1, 1)
                 };
                 
                 return () => card.GetView();
@@ -754,6 +755,18 @@ namespace Cards.Tests.Core
             public void ShouldAgeTextHasValue()
             {
                 Its.AgeText.Should().Be("5");
+            }
+
+            [Fact]
+            public void ShouldDaysLastUpdatedHaveValue()
+            {
+                Its.DaysSinceLastUpdate.Should().Be(5);
+            }
+
+            [Fact]
+            public void ShouldDaysLastUpdatedTextHaveValue()
+            {
+                Its.DaysSinceLastUpdateText.Should().Be("5");
             }
 
             public class GetViewMethod_AgeText : TestCase<CardView>
@@ -803,7 +816,181 @@ namespace Cards.Tests.Core
                 }
 
             }
+
+        }
+
+        public class InitializeCardWithNoDaysSinceLastUpdate : TestCase<Card>
+        {
+            readonly DateTime NOW = new DateTime(2013, 12, 1);
+
+            protected override Func<Card> Given()
+            {
+                var date = new Mock<IDateProvider>();
+                date
+                    .Setup(d => d.UtcNow())
+                    .Returns(NOW);
+
+                Card.DateProvider = date.Object;
+
+                var card = new Card();
+
+                return () => card;
+            }
+
+            [Fact]
+            public void ShouldDaysSinceLastUpdateBeZero()
+            {
+                Its.DaysSinceLastUpdate.Should().Be(0);
+            }
+        }
+
+        public class InitializeCardWithDaysSinceLastUpdate : TestCase<Card>
+        {
+            readonly DateTime CREATEDATE = new DateTime(2013, 1, 1);
+
+            protected override Func<Card> Given()
+            {
+                var staleCard = new Card()
+                {
+                    ID              = 1,
+                    AreaID          = 1,
+                    Name            = "Card",
+                    CreatedDateUtc  = CREATEDATE,
+                    ModifiedDateUtc = CREATEDATE
+                };
+
+                var date = new Mock<IDateProvider>();
+                date
+                    .Setup(r => r.UtcNow())
+                    .Returns(CREATEDATE.AddDays(1));
+
+                Card.DateProvider = date.Object;
+
+                return () => staleCard;
+            }
+
+            [Fact]
+            public void ShouldDaysStaleNotBeZero()
+            {
+                Its.DaysSinceLastUpdate.Should().NotBe(0);
+            }
+
+            [Fact]
+            public void ShouldDaysStaleBeOne()
+            {
+                Its.DaysSinceLastUpdate.Should().Be(1);
+            }
+        }
+
+        public class UpdateMethodAndGetDaysSinceLastUpdate : TestCase<Card>
+        {
+            readonly DateTime NOW = new DateTime(2013, 12, 1);
+
+            protected override Func<Card> Given()
+            {
+                var cardToUpdate = new Card()
+                {
+                    ID              = 1,
+                    AreaID          = 1,
+                    Name            = "CardToEdit",
+                    CreatedDateUtc  = DateTime.MinValue,
+                    ModifiedDateUtc = DateTime.MinValue
+                };
+
+                var date = new Mock<IDateProvider>();
+                date
+                    .Setup(d => d.UtcNow())
+                    .Returns(NOW);
+
+                Card.DateProvider = date.Object;
+
+                var repository = new Mock<ICardRepository>();
+                repository
+                    .Setup(r => r.FindCard(It.IsAny<int>()))
+                    .Returns(cardToUpdate);
+
+                var factory = new Mock<DbFactory>();
+                factory.Protected()
+                    .Setup<ICardRepository>("OnCreateDb")
+                    .Returns(repository.Object);
+
+                new DbFactory(factory.Object);
+
+                return () => Card.Update(1, "updatedCard", 1);
+            }
             
+            [Fact]
+            public void ShouldCardNotBeNull()
+            {
+                Subject().Should().NotBeNull();
+            }
+
+            [Fact]
+            public void ShouldCardNameBeUpdatedCard()
+            {
+                Its.Name.Should().Be("updatedCard");
+            }
+
+            [Fact]
+            public void ShouldDaysSinceLastUpdateBeZero()
+            {
+                Its.DaysSinceLastUpdate.Should().Be(0);
+            }
+        }
+
+        public class GetCardAndDaysSinceLastUpdate : TestCase<Card>
+        {
+            readonly DateTime NOW = new DateTime(2013, 12, 1);
+            readonly DateTime CREATED = new DateTime(2013, 11, 1);
+
+            protected override Func<Card> Given()
+            {
+                var date = new Mock<IDateProvider>();
+                date
+                    .Setup(d => d.UtcNow())
+                    .Returns(NOW);
+
+                Card.DateProvider = date.Object;
+
+                var repository = new Mock<ICardRepository>();
+                repository
+                    .Setup(r => r.FindCard(1))
+                    .Returns(new Card()
+                    {
+                        ID = 1,
+                        Name = "Inactive for 30 days",
+                        AreaID = 1,
+                        ModifiedDateUtc = CREATED,
+                        CreatedDateUtc = CREATED
+                    });
+
+                var factory = new Mock<DbFactory>();
+                factory.Protected()
+                    .Setup<ICardRepository>("OnCreateDb")
+                    .Returns(repository.Object);
+
+                new DbFactory(factory.Object);
+
+                return () => Card.Get(1);
+            }
+
+            [Fact]
+            public void ShouldCardNotBeNull()
+            {
+                Subject().Should().NotBeNull();
+            }
+
+            [Fact]
+            public void ShouldNameBeInactiveFor30Days()
+            {
+                Its.Name.Should().Be("Inactive for 30 days");
+            }
+
+            [Fact]
+            public void ShouldDaysLastUpdateBe30()
+            {
+                Its.DaysSinceLastUpdate.Should().Be(30);
+            }
         }
 
     }
