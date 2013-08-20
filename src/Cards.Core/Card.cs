@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Cards.Core
 {
@@ -144,6 +145,35 @@ namespace Cards.Core
             };
 
             card.AgeText = getAgeText(card.Age);
+            card = parseCard(card);
+
+            return card;
+        }
+
+        Regex labelRegex = new Regex("#(\\S+)\\s?");
+
+        private CardView parseCard(CardView card)
+        {
+            if (!string.IsNullOrEmpty(card.Name))
+            {
+                card.Labels = new List<LabelView>();
+
+                var matches = labelRegex.Matches(card.Name);
+
+                foreach (Match match in matches)
+                {
+                    var key = match.Value.Substring(1, match.Value.Length - 1).Trim();
+
+                    var label = LabelCache.GetLabel(key);
+                    
+                    if(label != null)
+                    {
+                        card.Labels.Add(label.GetView());
+                    }
+                }
+
+                card.Name = labelRegex.Replace(card.Name, string.Empty).Trim();
+            }
 
             return card;
         }

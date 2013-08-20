@@ -20,5 +20,7 @@ namespace Cards.Core
 
         public string AgeText { get; set; }
 
+        public List<LabelView> Labels { get; set; }
+
     }
 }

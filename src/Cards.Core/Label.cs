@@ -33,5 +33,21 @@ namespace Cards.Core
             return db.CreateLabel(label);
 
         }
+
+        public static List<Label> GetAll()
+        {
+            var db = DbFactory.Create();
+
+            return db.FindAllLabels();
+        }
+
+        public LabelView GetView()
+        {
+            return new LabelView()
+            {
+                Name = this.Name,
+                Color = this.Color
+            };
+        }
     }
 }

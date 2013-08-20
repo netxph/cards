@@ -89,5 +89,63 @@ namespace Cards.Tests.Core
             }
         }
 
+        public class GetAllMethod : TestCase<List<Label>>
+        {
+            protected override Func<List<Label>> Given()
+            {
+                var repository = new Mock<ICardRepository>();
+                repository
+                    .Setup(r => r.FindAllLabels())
+                    .Returns(new List<Label>() 
+                    {
+                        new Label() 
+                        {
+                            ID = 1,
+                            Name = "Bug",
+                            Color = "Red"
+                        }
+                    });
+
+                var factory = new Mock<DbFactory>();
+                factory.Protected()
+                    .Setup<ICardRepository>("OnCreateDb")
+                    .Returns(repository.Object);
+
+                new DbFactory(factory.Object);
+
+                return () => Label.GetAll();
+            }
+
+            [Fact]
+            public void ShouldNotReturnNull()
+            {
+                Subject().Should().NotBeNull();
+            }
+
+            [Fact]
+            public void ShouldCountIs1()
+            {
+                Its.Count.Should().Be(1);
+            }
+
+            [Fact]
+            public void ShouldIDHasValue()
+            {
+                Its[0].ID.Should().Be(1);
+            }
+
+            [Fact]
+            public void ShouldNameIsBug()
+            {
+                Its[0].Name.Should().Be("Bug");
+            }
+
+            [Fact]
+            public void ShouldColorIsRed()
+            {
+                Its[0].Color.Should().Be("Red");
+            }
+        }
+        
     }
 }

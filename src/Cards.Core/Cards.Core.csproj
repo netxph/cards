@@ -61,6 +61,8 @@
     <Compile Include="IDateProvider.cs" />
     <Compile Include="IDbList.cs" />
     <Compile Include="Label.cs" />
+    <Compile Include="LabelCache.cs" />
+    <Compile Include="LabelView.cs" />
     <Compile Include="Migrations\201306260430309_InitialCreate.cs" />
     <Compile Include="Migrations\201306260430309_InitialCreate.Designer.cs">
       <DependentUpon>201306260430309_InitialCreate.cs</DependentUpon>

@@ -107,5 +107,11 @@ namespace Cards.Core
                 return label;
             }
         }
+
+
+        public List<Label> FindAllLabels()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -756,6 +756,69 @@ namespace Cards.Tests.Core
                 Its.AgeText.Should().Be("5");
             }
 
+            public class GetViewMethod_ParseMessage : TestCase<CardView>
+            {
+                protected override Func<CardView> Given()
+                {
+                    var repository = new Mock<ICardRepository>();
+                    repository
+                        .Setup(r => r.FindAllLabels())
+                        .Returns(new List<Label>() 
+                        {
+                            new Label()
+                            {
+                                ID = 1,
+                                Name = "label",
+                                Color = "Red"
+                            }
+                        });
+
+                    var factory = new Mock<DbFactory>();
+                    factory.Protected()
+                        .Setup<ICardRepository>("OnCreateDb")
+                        .Returns(repository.Object);
+
+                    new DbFactory(factory.Object);
+
+                    var card = new Card()
+                    {
+                        Name = "Message #label"
+                    };
+
+                    return () => card.GetView();
+                }
+
+                [Fact]
+                public void ShouldNameIsMessage()
+                {
+                    Its.Name.Should().Be("Message");
+                }
+
+                [Fact]
+                public void ShouldLabelsIsNotNull()
+                {
+                    Its.Labels.Should().NotBeNull();
+                }
+
+                [Fact]
+                public void ShouldCountIs1()
+                {
+                    Its.Labels.Count.Should().Be(1);
+                }
+
+                [Fact]
+                public void ShouldNameIsLabel()
+                {
+                    Its.Labels[0].Name.Should().Be("label");
+                }
+
+                [Fact]
+                public void ShouldColorIsRed()
+                {
+                    Its.Labels[0].Color.Should().Be("Red");
+                }
+            }
+
             public class GetViewMethod_AgeText : TestCase<CardView>
             {
                 protected override Func<CardView> Given()
