@@ -26,9 +26,12 @@
             <h1 data-bind="text: Name"></h1>
             <a data-bind="attr: { 'href': 'Areas/Edit/' + ID }">Edit</a>
         </header>
-        <ul data-bind="foreach: Cards">
+        <ul id="cards" data-bind="foreach: Cards">
             <li data-bind="attr: { 'data-cardid': ID }" draggable="true">
                 <a data-bind="text: Name, attr: { 'href': 'Cards/Edit/' + ID }" draggable="false"></a>
+                <ul id="labels" data-bind="foreach: Labels">
+                    <li><span data-bind="text: Name, attr: { 'data-color' : Color }"></span></li>
+                </ul>
                 <span class="card-bubble" data-bind="text: AgeText, attr: { 'data-age': AgeText }"></span>
             </li>
         </ul>

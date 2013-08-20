@@ -768,7 +768,7 @@ namespace Cards.Tests.Core
                             new Label()
                             {
                                 ID = 1,
-                                Name = "label",
+                                Name = "Label",
                                 Color = "Red"
                             }
                         });
@@ -809,7 +809,7 @@ namespace Cards.Tests.Core
                 [Fact]
                 public void ShouldNameIsLabel()
                 {
-                    Its.Labels[0].Name.Should().Be("label");
+                    Its.Labels[0].Name.Should().Be("Label");
                 }
 
                 [Fact]

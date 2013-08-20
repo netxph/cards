@@ -220,7 +220,7 @@ article header a {
     float: right;
 }
 
-article ul li a {
+#cards li a {
     text-decoration: none;
     color: black;
 }
@@ -273,7 +273,7 @@ article {
     width: 100%;
 }
 
-article ul li {
+#cards li {
     background-color: white;
     border: 1px solid lightgray;
     margin: 12px 0;
@@ -308,4 +308,33 @@ article footer textarea {
     font-size: 1.5em;
     padding-bottom: 10px;
     font-weight: bold;
+}
+
+#labels {
+    margin: 6px 0;
+}
+
+#labels li {
+    display: inline;
+    background-color: transparent;
+    border: none;
+    line-height: 120%;
+    padding: 0;
+}
+
+#labels span {
+	color: white;
+	font-size: smaller;
+	padding:1px 2px 1px 2px;
+	color: white;
+	font-weight:bold;
+	font-size: 10px;
+
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+
+	-webkit-box-shadow: 1px 1px 1px gray;
+	-moz-box-shadow:    1px 1px 1px gray;
+	box-shadow:         1px 1px 1px gray;
 }

@@ -59,7 +59,7 @@ namespace Cards.Core
                 var labelDictionary = new Dictionary<string, Label>();
                 foreach (var item in labels)
                 {
-                    labelDictionary[item.Name] = item;
+                    labelDictionary[item.Name.ToLower()] = item;
                 }
 
                 lock (_lockObject)
@@ -71,7 +71,9 @@ namespace Cards.Core
                 }
             }
 
-            var label = Labels[name];
+            Label label = null;
+
+            Labels.TryGetValue(name.ToLower(), out label);
 
             return label;
         }

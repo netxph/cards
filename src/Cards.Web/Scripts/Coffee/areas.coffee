@@ -22,6 +22,19 @@
                 $("body").width(windowWidth)
 
             return
+        
+        self.colorizeLabel = (label) ->
+            labelElement = $(label)
+
+            color = labelElement.data("color")
+            labelElement.css("background-color", color)
+            return        
+        
+        self.colorize = ->
+            labels = $("#labels span")
+
+            self.colorizeLabel label for label in labels
+            return    
 
         self.initControls = ->
             self.resize()
@@ -120,7 +133,8 @@
                 .done (data) ->
                     self.areas(data)
                     self.resize()
-                    
+                    self.colorize()
+                                                    
                     return
                 .fail ->
                     self.showError "Santa can't figured out what happened, can you try it again?"

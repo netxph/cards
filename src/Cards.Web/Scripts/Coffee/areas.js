@@ -17,6 +17,20 @@
         $("body").width(windowWidth);
       }
     };
+    self.colorizeLabel = function(label) {
+      var color, labelElement;
+      labelElement = $(label);
+      color = labelElement.data("color");
+      labelElement.css("background-color", color);
+    };
+    self.colorize = function() {
+      var label, labels, _i, _len;
+      labels = $("#labels span");
+      for (_i = 0, _len = labels.length; _i < _len; _i++) {
+        label = labels[_i];
+        self.colorizeLabel(label);
+      }
+    };
     self.initControls = function() {
       self.resize();
       $().dragScroll();
@@ -100,6 +114,7 @@
       $.getJSON(self.rootUrl + "api/areas").done(function(data) {
         self.areas(data);
         self.resize();
+        self.colorize();
       }).fail(function() {
         self.showError("Santa can't figured out what happened, can you try it again?");
       });

@@ -108,10 +108,12 @@ namespace Cards.Core
             }
         }
 
-
         public List<Label> FindAllLabels()
         {
-            throw new NotImplementedException();
+            using (var db = new CardsDb())
+            {
+                return db.Labels.ToList();
+            }
         }
     }
 }
