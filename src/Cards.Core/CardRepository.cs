@@ -119,7 +119,13 @@ namespace Cards.Core
 
         public Label DeleteLabel(Label label)
         {
-            throw new NotImplementedException();
+            using (var db = new CardsDb())
+            {
+                db.Entry(new Label() { ID = label.ID }).State = EntityState.Deleted;
+                db.SaveChanges();
+
+                return label;
+            }
         }
     }
 }
