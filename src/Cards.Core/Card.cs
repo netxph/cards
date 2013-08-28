@@ -36,6 +36,19 @@ namespace Cards.Core
 
         public DateTime ModifiedDateUtc { get; set; }
 
+        public int DaysSinceLastUpdate
+        { 
+            get
+            {
+                return getDaysSinceLastUpdate();
+            }
+        }
+
+        private int getDaysSinceLastUpdate()
+        {
+            return (DateProvider.UtcNow().Date - ModifiedDateUtc.Date).Days;
+        }
+
         private long getAge()
         {
             return (DateProvider.UtcNow().Date - CreatedDateUtc.Date).Days;
@@ -137,11 +150,13 @@ namespace Cards.Core
         {
             var card = new CardView()
             {
-                AreaID = this.AreaID,
-                ID = this.ID,
-                IsActive = this.IsActive,
-                Name = this.Name,
-                Age = getAge()
+                AreaID                  = this.AreaID,
+                ID                      = this.ID,
+                IsActive                = this.IsActive,
+                Name                    = this.Name,
+                Age                     = getAge(),
+                DaysSinceLastUpdate     = getDaysSinceLastUpdate(),
+                DaysSinceLastUpdateText = getDaysSinceLastUpdate().ToString()
             };
 
             card.AgeText = getAgeText(card.Age);
