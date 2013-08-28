@@ -115,5 +115,11 @@ namespace Cards.Core
                 return db.Labels.ToList();
             }
         }
+
+
+        public Label DeleteLabel(Label label)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

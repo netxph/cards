@@ -49,5 +49,19 @@ namespace Cards.Core
                 Color = this.Color
             };
         }
+
+        public static Label Delete(string name)
+        {
+            var db = DbFactory.Create();
+
+            var label = LabelCache.GetLabel(name);
+
+            if (label != null)
+            {
+                label = db.DeleteLabel(label);
+            }
+
+            return label;
+        }
     }
 }

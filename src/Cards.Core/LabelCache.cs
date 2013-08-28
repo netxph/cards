@@ -78,5 +78,13 @@ namespace Cards.Core
             return label;
         }
 
+
+        public static void Reset()
+        {
+            lock (_lockObject)
+            {
+                _instance = null;
+            }
+        }
     }
 }

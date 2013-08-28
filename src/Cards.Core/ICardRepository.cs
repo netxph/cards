@@ -22,5 +22,7 @@ namespace Cards.Core
 
         Label CreateLabel(Label label);
         List<Label> FindAllLabels();
+
+        Label DeleteLabel(Label label);
     }
 }

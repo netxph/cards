@@ -47,6 +47,82 @@ namespace Cards.Tests.Core
             }
         }
 
+        public class DeleteLabelMethod : TestCase<Label>
+        {
+            protected override Func<Label> Given()
+            {
+                LabelCache.Reset();
+
+                Queue<List<Label>> resultQueue = new Queue<List<Label>>();
+
+                var label = new Label()
+                {
+                    ID = 1,
+                    Name = "Bug",
+                    Color = "Red"
+                };
+
+                var withValues = new List<Label>()
+                {
+                    label
+                };
+
+                var withoutValues = new List<Label>();
+
+                resultQueue.Enqueue(withValues);
+                resultQueue.Enqueue(withoutValues);
+
+                var repository = new Mock<ICardRepository>();
+                repository
+                    .Setup(r => r.FindAllLabels())
+                    .Returns(() => resultQueue.Dequeue());
+
+                repository
+                    .Setup(r => r.DeleteLabel(It.Is<Label>(l => l.Name == "Bug")))
+                    .Returns(label);
+
+                var factory = new Mock<DbFactory>();
+                factory.Protected()
+                    .Setup<ICardRepository>("OnCreateDb")
+                    .Returns(repository.Object);
+
+                new DbFactory(factory.Object);
+
+                return () => Label.Delete("bug");
+            }
+
+            [Fact]
+            public void ShouldNotReturnNull()
+            {
+                Subject().Should().NotBeNull();
+            }
+
+            [Fact]
+            public void ShouldNameIsBug()
+            {
+                Its.Name.Should().Be("Bug");
+            }
+
+            [Fact]
+            public void ShouldIDIs1()
+            {
+                Its.ID.Should().Be(1);
+            }
+
+            [Fact]
+            public void ShouldColorIsRed()
+            {
+                Its.Color.Should().Be("Red");
+            }
+
+            [Fact]
+            public void ShouldCacheIsReset()
+            {
+                LabelCache.GetLabel("Red").Should().Be(null);
+            }
+        }
+
+
         public class AddLabelMethod : TestCase<Label>
         {
             protected override Func<Label> Given()
@@ -65,7 +141,7 @@ namespace Cards.Tests.Core
                     .Returns(repository.Object);
 
                 new DbFactory(factory.Object);
-                
+
 
                 return () => Label.Create("Bug", "Red");
             }
@@ -146,6 +222,6 @@ namespace Cards.Tests.Core
                 Its[0].Color.Should().Be("Red");
             }
         }
-        
+
     }
 }
