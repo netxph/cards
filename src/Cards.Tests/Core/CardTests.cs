@@ -781,9 +781,19 @@ namespace Cards.Tests.Core
 
                     new DbFactory(factory.Object);
 
+                    DateTime NOW = new DateTime(2013, 1, 6);
+
+                    var dateProvider = new Mock<IDateProvider>();
+                    dateProvider
+                        .Setup(d => d.UtcNow())
+                        .Returns(NOW);
+
+                    Card.DateProvider = dateProvider.Object;
+
                     var card = new Card()
                     {
-                        Name = "Message #label"
+                        Name            = "Message #label",
+                        ModifiedDateUtc = NOW.AddDays(-5)
                     };
 
                     return () => card.GetView();
