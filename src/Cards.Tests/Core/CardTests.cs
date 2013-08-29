@@ -793,7 +793,7 @@ namespace Cards.Tests.Core
                     var card = new Card()
                     {
                         Name            = "Message #label",
-                        ModifiedDateUtc = NOW.AddDays(-5)
+                        ModifiedDateUtc = NOW.AddDays(-6)
                     };
 
                     return () => card.GetView();
@@ -832,13 +832,13 @@ namespace Cards.Tests.Core
                 [Fact]
                 public void ShouldDaysLastUpdatedHaveValue()
                 {
-                    Its.DaysSinceLastUpdate.Should().Be(5);
+                    Its.DaysSinceLastUpdate.Should().Be(6);
                 }
 
                 [Fact]
                 public void ShouldDaysLastUpdatedTextHaveValue()
                 {
-                    Its.DaysSinceLastUpdateText.Should().Be("5");
+                    Its.DaysSinceLastUpdateText.Should().Be("6");
                 }
             }
 
