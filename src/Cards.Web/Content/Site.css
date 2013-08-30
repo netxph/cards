@@ -15,6 +15,39 @@ button {
     vertical-align: bottom;
 }
 
+#labels-manage header {
+	font-size: 26px;
+}
+
+#labels-big {
+	margin: 24px 12px;
+}
+
+#labels-big li {
+	width: 100%;
+	margin: 12px;
+}
+
+#labels-big span {
+	font-size: 16px;
+	padding: 6px;
+	width: 100px;
+	float: left;
+	margin-right: 12px;
+}
+
+#labels-add {
+	border-top: 1px solid lightgray;
+}
+
+#labels-add input {
+	margin-bottom: 12px;
+}
+
+#labels-add form {
+	margin: 24px 12px;
+}
+
 .action-buttons {
     margin-top: 15px;
     float: right;
