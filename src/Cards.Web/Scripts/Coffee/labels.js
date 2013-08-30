@@ -5,6 +5,10 @@
     self = this;
     self.rootUrl = $("meta[name=cards-baseurl]").attr("content");
     self.labels = ko.observableArray([]);
+    self.newLabel = {
+      Name: ko.observable(""),
+      Color: ko.observable("")
+    };
     self.onReady = function() {
       ko.applyBindings(self);
       self.initialize();
@@ -14,6 +18,15 @@
       $.getJSON(self.rootUrl + "api/labels").done(function(data) {
         self.labels(data);
         self.colorize();
+      }).fail(function() {
+        self.showError("Santa can't figured out what happened, can you try it again?");
+      });
+    };
+    self.addLabel = function() {
+      var label;
+      label = ko.toJS(self.newLabel);
+      $.post(self.rootUrl + "api/labels", label).done(function() {
+        self.refresh();
       }).fail(function() {
         self.showError("Santa can't figured out what happened, can you try it again?");
       });

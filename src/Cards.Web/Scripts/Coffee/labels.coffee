@@ -7,6 +7,9 @@
         # Properties
         self.rootUrl = $("meta[name=cards-baseurl]").attr("content")
         self.labels = ko.observableArray([])
+        self.newLabel = 
+            Name: ko.observable("")
+            Color: ko.observable("")
 
         # Methods
         self.onReady = ->
@@ -25,6 +28,18 @@
                     self.showError "Santa can't figured out what happened, can you try it again?"
                     return
 
+            return
+
+        self.addLabel = ->
+            label = ko.toJS(self.newLabel)
+
+            $.post(self.rootUrl + "api/labels", label)
+                .done ->
+                    self.refresh()
+                    return
+                .fail ->
+                    self.showError "Santa can't figured out what happened, can you try it again?"
+                    return
             return
 
         self.colorizeLabel = (label) ->

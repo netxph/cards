@@ -18,11 +18,11 @@
 		</li>
 	</ul>
 
-	<form action="POST">
+	<form action="POST" data-bind="with: newLabel">
 		<span>Name</span>
-		<input type="text"></input>
+		<input type="text" data-bind="value: Name"></input>
 		<span>Color</span>
-		<input type="text"></input>
-		<button>Add</button>
+		<input type="text" data-bind="value: Color"></input>
+		<button data-bind="click: $root.addLabel">Add</button>
 	</form> 
 </section>
