@@ -834,12 +834,6 @@ namespace Cards.Tests.Core
                 {
                     Its.DaysSinceLastUpdate.Should().Be(6);
                 }
-
-                [Fact]
-                public void ShouldDaysLastUpdatedTextHaveValue()
-                {
-                    Its.DaysSinceLastUpdateText.Should().Be("6");
-                }
             }
 
             public class GetViewMethod_AgeText : TestCase<CardView>
