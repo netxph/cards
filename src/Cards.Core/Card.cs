@@ -155,8 +155,7 @@ namespace Cards.Core
                 IsActive                = this.IsActive,
                 Name                    = this.Name,
                 Age                     = getAge(),
-                DaysSinceLastUpdate     = getDaysSinceLastUpdate(),
-                DaysSinceLastUpdateText = getDaysSinceLastUpdate().ToString()
+                DaysSinceLastUpdate     = getDaysSinceLastUpdate()
             };
 
             card.AgeText = getAgeText(card.Age);
