@@ -1,26 +1,19 @@
-﻿<section>
+﻿@{
+    ViewBag.Title = "Labels";
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/labels")
+}
+
+<section>
 	<header>
 		<h1>Labels</h1>
 	</header>
-	<ul>
+	<ul id="labels-big" data-bind="foreach: labels">
 		<li>
-		<span data-color="Red">Bug</span>
-		<button>Delete</button>
-		</li>
-		<li>
-		<span data-color="Pink">Issue</span>
-		<button>Delete</button>
-		</li>
-		<li>
-		<span data-color="Blue">Enhancement</span>
-		<button>Delete</button>
-		</li>
-		<li>
-		<span data-color="Orange">Experiment</span>
-		<button>Delete</button>
-		</li>
-		<li>
-		<span data-color="Violet">For Review</span>
+		<span data-bind="text: Name, attr: { 'data-color': Color }"></span>
 		<button>Delete</button>
 		</li>
 	</ul>
