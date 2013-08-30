@@ -30,8 +30,10 @@ namespace Cards.Core
                 Color = color
             };
 
-            return db.CreateLabel(label);
+            label = db.CreateLabel(label);
+            LabelCache.Reset();
 
+            return label;
         }
 
         public static List<Label> GetAll()
@@ -59,6 +61,7 @@ namespace Cards.Core
             if (label != null)
             {
                 label = db.DeleteLabel(label);
+                LabelCache.Reset();
             }
 
             return label;

@@ -35,6 +35,8 @@
 
             $.post(self.rootUrl + "api/labels", label)
                 .done ->
+                    self.newLabel.Name("");
+                    self.newLabel.Color("");
                     self.refresh()
                     return
                 .fail ->

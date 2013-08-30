@@ -26,6 +26,8 @@
       var label;
       label = ko.toJS(self.newLabel);
       $.post(self.rootUrl + "api/labels", label).done(function() {
+        self.newLabel.Name("");
+        self.newLabel.Color("");
         self.refresh();
       }).fail(function() {
         self.showError("Santa can't figured out what happened, can you try it again?");
