@@ -55,7 +55,7 @@
             data: card
           }).done(function() {
             var target;
-            target = areaElement.find("ul");
+            target = areaElement.find("#cards");
             target.append(cardElement);
           }).fail(function() {
             self.showError("Santa can't figured out what happened, can you try it again?");

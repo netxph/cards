@@ -63,7 +63,7 @@
                             type: "PUT",
                             data: card)
                             .done ->
-                                target = areaElement.find("ul")
+                                target = areaElement.find("#cards")
                                 target.append(cardElement)        
                                 return
                             .fail ->

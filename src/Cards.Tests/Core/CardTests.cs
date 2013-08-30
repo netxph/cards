@@ -199,15 +199,15 @@ namespace Cards.Tests.Core
             }
 
             [Fact]
-            public void ShouldNameIsUpdated()
-            {
-                Its.Name.Should().Be("Updated task");
-            }
-
-            [Fact]
             public void ShouldAreaIs2()
             {
                 Its.AreaID.Should().Be(2);
+            }
+
+            [Fact]
+            public void ShouldNameNotChanged()
+            {
+                Its.Name.Should().Be("Card");
             }
 
             [Fact]

@@ -101,9 +101,9 @@ namespace Cards.Core
                 if (areaId == card.AreaID)
                 {
                     changeType = CardChangeType.Modify;
+                    card.Name = name;
                 }
-
-                card.Name = name;
+                
                 card.AreaID = areaId;
                 card.ModifiedDateUtc = DateProvider.UtcNow();
 
