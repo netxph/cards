@@ -23,8 +23,5 @@ namespace Cards.Core
         public List<LabelView> Labels { get; set; }
 
         public int DaysSinceLastUpdate { get; set; }
-
-        public string DaysSinceLastUpdateText { get; set; }
-
     }
 }
