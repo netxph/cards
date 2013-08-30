@@ -14,7 +14,7 @@
 	<ul id="labels-big" data-bind="foreach: labels">
 		<li>
 		<span data-bind="text: Name, attr: { 'data-color': Color }"></span>
-		<button>Delete</button>
+		<button data-bind="click: $root.deleteLabel">Delete</button>
 		</li>
 	</ul>
 

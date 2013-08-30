@@ -42,6 +42,21 @@
                     return
             return
 
+        self.deleteLabel = ->
+            label = this
+
+            $.ajax(
+                url: self.rootUrl + "api/labels/"
+                data: label
+                type: "DELETE")
+                .done ->
+                    self.refresh()
+                    return
+                .fail ->
+                    self.showError "Santa can't figured out what happened, can you try it again"
+                    return
+            return
+
         self.colorizeLabel = (label) ->
             labelElement = $(label)
 

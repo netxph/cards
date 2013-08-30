@@ -31,6 +31,19 @@
         self.showError("Santa can't figured out what happened, can you try it again?");
       });
     };
+    self.deleteLabel = function() {
+      var label;
+      label = this;
+      $.ajax({
+        url: self.rootUrl + "api/labels/",
+        data: label,
+        type: "DELETE"
+      }).done(function() {
+        self.refresh();
+      }).fail(function() {
+        self.showError("Santa can't figured out what happened, can you try it again");
+      });
+    };
     self.colorizeLabel = function(label) {
       var color, labelElement;
       labelElement = $(label);
