@@ -82,6 +82,7 @@
                             data: card)
                             .done ->
                                 target = areaElement.find("#cards")
+                                cardElement.removeClass('card-aged')
                                 target.append(cardElement)        
                                 return
                             .fail ->
