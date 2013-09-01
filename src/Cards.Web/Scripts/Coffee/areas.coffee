@@ -22,18 +22,36 @@
                 $("body").width(windowWidth)
 
             return
+
+        self.colorizeCard = (card, aged) ->
+            cardElement = $(card)
+            staleAge = cardElement.data("stale")
+
+            cardElement.addClass 'card-aged' if staleAge > aged
+
+            return
         
         self.colorizeLabel = (label) ->
             labelElement = $(label)
 
             color = labelElement.data("color")
             labelElement.css("background-color", color)
+
             return        
         
         self.colorize = ->
+
+            #labels
             labels = $("#labels span")
 
             self.colorizeLabel label for label in labels
+
+            #cards
+            aged = $("#cards").data('aged')
+            cards = $("#cards li")
+
+            self.colorizeCard card, aged for card in cards
+
             return    
 
         self.initControls = ->

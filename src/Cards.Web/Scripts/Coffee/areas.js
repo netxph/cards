@@ -17,6 +17,14 @@
         $("body").width(windowWidth);
       }
     };
+    self.colorizeCard = function(card, aged) {
+      var cardElement, staleAge;
+      cardElement = $(card);
+      staleAge = cardElement.data("stale");
+      if (staleAge > aged) {
+        cardElement.addClass('card-aged');
+      }
+    };
     self.colorizeLabel = function(label) {
       var color, labelElement;
       labelElement = $(label);
@@ -24,11 +32,17 @@
       labelElement.css("background-color", color);
     };
     self.colorize = function() {
-      var label, labels, _i, _len;
+      var aged, card, label, labels, _i, _j, _len, _len1;
       labels = $("#labels span");
       for (_i = 0, _len = labels.length; _i < _len; _i++) {
         label = labels[_i];
         self.colorizeLabel(label);
+      }
+      aged = $("#cards").data('aged');
+      cards = $("#cards li");
+      for (_j = 0, _len1 = cards.length; _j < _len1; _j++) {
+        card = cards[_j];
+        self.colorizeCard(card, aged);
       }
     };
     self.initControls = function() {

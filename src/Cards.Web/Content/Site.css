@@ -308,7 +308,6 @@ article {
 }
 
 #cards li {
-    background-color: white;
     border: 1px solid lightgray;
     margin: 12px 0;
     padding: 6px;
@@ -371,4 +370,8 @@ article footer textarea {
 	-webkit-box-shadow: 1px 1px 1px gray;
 	-moz-box-shadow:    1px 1px 1px gray;
 	box-shadow:         1px 1px 1px gray;
+}
+
+.card-aged {
+	background-color: lightgray;
 }

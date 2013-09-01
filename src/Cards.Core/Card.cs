@@ -13,10 +13,6 @@ namespace Cards.Core
     public class Card
     {
 
-        //TODO: Transfer this to settings
-        const int NEW_AGE = 0;
-        const int OLD_AGE = 30;
-
         public Card()
         {
             IsActive = true;
@@ -194,11 +190,11 @@ namespace Cards.Core
 
         private string getAgeText(long age)
         {
-            if (age <= NEW_AGE)
+            if (age <= Settings.NEW_AGE)
             {
                 return "new";
             }
-            else if (age >= OLD_AGE)
+            else if (age >= Settings.OLD_AGE)
             {
                 return "aged";
             }
