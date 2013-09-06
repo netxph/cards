@@ -49,7 +49,7 @@ namespace Cards.Core
             }
         }
 
-        public static User Create(string name, string email)
+        public static User Register(string name, string email)
         {
             var db = DbFactory.Create();
 
@@ -64,17 +64,17 @@ namespace Cards.Core
             return user;
         }
 
-        public static User Get(int id)
+        public static User CheckRegistration(string email)
         {
             var db = DbFactory.Create();
 
-            return db.FindUser(id);
+            return db.FindUser(email);
         }
 
-        public static User Update(int id, string name, string email)
+        public static User Update(string email, string name)
         {
             var db   = DbFactory.Create();
-            var user = db.FindUser(id);
+            var user = db.FindUser(email);
 
             if (user != null)
             {
@@ -90,10 +90,10 @@ namespace Cards.Core
             return null;
         }
 
-        public static User Delete(int id)
+        public static User Delete(string email)
         {
             var db   = DbFactory.Create();
-            var user = db.FindUser(id);
+            var user = db.FindUser(email);
 
             if (user != null)
             {

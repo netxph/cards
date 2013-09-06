@@ -165,7 +165,7 @@ namespace Cards.Tests.Core
 
                 new DbFactory(factory.Object);
 
-                return () => User.Create("user", "user@website.com");
+                return () => User.Register("user", "user@website.com");
             }
 
             [Fact]
@@ -215,7 +215,7 @@ namespace Cards.Tests.Core
                 var repository = new Mock<ICardRepository>();
 
                 repository
-                            .Setup(r => r.FindUser(1))
+                            .Setup(r => r.FindUser("user@website.com"))
                             .Returns(new User()
                             {
                                 ID              = 1,
@@ -233,7 +233,7 @@ namespace Cards.Tests.Core
 
                 new DbFactory(factory.Object);
 
-                return () => User.Get(1);
+                return () => User.CheckRegistration("user@website.com");
             }
 
             [Fact]
@@ -309,7 +309,7 @@ namespace Cards.Tests.Core
                 var repository = new Mock<ICardRepository>();
 
                 repository
-                            .Setup(r => r.FindUser(It.IsAny<int>()))
+                            .Setup(r => r.FindUser("email@email.com"))
                             .Returns(user);
 
                 var factory = new Mock<DbFactory>();
@@ -320,7 +320,7 @@ namespace Cards.Tests.Core
 
                 new DbFactory(factory.Object);
 
-                return () => User.Update(1, "updatedName", "updated.email@yahoo.com");
+                return () => User.Update("email@email.com", "updatedName");
             }
 
             [Fact]
@@ -338,7 +338,7 @@ namespace Cards.Tests.Core
             [Fact]
             public void UpdatedUserEmailShouldHaveValue()
             {
-                Its.Email.Should().Be("updated.email@yahoo.com");
+                Its.Email.Should().Be("email@email.com");
             }
 
             [Fact]
@@ -376,7 +376,7 @@ namespace Cards.Tests.Core
                 var repository = new Mock<ICardRepository>();
 
                 repository
-                            .Setup(r => r.FindUser(It.IsAny<int>()))
+                            .Setup(r => r.FindUser("delete@email.com"))
                             .Returns(user);
 
                 var factory = new Mock<DbFactory>();
@@ -387,7 +387,7 @@ namespace Cards.Tests.Core
 
                 new DbFactory(factory.Object);
 
-                return () => User.Delete(1);
+                return () => User.Delete("delete@email.com");
             }
 
             [Fact]

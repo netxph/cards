@@ -133,7 +133,7 @@ namespace Cards.Core
             throw new NotImplementedException();
         }
 
-        public User FindUser(int id)
+        public User FindUser(string email)
         {
             throw new NotImplementedException();
         }
