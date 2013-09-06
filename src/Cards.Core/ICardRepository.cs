@@ -8,7 +8,6 @@ namespace Cards.Core
 {
     public interface ICardRepository
     {
-
         Area CreateArea(Area area);
         List<Area> FindAllArea();
         Area FindArea(int id);
@@ -24,5 +23,9 @@ namespace Cards.Core
         List<Label> FindAllLabels();
 
         Label DeleteLabel(Label label);
+
+        User CreateUser(User user);
+        User FindUser(int id);
+        User UpdateUser(User user);
     }
 }
