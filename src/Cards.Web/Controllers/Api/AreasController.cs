@@ -11,9 +11,9 @@ namespace Cards.Web.Controllers.Api
     public class AreasController : ApiController
     {
 
-        public List<AreaView> GetAll()
+        public List<AreaView> GetAll([FromUri] FilterCardRequest request)
         {
-            return Area.GetViews();
+            return Area.Find(request);
         }
 
         public Area Get(int id)

@@ -556,7 +556,7 @@ namespace Cards.Tests.Core
                 {
                     LabelCache.Reset();
 
-                    return () => Area.Find(new FilterCardRequest() { CardLabel = "Bug" });
+                    return () => Area.Find(new FilterCardRequest() { CardLabel = "bug" });
                 }
 
                 [Fact]

@@ -130,7 +130,7 @@ namespace Cards.Core
             {
                 foreach (var area in areas)
                 {
-                    area.Cards = area.Cards.Where(c => c.Labels.Any(l => l.Name == request.CardLabel)).ToList();
+                    area.Cards = area.Cards.Where(c => c.Labels.Any(l => l.Name.Trim().ToLower() == request.CardLabel.ToLower())).ToList();
                 }
             }
 
