@@ -24,13 +24,27 @@ namespace Cards.Core
             var db = DbFactory.Create();
 
             //contruct label object
-            var label = new Label()
-            {
-                Name = name,
-                Color = color
-            };
 
-            label = db.CreateLabel(label);
+
+            var label = LabelCache.GetLabel(name);
+
+            if (label == null)
+            {
+                label = new Label()
+                {
+                    Name = name,
+                    Color = color
+                };
+
+                label = db.CreateLabel(label);
+            }
+            else
+            {
+                label.Color = color;
+
+                label = db.UpdateLabel(label);
+            }
+            
             LabelCache.Reset();
 
             return label;

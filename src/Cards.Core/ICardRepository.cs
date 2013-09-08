@@ -24,5 +24,7 @@ namespace Cards.Core
         List<Label> FindAllLabels();
 
         Label DeleteLabel(Label label);
+
+        Label UpdateLabel(Label label);
     }
 }

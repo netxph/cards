@@ -127,5 +127,16 @@ namespace Cards.Core
                 return label;
             }
         }
+
+        public Label UpdateLabel(Label label)
+        {
+            using (var db = new CardsDb())
+            {
+                db.Entry(label).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return label;
+            }
+        }
     }
 }

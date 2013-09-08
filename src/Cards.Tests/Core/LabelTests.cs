@@ -125,7 +125,8 @@ namespace Cards.Tests.Core
 
         public class AddLabelMethod : TestCase<Label>
         {
-            protected override Func<Label> Given()
+
+            protected override void Initialize()
             {
                 Label label = null;
 
@@ -135,6 +136,10 @@ namespace Cards.Tests.Core
                     .Callback<Label>(l => label = l)
                     .Returns(() => label);
 
+                repository
+                    .Setup(r => r.FindAllLabels())
+                    .Returns(new List<Label>());
+
                 var factory = new Mock<DbFactory>();
                 factory.Protected()
                     .Setup<ICardRepository>("OnCreateDb")
@@ -142,7 +147,11 @@ namespace Cards.Tests.Core
 
                 new DbFactory(factory.Object);
 
+            }
 
+            protected override Func<Label> Given()
+            {
+                LabelCache.Reset();
                 return () => Label.Create("Bug", "Red");
             }
 
@@ -163,6 +172,57 @@ namespace Cards.Tests.Core
             {
                 Its.Color.Should().Be("Red");
             }
+
+        }
+
+        public class AddLabelMethod_Duplicate : TestCase<Label>
+        {
+            protected override void Initialize()
+            {
+                Label label = null;
+
+                var repository = new Mock<ICardRepository>();
+                repository
+                    .Setup(r => r.FindAllLabels())
+                    .Returns(new List<Label>()
+                        {
+                            new Label()
+                            {
+                                ID = 1,
+                                Name = "Bug",
+                                Color = "Red"
+                            }
+                        });
+
+                repository
+                    .Setup(r => r.UpdateLabel(It.IsAny<Label>()))
+                    .Callback<Label>(l => label = l)
+                    .Returns(() => label);
+
+                var factory = new Mock<DbFactory>();
+                factory.Protected()
+                    .Setup<ICardRepository>("OnCreateDb")
+                    .Returns(repository.Object);
+
+                new DbFactory(factory.Object);
+            }
+
+            protected override Func<Label> Given()
+            {
+                LabelCache.Reset();
+
+                return () => Label.Create("bug", "Red");
+            }
+
+            [Fact]
+            public void ShouldCallUpdate()
+            {
+                Subject();
+
+                Mock.Get(DbFactory.Create())
+                    .Verify(d => d.UpdateLabel(It.IsAny<Label>()), Times.Once());
+            }
+
         }
 
         public class GetAllMethod : TestCase<List<Label>>
