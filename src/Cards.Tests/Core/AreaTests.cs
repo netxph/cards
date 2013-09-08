@@ -113,7 +113,6 @@ namespace Cards.Tests.Core
             }
         }
 
-
         public class GetAllMethod : TestCase<List<Area>>
         {
             protected override Func<List<Area>> Given()
@@ -429,6 +428,148 @@ namespace Cards.Tests.Core
             public void ShouldModifiedIsNow()
             {
                 Its.ModifiedDateUtc.Should().Be(NOW);
+            }
+        }
+
+        public class FindMethod : TestCase<List<AreaView>>
+        {
+            protected override void Initialize()
+            {
+                var repository = new Mock<ICardRepository>();
+                repository
+                    .Setup(r => r.FindAllArea())
+                    .Returns(new List<Area>()
+                    {
+                        new Area()
+                        {
+                            ID = 1,
+                            Name = "Backlog",
+                            IsActive = true,
+                            Cards = new List<Card>()
+                            {
+                                new Card()
+                                {
+                                    Name = "A bug #bug"
+                                },
+                                new Card()
+                                {
+                                    Name = "Not a bug"
+                                }
+                            }
+                        }
+                    });
+                
+                repository
+                    .Setup(r => r.FindAllLabels())
+                    .Returns(new List<Label>()
+                    {
+                        new Label()
+                        {
+                            Name = "Bug",
+                            Color = "Red"
+                        }
+                    });
+
+                var factory = new Mock<DbFactory>();
+                factory.Protected()
+                    .Setup<ICardRepository>("OnCreateDb")
+                    .Returns(repository.Object);
+
+                new DbFactory(factory.Object);                
+            }
+
+            protected override Func<List<AreaView>> Given()
+            {
+                LabelCache.Reset();
+                
+                return () => Area.Find(new FilterCardRequest());
+            }
+
+            [Fact]
+            public void ShouldNotReturnNull()
+            {
+                Subject().Should().NotBeNull();
+            }
+
+            [Fact]
+            public void ShouldNotBeEmpty()
+            {
+                Its.Should().NotBeEmpty();
+            }
+
+            [Fact]
+            public void ShouldReturnAllCards()
+            {
+                Its[0].Cards.Count.Should().Be(2);
+            }
+
+            public class FindMethod_Labels : TestCase<List<AreaView>>
+            {
+
+                protected override void Initialize()
+                {
+
+                    var repository = new Mock<ICardRepository>();
+                    repository
+                        .Setup(r => r.FindAllArea())
+                        .Returns(new List<Area>()
+                    {
+                        new Area()
+                        {
+                            ID = 1,
+                            Name = "Backlog",
+                            IsActive = true,
+                            Cards = new List<Card>()
+                            {
+                                new Card()
+                                {
+                                    Name = "A bug #bug"
+                                },
+                                new Card()
+                                {
+                                    Name = "Not a bug"
+                                }
+                            }
+                        }
+                    });
+
+                    repository
+                        .Setup(r => r.FindAllLabels())
+                        .Returns(new List<Label>()
+                    {
+                        new Label()
+                        {
+                            Name = "Bug",
+                            Color = "Red"
+                        }
+                    });
+
+                    var factory = new Mock<DbFactory>();
+                    factory.Protected()
+                        .Setup<ICardRepository>("OnCreateDb")
+                        .Returns(repository.Object);
+
+                    new DbFactory(factory.Object);
+                }
+
+                protected override Func<List<AreaView>> Given()
+                {
+                    LabelCache.Reset();
+
+                    return () => Area.Find(new FilterCardRequest() { CardLabel = "Bug" });
+                }
+
+                [Fact]
+                public void ShouldReturn1Card()
+                {
+                    Its[0].Cards.Count.Should().Be(1);
+                }
+
+                [Fact]
+                public void ShouldCardHasLabelBug()
+                {
+                    Its[0].Cards[0].Labels.Any(l => l.Name == "Bug").Should().BeTrue();
+                }
             }
         }
 

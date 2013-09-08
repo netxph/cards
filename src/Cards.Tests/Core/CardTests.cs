@@ -761,6 +761,8 @@ namespace Cards.Tests.Core
             {
                 protected override Func<CardView> Given()
                 {
+                    LabelCache.Reset();
+
                     var repository = new Mock<ICardRepository>();
                     repository
                         .Setup(r => r.FindAllLabels())

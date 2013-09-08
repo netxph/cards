@@ -57,6 +57,7 @@
     <Compile Include="DateProvider.cs" />
     <Compile Include="DbFactory.cs" />
     <Compile Include="Activity.cs" />
+    <Compile Include="FilterCardRequest.cs" />
     <Compile Include="ICardRepository.cs" />
     <Compile Include="IDateProvider.cs" />
     <Compile Include="IDbList.cs" />
