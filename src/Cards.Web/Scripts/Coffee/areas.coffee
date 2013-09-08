@@ -8,7 +8,12 @@
         self.rootUrl = $("meta[name=cards-baseurl]").attr("content")
 
         self.newArea = ko.observable("")
+        self.filterString = ko.observable("")
         self.areas = ko.observableArray([])
+
+        self.filterCards = ->
+            self.refresh();
+            return
 
         self.resize = ->
             windowWidth = $(window).width()
@@ -148,7 +153,7 @@
             return
 
         self.refresh = ->
-            $.getJSON(self.rootUrl + "api/areas")
+            $.getJSON(self.rootUrl + "api/areas?CardLabel=" + self.filterString())
                 .done (data) ->
                     self.areas(data)
                     self.resize()
