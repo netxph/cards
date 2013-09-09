@@ -1,4 +1,5 @@
-﻿
+﻿var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+
 (function(cards, window, $, ko) {
   cards.Class.AreasViewModel = function() {
     var self;
@@ -21,11 +22,35 @@
         $("body").width(windowWidth);
       }
     };
+    self.getNoAgeAreas = function() {
+      var noAgeAreas;
+      noAgeAreas = $("#areas").data("noage");
+      return noAgeAreas.split(";");
+    };
+    self.hideBubbles = function() {
+      var bubble, bubbles, noAgeAreas, _i, _len;
+      noAgeAreas = self.getNoAgeAreas();
+      bubbles = $(".card-bubble");
+      for (_i = 0, _len = bubbles.length; _i < _len; _i++) {
+        bubble = bubbles[_i];
+        self.hideBubble(bubble, noAgeAreas);
+      }
+    };
+    self.hideBubble = function(bubble, noAgeAreas) {
+      var area, bubbleElement;
+      bubbleElement = $(bubble);
+      area = $(bubble).closest("article").find("header h1").text();
+      if (__indexOf.call(noAgeAreas, area) >= 0) {
+        bubbleElement.hide();
+      }
+    };
     self.colorizeCard = function(card, aged) {
-      var cardElement, staleAge;
+      var area, cardElement, noAgeAreas, staleAge;
       cardElement = $(card);
       staleAge = cardElement.data("stale");
-      if (staleAge > aged) {
+      noAgeAreas = self.getNoAgeAreas();
+      area = cardElement.closest("article").find("header h1").text();
+      if (staleAge > aged && __indexOf.call(noAgeAreas, area) < 0) {
         cardElement.addClass('card-aged');
       }
     };
@@ -134,6 +159,7 @@
         self.areas(data);
         self.resize();
         self.colorize();
+        self.hideBubbles();
       }).fail(function() {
         self.showError("Santa can't figured out what happened, can you try it again?");
       });

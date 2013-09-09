@@ -24,7 +24,7 @@
     </ul>
 </nav>
 
-<section id="areas" data-bind="foreach: areas">
+<section id="areas" data-bind="foreach: areas" data-noage="@Settings.NO_AGE_AREAS">
     <article data-bind="attr: { 'data-areaid': ID }">
         <header>
             <h1 data-bind="text: Name"></h1>
