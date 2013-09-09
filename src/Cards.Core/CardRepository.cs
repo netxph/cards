@@ -128,6 +128,17 @@ namespace Cards.Core
             }
         }
 
+        public Label UpdateLabel(Label label)
+        {
+            using (var db = new CardsDb())
+            {
+                db.Entry(label).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return label;
+            }
+        }
+
         public User CreateUser(User user)
         {
             throw new NotImplementedException();
@@ -142,5 +153,6 @@ namespace Cards.Core
         {
             throw new NotImplementedException();
         }
+
     }
 }

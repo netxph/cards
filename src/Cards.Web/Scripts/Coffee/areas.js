@@ -5,7 +5,11 @@
     self = this;
     self.rootUrl = $("meta[name=cards-baseurl]").attr("content");
     self.newArea = ko.observable("");
+    self.filterString = ko.observable("");
     self.areas = ko.observableArray([]);
+    self.filterCards = function() {
+      self.refresh();
+    };
     self.resize = function() {
       var areaCount, width, windowWidth;
       windowWidth = $(window).width();
@@ -126,7 +130,7 @@
       });
     };
     self.refresh = function() {
-      $.getJSON(self.rootUrl + "api/areas").done(function(data) {
+      $.getJSON(self.rootUrl + "api/areas?CardLabel=" + self.filterString()).done(function(data) {
         self.areas(data);
         self.resize();
         self.colorize();

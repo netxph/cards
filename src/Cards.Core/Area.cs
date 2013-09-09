@@ -120,5 +120,21 @@ namespace Cards.Core
         {
             return GetAll().ConvertAll(a => a.GetView());
         }
+
+
+        public static List<AreaView> Find(FilterCardRequest request)
+        {
+            var areas = GetViews();
+
+            if (!string.IsNullOrEmpty(request.CardLabel))
+            {
+                foreach (var area in areas)
+                {
+                    area.Cards = area.Cards.Where(c => c.Labels.Any(l => l.Name.Trim().ToLower() == request.CardLabel.ToLower())).ToList();
+                }
+            }
+
+            return areas;
+        }
     }
 }

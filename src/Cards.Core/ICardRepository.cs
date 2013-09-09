@@ -20,6 +20,7 @@ namespace Cards.Core
         Activity CreateActivity(Activity activity);
 
         Label CreateLabel(Label label);
+        Label UpdateLabel(Label label);
         List<Label> FindAllLabels();
 
         Label DeleteLabel(Label label);
