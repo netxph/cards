@@ -28,11 +28,31 @@
 
             return
 
+        self.getNoAgeAreas = ->
+            noAgeAreas = $("#areas").data("noage")            
+            return noAgeAreas.split(";")
+
+        self.hideBubbles = ->
+            noAgeAreas = self.getNoAgeAreas()
+            bubbles = $(".card-bubble")
+            self.hideBubble bubble, noAgeAreas for bubble in bubbles
+
+            return
+        self.hideBubble = (bubble, noAgeAreas) ->
+            bubbleElement = $(bubble)
+            area = $(bubble).closest("article").find("header h1").text()
+
+            bubbleElement.hide() if area in noAgeAreas
+
+            return
+
         self.colorizeCard = (card, aged) ->
             cardElement = $(card)
             staleAge = cardElement.data("stale")
+            noAgeAreas = self.getNoAgeAreas()
+            area = cardElement.closest("article").find("header h1").text()
 
-            cardElement.addClass 'card-aged' if staleAge > aged
+            cardElement.addClass 'card-aged' if staleAge > aged && area not in noAgeAreas
 
             return
         
@@ -158,6 +178,7 @@
                     self.areas(data)
                     self.resize()
                     self.colorize()
+                    self.hideBubbles()
                                                     
                     return
                 .fail ->

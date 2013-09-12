@@ -325,6 +325,7 @@ article {
     position: relative;
     
     line-height: 120%;
+    background-color: white;
 }
 
 article footer a {
@@ -384,5 +385,5 @@ article footer textarea {
 }
 
 .card-aged {
-	background-color: lightgray;
+	font-weight: bold;
 }

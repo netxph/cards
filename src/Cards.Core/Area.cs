@@ -30,9 +30,9 @@ namespace Cards.Core
         public DateTime ModifiedDateUtc { get; set; }
 
         static IDateProvider _dateProvider = null;
-        public static IDateProvider DateProvider 
-        { 
-            get 
+        public static IDateProvider DateProvider
+        {
+            get
             {
                 if (_dateProvider == null)
                 {
@@ -56,8 +56,8 @@ namespace Cards.Core
         public static Area Create(string name)
         {
             var db = DbFactory.Create();
-            var area = new Area() 
-            { 
+            var area = new Area()
+            {
                 Name = name,
             };
 
@@ -128,9 +128,11 @@ namespace Cards.Core
 
             if (!string.IsNullOrEmpty(request.CardLabel))
             {
+                var labels = request.CardLabel.ToLower().Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+                
                 foreach (var area in areas)
                 {
-                    area.Cards = area.Cards.Where(c => c.Labels.Any(l => l.Name.Trim().ToLower() == request.CardLabel.ToLower())).ToList();
+                    area.Cards = area.Cards.Where(c => c.Labels.Any(l => labels.Contains(l.Name.Trim().ToLower()))).ToList();
                 }
             }
 

@@ -431,6 +431,85 @@ namespace Cards.Tests.Core
             }
         }
 
+        public class FindMethod_MultiLabels : TestCase<List<AreaView>>
+        {
+
+            protected override void Initialize()
+            {
+                var repository = new Mock<ICardRepository>();
+                repository
+                    .Setup(r => r.FindAllArea())
+                    .Returns(new List<Area>()
+                    {
+                        new Area()
+                        {
+                            ID = 1,
+                            Name = "Backlog",
+                            IsActive = true,
+                            Cards = new List<Card>()
+                            {
+                                new Card()
+                                {
+                                    Name = "A bug #bug"
+                                },
+                                new Card()
+                                {
+                                    Name = "Not a bug #test"
+                                }
+                            }
+                        }
+                    });
+
+                repository
+                    .Setup(r => r.FindAllLabels())
+                    .Returns(new List<Label>()
+                    {
+                        new Label()
+                        {
+                            Name = "Bug",
+                            Color = "Red"
+                        },
+                        new Label()
+                        {
+                            Name = "Test",
+                            Color = "Green"
+                        }
+                    });
+
+                var factory = new Mock<DbFactory>();
+                factory.Protected()
+                    .Setup<ICardRepository>("OnCreateDb")
+                    .Returns(repository.Object);
+
+                new DbFactory(factory.Object);
+            }
+
+            protected override Func<List<AreaView>> Given()
+            {
+                LabelCache.Reset();
+
+                return () => Area.Find(new FilterCardRequest() { CardLabel = "bug;test" });
+            }
+
+            [Fact]
+            public void ShouldReturnAllMatches()
+            {
+                Its[0].Cards.Count.Should().Be(2);
+            }
+
+            [Fact]
+            public void ShouldCardsHasBug()
+            {
+                Its.Any(a => a.Cards.Any(c => c.Labels.Any(l => l.Name == "Bug")));
+            }
+
+            [Fact]
+            public void ShouldCardsHasTest()
+            {
+                Its.Any(a => a.Cards.Any(c => c.Labels.Any(l => l.Name == "Test")));
+            }
+        }
+
         public class FindMethod : TestCase<List<AreaView>>
         {
             protected override void Initialize()
@@ -453,7 +532,7 @@ namespace Cards.Tests.Core
                                 },
                                 new Card()
                                 {
-                                    Name = "Not a bug"
+                                    Name = "Not a bug #test"
                                 }
                             }
                         }
@@ -527,7 +606,7 @@ namespace Cards.Tests.Core
                                 },
                                 new Card()
                                 {
-                                    Name = "Not a bug"
+                                    Name = "Not a bug #test"
                                 }
                             }
                         }
