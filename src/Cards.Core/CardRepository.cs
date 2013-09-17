@@ -138,5 +138,21 @@ namespace Cards.Core
                 return label;
             }
         }
+
+        public User CreateUser(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public User FindUser(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public User UpdateUser(User user)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

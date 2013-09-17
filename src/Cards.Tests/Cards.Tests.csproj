@@ -62,6 +62,7 @@
     <Compile Include="Core\CardTests.cs" />
     <Compile Include="Core\ActivityTests.cs" />
     <Compile Include="Core\LabelTests.cs" />
+    <Compile Include="Core\UserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
