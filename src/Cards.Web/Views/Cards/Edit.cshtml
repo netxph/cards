@@ -14,9 +14,14 @@
             <h1>
                 <textarea data-bind="value: Name" ></textarea>
             </h1>
-            <textarea data-bind="value: Description" ></textarea>
-            <input type="text" data-bind="value: DueDateText" />
+            
         </header>
+        <div class="form-details">
+            <span>Description</span>
+            <textarea data-bind="value: Description" ></textarea>
+            <span>Due Date</span>
+            <input type="text" data-bind="value: DueDateText" />
+        </div>
         <div class="action-buttons">
             <button data-bind="click: $root.updateCard">Save</button>
             <button data-bind="click: $root.deleteCard">Delete</button>

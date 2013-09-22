@@ -72,6 +72,22 @@ button {
     font-weight: bold;
 }
 
+.form-details {
+	margin-top: 12px;
+}
+
+.form-details span {
+	margin: 6px 0;
+	display: block;
+	font-weight: bold;
+}
+
+.form-details textarea {
+	border: none;
+	border-bottom: 1px solid;
+	width: 100%;
+}
+
 .edit-form header textarea {
     font-family: "Segoe UI Light", Verdana, Helvetica, Sans-Serif;
     font-size: 26px;
