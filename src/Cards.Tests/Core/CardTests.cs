@@ -161,7 +161,6 @@ namespace Cards.Tests.Core
 
         public class UpdateMethod : TestCase<Card>
         {
-
             readonly DateTime NOW = new DateTime(2013, 12, 1);
 
             protected override Func<Card> Given()
@@ -233,6 +232,72 @@ namespace Cards.Tests.Core
             {
                 Its.CreatedDateUtc.Should().NotBe(NOW);
             }
+
+            public class UpdateMethod_Modify : TestCase<Card>
+            {
+
+                readonly DateTime NOW = new DateTime(2013, 12, 1);
+                readonly DateTime LATER = new DateTime(2013, 12, 15);
+
+                protected override Func<Card> Given()
+                {
+                    var card = new Card()
+                    {
+                        ID = 1,
+                        Name = "Card",
+                        AreaID = 1,
+                        ModifiedDateUtc = DateTime.MinValue,
+                        CreatedDateUtc = DateTime.MinValue
+                    };
+
+                    var date = new Mock<IDateProvider>();
+                    date
+                        .Setup(d => d.UtcNow())
+                        .Returns(NOW);
+
+                    Card.DateProvider = date.Object;
+
+                    var repository = new Mock<ICardRepository>();
+                    repository
+                        .Setup(r => r.FindCard(It.IsAny<int>()))
+                        .Returns(card);
+
+                    var factory = new Mock<DbFactory>();
+                    factory.Protected()
+                        .Setup<ICardRepository>("OnCreateDb")
+                        .Returns(repository.Object);
+
+                    new DbFactory(factory.Object);
+
+                    return () => Card.Update(1, "Updated task", 1, "Description", LATER);
+                }
+
+                [Fact]
+                public void ShouldNotBeNull()
+                {
+                    Subject().Should().NotBeNull();
+                }
+
+                [Fact]
+                public void ShouldNameHasChanged()
+                {
+                    Its.Name.Should().Be("Updated task");
+                }
+
+                [Fact]
+                public void ShouldDescriptionHasValue()
+                {
+                    Its.Description.Should().Be("Description");
+                }
+
+                [Fact]
+                public void ShouldDueDateIsLater()
+                {
+                    Its.DueDateUtc.Should().Be(LATER);
+                }
+
+            }
+
 
             public class UpdateActivity : TestCase<Card>
             {
@@ -568,9 +633,21 @@ namespace Cards.Tests.Core
             }
 
             [Fact]
-            public void ShouldNameIsASampleTask()
+            public void ShouldNameHasValue()
             {
                 Its.Name.Should().Be("Card");
+            }
+
+            [Fact]
+            public void ShouldDescriptionIsNull()
+            {
+                Its.Description.Should().BeNull();
+            }
+
+            [Fact]
+            public void ShouldDueDateIsMaxDate()
+            {
+                Its.DueDateUtc.Should().Be(DateTime.MaxValue);
             }
 
             [Fact]

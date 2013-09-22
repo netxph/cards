@@ -91,7 +91,7 @@ namespace Cards.Core
             return card;
         }
 
-        public static Card Update(int cardId, string name, int areaId)
+        public static Card Update(int cardId, string name, int areaId, string description, DateTime dueDate)
         {
             var changeType = CardChangeType.Transfer;
             var db = DbFactory.Create();
@@ -103,9 +103,14 @@ namespace Cards.Core
                 {
                     changeType = CardChangeType.Modify;
                     card.Name = name;
+                    card.Description = description;
+                    card.DueDateUtc = dueDate;
                 }
-                
-                card.AreaID = areaId;
+                else
+                {
+                    card.AreaID = areaId;
+                }
+
                 card.ModifiedDateUtc = DateProvider.UtcNow();
 
                 //TODO: db update card does not return card
@@ -117,6 +122,11 @@ namespace Cards.Core
             }
 
             return null;
+        }
+
+        public static Card Update(int cardId, string name, int areaId)
+        {
+            return Update(cardId, name, areaId, null, DateTime.MaxValue);
         }
 
         public static Card Delete(int id)
