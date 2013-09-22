@@ -64,6 +64,14 @@
             $.getJSON(self.rootUrl + 'api/cards/' + id)
                 .done (data) ->
                     self.card = ko.mapping.fromJS(data)
+                    self.card.DueDateText = ko.computed(
+                        read: -> 
+                            moment(self.card.DueDateUtc()).format('L')
+                        write: (value) ->
+                            self.card.DueDateUtc(value)
+                            return
+                    )
+
                     ko.applyBindings self
                     return
                 .fail ->

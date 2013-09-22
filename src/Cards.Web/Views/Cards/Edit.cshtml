@@ -3,6 +3,7 @@
 }
 
 @section scripts {
+    @Scripts.Render("~/bundles/moment")
     @Scripts.Render("~/bundles/knockout")
     @Scripts.Render("~/bundles/editcard")
 }
@@ -13,6 +14,8 @@
             <h1>
                 <textarea data-bind="value: Name" ></textarea>
             </h1>
+            <textarea data-bind="value: Description" ></textarea>
+            <input type="text" data-bind="value: DueDateText" />
         </header>
         <div class="action-buttons">
             <button data-bind="click: $root.updateCard">Save</button>
