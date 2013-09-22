@@ -46,6 +46,13 @@
 
             return
 
+        self.bindCardAction = ->
+            $(".cards").on('click', 'li.card', ->
+                cardid = $(this).data('cardid')
+                window.location.href = 'Cards/Edit/' + cardid
+                return)
+            return
+
         self.colorizeCard = (card, aged) ->
             cardElement = $(card)
             staleAge = cardElement.data("stale")
@@ -179,6 +186,7 @@
                     self.resize()
                     self.colorize()
                     self.hideBubbles()
+                    self.bindCardAction()
                                                     
                     return
                 .fail ->
