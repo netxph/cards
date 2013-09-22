@@ -16,6 +16,7 @@ namespace Cards.Core
         public Card()
         {
             IsActive = true;
+            DueDateUtc = DateTime.MaxValue;
             ModifiedDateUtc = DateProvider.UtcNow();
             CreatedDateUtc = DateProvider.UtcNow();
         }
@@ -25,6 +26,10 @@ namespace Cards.Core
 
         [Required]
         public string Name { get; set; }
+
+        public string Description { get; set; }
+
+        public DateTime DueDateUtc { get; set; }
 
         public bool IsActive { get; set; }
 

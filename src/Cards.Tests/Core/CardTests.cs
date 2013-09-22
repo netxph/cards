@@ -48,6 +48,18 @@ namespace Cards.Tests.Core
             }
 
             [Fact]
+            public void ShouldDescriptionIsNull()
+            {
+                Its.Description.Should().BeNull();
+            }
+
+            [Fact]
+            public void ShouldDueDateIsMaxDate()
+            {
+                Its.DueDateUtc.Should().Be(DateTime.MaxValue);
+            }
+
+            [Fact]
             public void ShouldAreaIsNull()
             {
                 Its.AreaID.Should().Be(0);
