@@ -18,7 +18,7 @@ namespace Cards.Web.Controllers.Api
 
         public Card Put(int id, Card card)
         {
-            return Card.Update(id, card.Name, card.AreaID);
+            return Card.Update(id, card.Name, card.AreaID, card.Description, card.DueDateUtc);
         }
 
         public Card Get(int id)
