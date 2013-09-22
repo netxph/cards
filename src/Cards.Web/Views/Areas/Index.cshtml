@@ -30,8 +30,8 @@
             <h1 data-bind="text: Name"></h1>
             <a data-bind="attr: { 'href': 'Areas/Edit/' + ID }">Edit</a>
         </header>
-        <ul id="cards" data-bind="foreach: Cards" data-aged="@Settings.STALE_AGE">
-            <li data-bind="attr: { 'data-cardid': ID, 'data-stale': DaysSinceLastUpdate }" draggable="true">
+        <ul class="cards" data-bind="foreach: Cards" data-aged="@Settings.STALE_AGE">
+            <li class="card" data-bind="attr: { 'data-cardid': ID, 'data-stale': DaysSinceLastUpdate }" draggable="true">
                 <a data-bind="text: Name, attr: { 'href': 'Cards/Edit/' + ID }" draggable="false"></a>
                 <ul id="labels" data-bind="foreach: Labels">
                     <li><span data-bind="text: Name, attr: { 'data-color' : Color }"></span></li>

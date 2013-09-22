@@ -254,7 +254,7 @@ article header a {
     float: right;
 }
 
-#cards li a {
+.cards li a {
     text-decoration: none;
     color: black;
 }
@@ -318,7 +318,7 @@ article {
     vertical-align: top;
 }
 
-#cards li {
+.cards li {
     border: 1px solid lightgray;
     margin: 12px 0;
     padding: 6px;
