@@ -17,6 +17,7 @@ namespace Cards.Core
         {
             IsActive = true;
             DueDateUtc = DateTime.MaxValue;
+            Difficulty = Settings.NORMAL_DIFFICULTY;
             ModifiedDateUtc = DateProvider.UtcNow();
             CreatedDateUtc = DateProvider.UtcNow();
         }
@@ -30,6 +31,8 @@ namespace Cards.Core
         public string Description { get; set; }
 
         public DateTime DueDateUtc { get; set; }
+
+        public int Difficulty { get; set; }
 
         public bool IsActive { get; set; }
 
@@ -91,7 +94,7 @@ namespace Cards.Core
             return card;
         }
 
-        public static Card Update(int cardId, string name, int areaId, string description, DateTime dueDate)
+        public static Card Update(int cardId, string name, int areaId, string description, DateTime dueDate, int difficulty)
         {
             var changeType = CardChangeType.Transfer;
             var db = DbFactory.Create();
@@ -105,6 +108,7 @@ namespace Cards.Core
                     card.Name = name;
                     card.Description = description;
                     card.DueDateUtc = dueDate;
+                    card.Difficulty = difficulty;
                 }
                 else
                 {
@@ -126,7 +130,7 @@ namespace Cards.Core
 
         public static Card Update(int cardId, string name, int areaId)
         {
-            return Update(cardId, name, areaId, null, DateTime.MaxValue);
+            return Update(cardId, name, areaId, null, DateTime.MaxValue, Settings.NORMAL_DIFFICULTY);
         }
 
         public static Card Delete(int id)

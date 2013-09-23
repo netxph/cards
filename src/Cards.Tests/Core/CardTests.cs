@@ -60,6 +60,12 @@ namespace Cards.Tests.Core
             }
 
             [Fact]
+            public void ShouldDifficultyIsNormal()
+            {
+                Its.Difficulty.Should().Be(Settings.NORMAL_DIFFICULTY);
+            }
+
+            [Fact]
             public void ShouldAreaIsNull()
             {
                 Its.AreaID.Should().Be(0);
@@ -269,7 +275,7 @@ namespace Cards.Tests.Core
 
                     new DbFactory(factory.Object);
 
-                    return () => Card.Update(1, "Updated task", 1, "Description", LATER);
+                    return () => Card.Update(1, "Updated task", 1, "Description", LATER, 1);
                 }
 
                 [Fact]
@@ -288,6 +294,12 @@ namespace Cards.Tests.Core
                 public void ShouldDescriptionHasValue()
                 {
                     Its.Description.Should().Be("Description");
+                }
+
+                [Fact]
+                public void ShouldDifficultyIsNotNormal()
+                {
+                    Its.Difficulty.Should().Be(1);
                 }
 
                 [Fact]
@@ -648,6 +660,12 @@ namespace Cards.Tests.Core
             public void ShouldDueDateIsMaxDate()
             {
                 Its.DueDateUtc.Should().Be(DateTime.MaxValue);
+            }
+
+            [Fact]
+            public void ShouldDifficultyIsNormal()
+            {
+                Its.Difficulty.Should().Be(Settings.NORMAL_DIFFICULTY);
             }
 
             [Fact]

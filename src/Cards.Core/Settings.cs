@@ -14,5 +14,6 @@ namespace Cards.Core
         public const int OLD_AGE = 30;
         public const int STALE_AGE = 10;
         public const string NO_AGE_AREAS = "Done";
+        public const int NORMAL_DIFFICULTY = 2;
     }
 }
