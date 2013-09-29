@@ -42,6 +42,12 @@ namespace Cards.Tests.Core
             }
 
             [Fact]
+            public void ShouldAliasIsNull()
+            {
+                Its.Alias.Should().BeNull();
+            }
+
+            [Fact]
             public void ShouldUserNameBeNull()
             {
                 Its.Name.Should().BeNull();
