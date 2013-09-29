@@ -19,7 +19,7 @@ namespace Cards.Core
         public DbSet<Card> Cards { get; set; }
         public DbSet<Activity> Activities { get; set; }
         public DbSet<Label> Labels { get; set; }
-
+        public DbSet<Account> Accounts { get; set; }
 
     }
 }

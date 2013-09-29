@@ -92,6 +92,10 @@
     <Compile Include="Migrations\201309230323146_AddDifficultyColumnToCard.Designer.cs">
       <DependentUpon>201309230323146_AddDifficultyColumnToCard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201309291354561_AddAccountTable.cs" />
+    <Compile Include="Migrations\201309291354561_AddAccountTable.Designer.cs">
+      <DependentUpon>201309291354561_AddAccountTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScriptHelper.cs" />
@@ -123,6 +127,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201309230323146_AddDifficultyColumnToCard.resx">
       <DependentUpon>201309230323146_AddDifficultyColumnToCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201309291354561_AddAccountTable.resx">
+      <DependentUpon>201309291354561_AddAccountTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
