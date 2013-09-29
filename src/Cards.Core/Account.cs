@@ -110,5 +110,13 @@ namespace Cards.Core
             return null;
 
         }
+
+        public static List<Account> GetAll()
+        {
+            var db = DbFactory.Create();
+            var accounts = db.FindAllAccounts();
+
+            return accounts;
+        }
     }
 }

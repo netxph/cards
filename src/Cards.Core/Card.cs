@@ -40,8 +40,10 @@ namespace Cards.Core
 
         public DateTime ModifiedDateUtc { get; set; }
 
+        public Account AssignedTo { get; set; }
+
         public int DaysSinceLastUpdate
-        { 
+        {
             get
             {
                 return getDaysSinceLastUpdate();
@@ -79,19 +81,46 @@ namespace Cards.Core
         public static Card Create(string name, int areaId)
         {
             var db = DbFactory.Create();
-            var card = new Card() 
-            { 
-                Name = name, 
+
+            var card = new Card()
+            {
+                Name = name,
                 AreaID = areaId,
                 CreatedDateUtc = DateProvider.UtcNow(),
-                ModifiedDateUtc = DateProvider.UtcNow()
+                ModifiedDateUtc = DateProvider.UtcNow(),
             };
+
+            var assignedTo = parseAssigned(ref name);
+            if (!string.IsNullOrEmpty(assignedTo))
+            {
+                card.Name = name;
+                card.AssignedTo = AccountCache.GetFromName(assignedTo);
+            }
 
             card = db.CreateCard(card);
 
             Activity.Create(card.ID, areaId, CardChangeType.Transfer, null);
 
             return card;
+        }
+
+        static Regex assignedRegex = new Regex("@(\\S+)\\s?");
+
+        private static string parseAssigned(ref string name)
+        {
+            var matches = assignedRegex.Matches(name);
+
+            //one user is supported per card
+            if (matches.Count > 0)
+            {
+                var alias = matches[0].Value.Substring(1, matches[0].Value.Length - 1).Trim();
+
+                name = name.Replace(string.Format("@{0}", alias), string.Empty).Trim();
+
+                return alias.ToLower();
+            }
+
+            return null;
         }
 
         public static Card Update(int cardId, string name, int areaId, string description, DateTime dueDate, int difficulty)
@@ -160,17 +189,17 @@ namespace Cards.Core
 
             return db.FindCard(id);
         }
-        
+
         public CardView GetView()
         {
             var card = new CardView()
             {
-                AreaID                  = this.AreaID,
-                ID                      = this.ID,
-                IsActive                = this.IsActive,
-                Name                    = this.Name,
-                Age                     = getAge(),
-                DaysSinceLastUpdate     = getDaysSinceLastUpdate()
+                AreaID = this.AreaID,
+                ID = this.ID,
+                IsActive = this.IsActive,
+                Name = this.Name,
+                Age = getAge(),
+                DaysSinceLastUpdate = getDaysSinceLastUpdate()
             };
 
             card.AgeText = getAgeText(card.Age);
@@ -194,8 +223,8 @@ namespace Cards.Core
                     var key = match.Value.Substring(1, match.Value.Length - 1).Trim();
 
                     var label = LabelCache.GetLabel(key);
-                    
-                    if(label != null)
+
+                    if (label != null)
                     {
                         card.Labels.Add(label.GetView());
                     }

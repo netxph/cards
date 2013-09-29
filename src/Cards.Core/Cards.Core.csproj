@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountCache.cs" />
     <Compile Include="Area.cs" />
     <Compile Include="AreaView.cs" />
     <Compile Include="Card.cs" />

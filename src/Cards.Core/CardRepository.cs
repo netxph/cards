@@ -154,5 +154,11 @@ namespace Cards.Core
             throw new NotImplementedException();
         }
 
+
+
+        public List<Account> FindAllAccounts()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

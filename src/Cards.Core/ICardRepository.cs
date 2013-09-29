@@ -28,5 +28,7 @@ namespace Cards.Core
         Account CreateAccount(Account account);
         Account FindAccount(string email);
         Account UpdateAccount(Account user);
+
+        List<Account> FindAllAccounts();
     }
 }

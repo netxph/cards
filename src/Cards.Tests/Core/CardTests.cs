@@ -698,6 +698,85 @@ namespace Cards.Tests.Core
                 Its.IsActive.Should().BeTrue();
             }
 
+            public class ParseAssigned : TestCase<Card>
+            {
+                protected override Func<Card> Given()
+                {
+                    AccountCache.Reset();
+
+                    Card card = null;
+
+                    var repository = new Mock<ICardRepository>();
+                    repository
+                        .Setup(r => r.FindAllAccounts())
+                        .Returns(new List<Account>()
+                        {
+                            new Account()
+                            {
+                                ID = 1,
+                                Name = "John Doe",
+                                Alias = "John",
+                                Email = "john.doe@company.com",
+                                IsActive = true
+                            }
+                        });
+                    repository
+                        .Setup(r => r.CreateCard(It.IsAny<Card>()))
+                        .Callback<Card>(c => card = c)
+                        .Returns(() => new Card() 
+                        { 
+                            ID = 1,
+                            Name = card.Name,
+                            AssignedTo = card.AssignedTo 
+                        });
+
+                    var factory = new Mock<DbFactory>();
+                    factory.Protected()
+                        .Setup<ICardRepository>("OnCreateDb")
+                        .Returns(repository.Object);
+
+                    new DbFactory(factory.Object);
+
+                    return () => Card.Create("Card @john", 1);
+                }
+
+                [Fact]
+                public void ShouldNotReturnNull()
+                {
+                    Subject().Should().NotBeNull();
+                }
+
+                [Fact]
+                public void ShouldAssignedToIsNotNull()
+                {
+                    Its.AssignedTo.Should().NotBeNull();
+                }
+
+                [Fact]
+                public void ShouldAssignedToNameHasValue()
+                {
+                    Its.AssignedTo.Name.Should().Be("John Doe");
+                }
+
+                [Fact]
+                public void ShouldAliasHasValue()
+                {
+                    Its.AssignedTo.Alias.Should().Be("John");
+                }
+
+                [Fact]
+                public void ShouldEmailHasValue()
+                {
+                    Its.AssignedTo.Email.Should().Be("john.doe@company.com");
+                }
+
+                [Fact]
+                public void ShouldNameHasNoAssignTag()
+                {
+                    Its.Name.Should().Be("Card");
+                }
+            }
+
             public class CreateActivity : TestCase<Card>
             {
                 readonly DateTime NOW = new DateTime(2013, 12, 1);

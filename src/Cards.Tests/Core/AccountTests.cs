@@ -79,6 +79,55 @@ namespace Cards.Tests.Core
 
         }
 
+        public class GetAllMethod : TestCase<List<Account>>
+        {
+            protected override Func<List<Account>> Given()
+            {
+                var repository = new Mock<ICardRepository>();
+                repository.Setup(d => d.FindAllAccounts())
+                    .Returns(new List<Account>()
+                    {
+                        new Account()
+                        {
+                            ID = 1,
+                            Name = "John Doe",
+                            Alias = "John",
+                            Email = "john.doe@company.com",
+                            IsActive = true
+                            
+                        }
+                    });
+
+                var factory = new Mock<DbFactory>();
+
+                factory.Protected()
+                       .Setup<ICardRepository>("OnCreateDb")
+                       .Returns(repository.Object);
+
+                new DbFactory(factory.Object);
+
+                return () => Account.GetAll();
+            }
+
+            [Fact]
+            public void ShouldNotBeNull()
+            {
+                Subject().Should().NotBeNull();
+            }
+
+            [Fact]
+            public void ShouldNotBeEmpty()
+            {
+                Subject().Should().NotBeEmpty();
+            }
+
+            [Fact]
+            public void ShouldFirstItemHasValue()
+            {
+                Its[0].Alias.Should().Be("John");
+            }
+        }
+
         public class InitializeAccountWithData : TestCase<Account>
         {
             readonly DateTime NOW = DateTime.Now;
