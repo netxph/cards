@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Cards.Core
 {
-    public class User
+    public class Account
     {
-        public User()
+        public Account()
         {
             IsActive = true;
             CreatedDateUtc = DateProvider.UtcNow();
@@ -51,32 +51,32 @@ namespace Cards.Core
             }
         }
 
-        public static User Register(string email, string name)
+        public static Account Register(string email, string name)
         {
             var db = DbFactory.Create();
 
-            var user = new User()
+            var user = new Account()
             {
                 Name  = name,
                 Email = email
             };
 
-            user = db.CreateUser(user);
+            user = db.CreateAccount(user);
 
             return user;
         }
 
-        public static User CheckRegistration(string email)
+        public static Account CheckRegistration(string email)
         {
             var db = DbFactory.Create();
 
-            return db.FindUser(email);
+            return db.FindAccount(email);
         }
 
-        public static User Update(string email, string name)
+        public static Account Update(string email, string name)
         {
             var db   = DbFactory.Create();
-            var user = db.FindUser(email);
+            var user = db.FindAccount(email);
 
             if (user != null)
             {
@@ -84,7 +84,7 @@ namespace Cards.Core
                 user.Email           = email;
                 user.ModifiedDateUtc = DateProvider.UtcNow();
 
-                db.UpdateUser(user);
+                db.UpdateAccount(user);
 
                 return user;
             }
@@ -92,17 +92,17 @@ namespace Cards.Core
             return null;
         }
 
-        public static User Delete(string email)
+        public static Account Delete(string email)
         {
             var db   = DbFactory.Create();
-            var user = db.FindUser(email);
+            var user = db.FindAccount(email);
 
             if (user != null)
             {
                 user.IsActive        = false;
                 user.ModifiedDateUtc = DateProvider.UtcNow();
 
-                db.UpdateUser(user);
+                db.UpdateAccount(user);
                 
                 return user;
             }

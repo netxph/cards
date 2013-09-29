@@ -12,21 +12,21 @@ using Moq.Protected;
 
 namespace Cards.Tests.Core
 {
-    public class UserTests
+    public class AccountTests
     {
-        public class Initialize : TestCase<User>
+        public class Initialize : TestCase<Account>
         {
             readonly DateTime NOW = new DateTime(2013, 9, 12);
 
-            protected override Func<User> Given()
+            protected override Func<Account> Given()
             {
                 var date = new Mock<IDateProvider>();
 
                 date.Setup(d => d.UtcNow()).Returns(NOW);
 
-                User.DateProvider = date.Object;
+                Account.DateProvider = date.Object;
 
- 	            return () => new User();
+ 	            return () => new Account();
             }
             
             [Fact]
@@ -36,7 +36,7 @@ namespace Cards.Tests.Core
             }
 
             [Fact]
-            public void ShouldUserIDReturnZero()
+            public void ShouldAccountIDReturnZero()
             {
                 Its.ID.Should().Be(0);
             }
@@ -48,7 +48,7 @@ namespace Cards.Tests.Core
             }
 
             [Fact]
-            public void ShouldUserNameBeNull()
+            public void ShouldAccountNameBeNull()
             {
                 Its.Name.Should().BeNull();
             }
@@ -79,19 +79,19 @@ namespace Cards.Tests.Core
 
         }
 
-        public class InitializeUserWithData : TestCase<User>
+        public class InitializeAccountWithData : TestCase<Account>
         {
             readonly DateTime NOW = DateTime.Now;
 
-            protected override Func<User> Given()
+            protected override Func<Account> Given()
             {
                 var dateProvider = new Mock<IDateProvider>();
 
                 dateProvider.Setup(d => d.UtcNow()).Returns(NOW);
 
-                User.DateProvider = dateProvider.Object;
+                Account.DateProvider = dateProvider.Object;
 
-                return () => new User()
+                return () => new Account()
                     {
                         ID = 1,
                         Email = "email@email.com",
@@ -100,7 +100,7 @@ namespace Cards.Tests.Core
             }
 
             [Fact]
-            public void ShouldUserBeNull()
+            public void ShouldAccountBeNull()
             {
                 Subject.Should().NotBeNull();
             }
@@ -143,25 +143,25 @@ namespace Cards.Tests.Core
 
         }
 
-        public class AddUserMethod : TestCase<User>
+        public class AddAccountMethod : TestCase<Account>
         {
             readonly DateTime NOW = DateTime.Now;
 
-            protected override Func<User> Given()
+            protected override Func<Account> Given()
             {
-                User user = null;
+                Account Account = null;
 
                 var dateProvider = new Mock<IDateProvider>();
 
                 dateProvider.Setup(d => d.UtcNow()).Returns(NOW);
 
-                User.DateProvider = dateProvider.Object;
+                Account.DateProvider = dateProvider.Object;
 
                 var repository = new Mock<ICardRepository>();
                 repository
-                            .Setup(r => r.CreateUser(It.IsAny<User>()))
-                            .Callback<User>(u => user = u)
-                            .Returns(() => user);
+                            .Setup(r => r.CreateAccount(It.IsAny<Account>()))
+                            .Callback<Account>(u => Account = u)
+                            .Returns(() => Account);
 
                 var factory = new Mock<DbFactory>();
                 factory
@@ -171,25 +171,25 @@ namespace Cards.Tests.Core
 
                 new DbFactory(factory.Object);
 
-                return () => User.Register("user@website.com", "user");
+                return () => Account.Register("Account@website.com", "Account");
             }
 
             [Fact]
-            public void UserShouldNotBeNull()
+            public void AccountShouldNotBeNull()
             {
                 Subject.Should().NotBeNull();
             }
 
             [Fact]
-            public void UserNameShouldBeUser()
+            public void AccountNameShouldBeAccount()
             {
-                Its.Name.Should().Be("user");
+                Its.Name.Should().Be("Account");
             }
 
             [Fact]
-            public void UserEmailShouldHaveValue()
+            public void AccountEmailShouldHaveValue()
             {
-                Its.Email.Should().Be("user@website.com");
+                Its.Email.Should().Be("Account@website.com");
             }
 
             [Fact]
@@ -205,28 +205,28 @@ namespace Cards.Tests.Core
             }
         }
 
-        public class GetUserMethod : TestCase<User>
+        public class GetAccountMethod : TestCase<Account>
         {
             DateTime CREATED = new DateTime(2013, 9, 1);
             DateTime NOW = new DateTime(2013, 9, 6);
 
-            protected override Func<User> Given()
+            protected override Func<Account> Given()
             {
                 var dateProvider = new Mock<IDateProvider>();
 
                 dateProvider.Setup(d => d.UtcNow()).Returns(NOW);
 
-                User.DateProvider = dateProvider.Object;
+                Account.DateProvider = dateProvider.Object;
 
                 var repository = new Mock<ICardRepository>();
 
                 repository
-                            .Setup(r => r.FindUser("user@website.com"))
-                            .Returns(new User()
+                            .Setup(r => r.FindAccount("Account@website.com"))
+                            .Returns(new Account()
                             {
                                 ID              = 1,
-                                Name            = "user",
-                                Email           = "user@website.com",
+                                Name            = "Account",
+                                Email           = "Account@website.com",
                                 CreatedDateUtc  = CREATED,
                                 ModifiedDateUtc = CREATED
                             });
@@ -239,31 +239,31 @@ namespace Cards.Tests.Core
 
                 new DbFactory(factory.Object);
 
-                return () => User.CheckRegistration("user@website.com");
+                return () => Account.CheckRegistration("Account@website.com");
             }
 
             [Fact]
-            public void ShouldUserBeNull()
+            public void ShouldAccountBeNull()
             {
                 Subject.Should().NotBeNull();
             }
 
             [Fact]
-            public void ShouldUserIDBeOne()
+            public void ShouldAccountIDBeOne()
             {
                 Its.ID.Should().Be(1);
             }
 
             [Fact]
-            public void ShouldUserNameBeUser()
+            public void ShouldAccountNameBeAccount()
             {
-                Its.Name.Should().Be("user");
+                Its.Name.Should().Be("Account");
             }
 
             [Fact]
-            public void ShouldUserEmailHaveValue()
+            public void ShouldAccountEmailHaveValue()
             {
-                Its.Email.Should().Be("user@website.com");
+                Its.Email.Should().Be("Account@website.com");
             }
 
             [Fact]
@@ -291,13 +291,13 @@ namespace Cards.Tests.Core
             }
         }
 
-        public class UpdateUserMethod : TestCase<User>
+        public class UpdateAccountMethod : TestCase<Account>
         {
             readonly DateTime NOW = DateTime.Now;
 
-            protected override Func<User> Given()
+            protected override Func<Account> Given()
             {
-                var user = new User()
+                var Account = new Account()
                 {
                     ID              = 1,
                     Name            = "name",
@@ -310,13 +310,13 @@ namespace Cards.Tests.Core
 
                 dateProvider.Setup(d => d.UtcNow()).Returns(NOW);
 
-                User.DateProvider = dateProvider.Object;
+                Account.DateProvider = dateProvider.Object;
 
                 var repository = new Mock<ICardRepository>();
 
                 repository
-                            .Setup(r => r.FindUser("email@email.com"))
-                            .Returns(user);
+                            .Setup(r => r.FindAccount("email@email.com"))
+                            .Returns(Account);
 
                 var factory = new Mock<DbFactory>();
 
@@ -326,47 +326,47 @@ namespace Cards.Tests.Core
 
                 new DbFactory(factory.Object);
 
-                return () => User.Update("email@email.com", "updatedName");
+                return () => Account.Update("email@email.com", "updatedName");
             }
 
             [Fact]
-            public void UpdatedUserShouldNotBeNull()
+            public void UpdatedAccountShouldNotBeNull()
             {
                 Subject.Should().NotBeNull();
             }
 
             [Fact]
-            public void UpdatedUserNameShouldBeUpdatedName()
+            public void UpdatedAccountNameShouldBeUpdatedName()
             {
                 Its.Name.Should().Be("updatedName");
             }
 
             [Fact]
-            public void UpdatedUserEmailShouldHaveValue()
+            public void UpdatedAccountEmailShouldHaveValue()
             {
                 Its.Email.Should().Be("email@email.com");
             }
 
             [Fact]
-            public void UpdatedUserModifiedDateShouldBeNow()
+            public void UpdatedAccountModifiedDateShouldBeNow()
             {
                 Its.ModifiedDateUtc.Should().Be(NOW);
             }
 
             [Fact]
-            public void UpdatedUserIDShouldBeOne()
+            public void UpdatedAccountIDShouldBeOne()
             {
                 Its.ID.Should().Be(1);
             }
         }
 
-        public class DeleteUserMethod : TestCase<User>
+        public class DeleteAccountMethod : TestCase<Account>
         {
             readonly DateTime NOW = DateTime.Now;
 
-            protected override Func<User> Given()
+            protected override Func<Account> Given()
             {
-                var user = new User()
+                var Account = new Account()
                 {
                     ID    = 1,
                     Name  = "toDelete",
@@ -377,13 +377,13 @@ namespace Cards.Tests.Core
 
                 dateProvider.Setup(d => d.UtcNow()).Returns(NOW);
 
-                User.DateProvider = dateProvider.Object;
+                Account.DateProvider = dateProvider.Object;
 
                 var repository = new Mock<ICardRepository>();
 
                 repository
-                            .Setup(r => r.FindUser("delete@email.com"))
-                            .Returns(user);
+                            .Setup(r => r.FindAccount("delete@email.com"))
+                            .Returns(Account);
 
                 var factory = new Mock<DbFactory>();
 
@@ -393,35 +393,35 @@ namespace Cards.Tests.Core
 
                 new DbFactory(factory.Object);
 
-                return () => User.Delete("delete@email.com");
+                return () => Account.Delete("delete@email.com");
             }
 
             [Fact]
-            public void ShouldUserBeNull()
+            public void ShouldAccountBeNull()
             {
                 Subject.Should().NotBeNull();
             }
 
             [Fact]
-            public void ShouldUserNameBeToDelete()
+            public void ShouldAccountNameBeToDelete()
             {
                 Its.Name.Should().Be("toDelete");
             }
 
             [Fact]
-            public void ShouldUserEmailHaveValue()
+            public void ShouldAccountEmailHaveValue()
             {
                 Its.Email.Should().Be("delete@email.com");
             }
 
             [Fact]
-            public void ShouldUserModifiedDateBeNow()
+            public void ShouldAccountModifiedDateBeNow()
             {
                 Its.ModifiedDateUtc.Should().Be(NOW);
             }
 
             [Fact]
-            public void ShouldUserBeInactive()
+            public void ShouldAccountBeInactive()
             {
                 Its.IsActive.Should().BeFalse();
             }

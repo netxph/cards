@@ -139,17 +139,17 @@ namespace Cards.Core
             }
         }
 
-        public User CreateUser(User user)
+        public Account CreateAccount(Account user)
         {
             throw new NotImplementedException();
         }
 
-        public User FindUser(string email)
+        public Account FindAccount(string email)
         {
             throw new NotImplementedException();
         }
 
-        public User UpdateUser(User user)
+        public Account UpdateAccount(Account user)
         {
             throw new NotImplementedException();
         }

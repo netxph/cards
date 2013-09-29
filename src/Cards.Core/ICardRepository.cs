@@ -25,8 +25,8 @@ namespace Cards.Core
 
         Label DeleteLabel(Label label);
 
-        User CreateUser(User user);
-        User FindUser(string email);
-        User UpdateUser(User user);
+        Account CreateAccount(Account account);
+        Account FindAccount(string email);
+        Account UpdateAccount(Account user);
     }
 }
