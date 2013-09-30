@@ -205,6 +205,11 @@ namespace Cards.Core
             card.AgeText = getAgeText(card.Age);
             card = parseCard(card);
 
+            if (this.AssignedTo != null)
+            {
+                card.AssignedTo = this.AssignedTo.Alias;
+            }
+
             return card;
         }
 

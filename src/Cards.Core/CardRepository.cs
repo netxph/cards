@@ -24,7 +24,10 @@ namespace Cards.Core
         {
             using (var db = new CardsDb())
             {
-                var areas = db.Areas.Include("Cards").Where(a => a.IsActive == true).ToList();
+                var areas = db.Areas
+                    .Include(a => a.Cards)
+                    .Include(a => a.Cards.Select(c => c.AssignedTo))
+                    .Where(a => a.IsActive == true).ToList();
                 
                 //TODO find better solution
                 areas.ForEach(a => a.Cards.RemoveAll(c => !c.IsActive));
@@ -40,6 +43,11 @@ namespace Cards.Core
         {
             using (var db = new CardsDb())
             {
+                if (card.AssignedTo != null)
+                {
+                    db.Entry(card.AssignedTo).State = EntityState.Unchanged;
+                }
+
                 var result = db.Cards.Add(card);
                 db.SaveChanges();
 
@@ -51,6 +59,11 @@ namespace Cards.Core
         {
             using (var db = new CardsDb())
             {
+                if (card.AssignedTo != null)
+                {
+                    db.Entry(card.AssignedTo).State = EntityState.Unchanged;
+                }
+
                 db.Entry(card).State = EntityState.Modified;
                 db.SaveChanges();
 
@@ -154,11 +167,12 @@ namespace Cards.Core
             throw new NotImplementedException();
         }
 
-
-
         public List<Account> FindAllAccounts()
         {
-            throw new NotImplementedException();
+            using (var db = new CardsDb())
+            {
+                return db.Accounts.ToList();
+            }
         }
     }
 }

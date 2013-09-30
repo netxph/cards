@@ -210,6 +210,9 @@
     <Content Include="Scripts\Coffee\editcard.coffee" />
     <None Include="Properties\PublishProfiles\Share.pubxml" />
     <Content Include="Scripts\Coffee\labels.coffee" />
+    <Content Include="Scripts\Coffee\areas.min.js.map">
+      <DependentUpon>areas.js</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\about.js" />
     <Content Include="Scripts\Coffee\app.js">

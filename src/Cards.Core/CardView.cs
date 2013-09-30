@@ -18,6 +18,8 @@ namespace Cards.Core
 
         public long Age { get; set; }
 
+        public string AssignedTo { get; set; }
+
         public string AgeText { get; set; }
 
         public List<LabelView> Labels { get; set; }
