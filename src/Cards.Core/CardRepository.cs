@@ -63,8 +63,11 @@ namespace Cards.Core
                     .Include(c => c.AssignedTo)
                     .Where(c => c.ID == card.ID)
                     .Single();
-                
-                db.Accounts.Attach(card.AssignedTo);
+
+                //if (card.AssignedTo != null)
+                //{
+                //    db.Accounts.Attach(card.AssignedTo);
+                //}
 
                 db.Entry(dbCard).CurrentValues.SetValues(card);
                 dbCard.AssignedTo = card.AssignedTo;
@@ -79,7 +82,7 @@ namespace Cards.Core
         {
             using (var db = new CardsDb())
             {
-                return db.Cards.FirstOrDefault(c => c.ID == id);
+                return db.Cards.Include(c => c.AssignedTo).FirstOrDefault(c => c.ID == id);
             }
         }
 

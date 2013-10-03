@@ -79,8 +79,8 @@
             self.colorizeLabel label for label in labels
 
             #cards
-            aged = $("#cards").data('aged')
-            cards = $("#cards li")
+            aged = $(".cards").data('aged')
+            cards = $(".cards li")
 
             self.colorizeCard card, aged for card in cards
 
@@ -113,7 +113,7 @@
                             type: "PUT",
                             data: card)
                             .done ->
-                                target = areaElement.find("#cards")
+                                target = areaElement.find(".cards")
                                 cardElement.removeClass('card-aged')
                                 target.append(cardElement)        
                                 return
