@@ -23,8 +23,8 @@ button {
     position: relative;
     top: -6px;
     left: -7px;
-    padding: 2px;
-    background-color: darkgray;
+    padding: 2px 6px;
+    background-color: black;
     color: white;
     font-size: 12px;     
 	-webkit-box-shadow: 1px 1px 1px gray;

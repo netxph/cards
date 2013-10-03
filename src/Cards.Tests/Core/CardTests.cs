@@ -247,6 +247,8 @@ namespace Cards.Tests.Core
 
                 protected override Func<Card> Given()
                 {
+                    AccountCache.Reset();
+
                     var card = new Card()
                     {
                         ID = 1,
@@ -268,6 +270,19 @@ namespace Cards.Tests.Core
                         .Setup(r => r.FindCard(It.IsAny<int>()))
                         .Returns(card);
 
+                    repository.Setup(r => r.FindAllAccounts())
+                        .Returns(new List<Account>()
+                        {
+                            new Account()
+                            {
+                                ID = 1,
+                                Name = "John Doe",
+                                Alias = "john",
+                                Email = "john.doe@company.com",
+                                IsActive = true
+                            }
+                        });
+
                     var factory = new Mock<DbFactory>();
                     factory.Protected()
                         .Setup<ICardRepository>("OnCreateDb")
@@ -275,7 +290,7 @@ namespace Cards.Tests.Core
 
                     new DbFactory(factory.Object);
 
-                    return () => Card.Update(1, "Updated task", 1, "Description", LATER, 1);
+                    return () => Card.Update(1, "Updated task @john", 1, "Description", LATER, 1);
                 }
 
                 [Fact]
@@ -306,6 +321,12 @@ namespace Cards.Tests.Core
                 public void ShouldDueDateIsLater()
                 {
                     Its.DueDateUtc.Should().Be(LATER);
+                }
+
+                [Fact]
+                public void ShouldAssignedToIsNotNull()
+                {
+                    Its.AssignedTo.Should().NotBeNull();
                 }
 
             }
@@ -380,6 +401,8 @@ namespace Cards.Tests.Core
 
                 protected override Func<Card> Given()
                 {
+                    AccountCache.Reset();
+
                     var dateProvider = new Mock<IDateProvider>();
                     dateProvider
                         .Setup(dp => dp.UtcNow())
@@ -407,6 +430,8 @@ namespace Cards.Tests.Core
         {
             protected override void Initialize()
             {
+                AccountCache.Reset();
+
                 var card = new Card()
                 {
                     ID = 1,
@@ -1143,6 +1168,8 @@ namespace Cards.Tests.Core
 
             protected override Func<Card> Given()
             {
+                AccountCache.Reset();
+
                 var cardToUpdate = new Card()
                 {
                     ID              = 1,

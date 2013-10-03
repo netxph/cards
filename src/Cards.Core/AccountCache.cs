@@ -43,21 +43,25 @@ namespace Cards.Core
             {
                 var accounts = Account.GetAll();
                 var accountDictionary = new Dictionary<string, Account>();
-                foreach (var account in accounts)
+                
+                if (accounts != null)
                 {
-                    accountDictionary[account.Alias.ToLower()] = account;
-                }
-
-                lock (_lockObject)
-                {
-                    if (Accounts == null)
+                    foreach (var account in accounts)
                     {
-                        Accounts = new ReadOnlyDictionary<string, Account>(accountDictionary);
+                        accountDictionary[account.Alias.ToLower()] = account;
+                    }
+
+                    lock (_lockObject)
+                    {
+                        if (Accounts == null)
+                        {
+                            Accounts = new ReadOnlyDictionary<string, Account>(accountDictionary);
+                        }
                     }
                 }
             }
 
-            if (Accounts.ContainsKey(name))
+            if (Accounts != null && name != null && Accounts.ContainsKey(name))
             {
                 return Accounts[name];
             }

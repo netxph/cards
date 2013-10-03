@@ -28,7 +28,7 @@ namespace Cards.Core
                     .Include(a => a.Cards)
                     .Include(a => a.Cards.Select(c => c.AssignedTo))
                     .Where(a => a.IsActive == true).ToList();
-                
+
                 //TODO find better solution
                 areas.ForEach(a => a.Cards.RemoveAll(c => !c.IsActive));
 
@@ -59,12 +59,16 @@ namespace Cards.Core
         {
             using (var db = new CardsDb())
             {
-                if (card.AssignedTo != null)
-                {
-                    db.Entry(card.AssignedTo).State = EntityState.Unchanged;
-                }
+                var dbCard = db.Cards
+                    .Include(c => c.AssignedTo)
+                    .Where(c => c.ID == card.ID)
+                    .Single();
+                
+                db.Accounts.Attach(card.AssignedTo);
 
-                db.Entry(card).State = EntityState.Modified;
+                db.Entry(dbCard).CurrentValues.SetValues(card);
+                dbCard.AssignedTo = card.AssignedTo;
+
                 db.SaveChanges();
 
                 return card;

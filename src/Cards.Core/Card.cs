@@ -134,10 +134,15 @@ namespace Cards.Core
                 if (areaId == card.AreaID)
                 {
                     changeType = CardChangeType.Modify;
-                    card.Name = name;
                     card.Description = description;
                     card.DueDateUtc = dueDate;
                     card.Difficulty = difficulty;
+
+                    var user = parseAssigned(ref name);
+                    var account = AccountCache.GetFromName(user);
+
+                    card.AssignedTo = account;
+                    card.Name = name;
                 }
                 else
                 {
