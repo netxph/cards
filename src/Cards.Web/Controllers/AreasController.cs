@@ -7,11 +7,10 @@ using System.Web.Mvc;
 
 namespace Cards.Web.Controllers
 {
+    [Authorize]
     public class AreasController : Controller
     {
-        //
-        // GET: /Areas/
-
+        
         public ActionResult Index()
         {
             return View();

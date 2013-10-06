@@ -59,9 +59,11 @@
     <Compile Include="DbFactory.cs" />
     <Compile Include="Activity.cs" />
     <Compile Include="FilterCardRequest.cs" />
+    <Compile Include="IAuthenticationProvider.cs" />
     <Compile Include="ICardRepository.cs" />
     <Compile Include="IDateProvider.cs" />
     <Compile Include="IDbList.cs" />
+    <Compile Include="IUserCredentials.cs" />
     <Compile Include="Label.cs" />
     <Compile Include="LabelCache.cs" />
     <Compile Include="LabelView.cs" />
@@ -102,6 +104,7 @@
     <Compile Include="ScriptHelper.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Account.cs" />
+    <Compile Include="TokenCredentials.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

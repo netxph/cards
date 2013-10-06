@@ -136,6 +136,7 @@
     <Compile Include="Controllers\CardsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LabelsController.cs" />
+    <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -296,6 +297,10 @@
     <ProjectReference Include="..\Cards.Core\Cards.Core.csproj">
       <Project>{74fc73dc-a614-4946-95cc-991e22934316}</Project>
       <Name>Cards.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Cards.Extensions.SSO\Cards.Extensions.SSO.csproj">
+      <Project>{250b049d-06cc-4005-bc3d-88f3f7c7809d}</Project>
+      <Name>Cards.Extensions.SSO</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

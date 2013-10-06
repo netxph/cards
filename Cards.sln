@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{82ED17
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cards.Extensions.SSO", "src\Cards.Extensions.SSO\Cards.Extensions.SSO.csproj", "{250B049D-06CC-4005-BC3D-88F3F7C7809D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{31CEF0D1-7467-4384-9003-FE872131CCAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31CEF0D1-7467-4384-9003-FE872131CCAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31CEF0D1-7467-4384-9003-FE872131CCAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{250B049D-06CC-4005-BC3D-88F3F7C7809D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{250B049D-06CC-4005-BC3D-88F3F7C7809D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{250B049D-06CC-4005-BC3D-88F3F7C7809D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{250B049D-06CC-4005-BC3D-88F3F7C7809D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

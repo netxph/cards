@@ -8,6 +8,8 @@ using System.Web.Http;
 
 namespace Cards.Web.Controllers.Api
 {
+
+    [Authorize]
     public class CardsController : ApiController
     {
 
