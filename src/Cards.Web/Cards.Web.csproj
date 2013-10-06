@@ -214,6 +214,7 @@
     <Content Include="Scripts\Coffee\areas.min.js.map">
       <DependentUpon>areas.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\Coffee\session.coffee" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\about.js" />
     <Content Include="Scripts\Coffee\app.js">
@@ -245,6 +246,12 @@
     </Content>
     <Content Include="Scripts\Coffee\labels.min.js">
       <DependentUpon>labels.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\Coffee\session.js">
+      <DependentUpon>session.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\Coffee\session.min.js">
+      <DependentUpon>session.coffee</DependentUpon>
     </Content>
     <Content Include="Scripts\dragscroll.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
@@ -285,6 +292,7 @@
     <Content Include="Views\Areas\Edit.cshtml" />
     <Content Include="Views\Cards\Edit.cshtml" />
     <Content Include="Views\Labels\Index.cshtml" />
+    <Content Include="Views\Session\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

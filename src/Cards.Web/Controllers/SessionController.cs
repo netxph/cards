@@ -28,23 +28,28 @@ namespace Cards.Web.Controllers
 
         public ActionResult Create(string access_token)
         {
-            var userName = Provider.Authenticate(new TokenCredentials() { Token = access_token }); 
-
-            if (!string.IsNullOrEmpty(userName))
+            if (!string.IsNullOrEmpty(access_token))
             {
-                FormsAuthentication.SetAuthCookie(userName, false);
-                
-                return RedirectToAction("index", "areas");
+                var userName = Provider.Authenticate(new TokenCredentials() { Token = access_token });
+
+                if (!string.IsNullOrEmpty(userName))
+                {
+                    FormsAuthentication.SetAuthCookie(userName, false);
+
+                    return RedirectToAction("index", "areas");
+                }
+
+                return RedirectToAction("index", "home");
             }
 
-            return RedirectToAction("index", "home");
+            return View();
         }
 
         public ActionResult Delete()
         {
             FormsAuthentication.SignOut();
 
-            return RedirectToAction("index", "areas");
+            return RedirectToAction("index", "home");
         }
 
     }
