@@ -45,6 +45,11 @@ namespace Cards.Web.Controllers
             return View();
         }
 
+        public ActionResult Callback()
+        {
+            return View();
+        }
+
         public ActionResult Delete()
         {
             FormsAuthentication.SignOut();

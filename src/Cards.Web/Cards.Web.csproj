@@ -292,7 +292,8 @@
     <Content Include="Views\Areas\Edit.cshtml" />
     <Content Include="Views\Cards\Edit.cshtml" />
     <Content Include="Views\Labels\Index.cshtml" />
-    <Content Include="Views\Session\Create.cshtml" />
+    <Content Include="Views\Session\Callback.cshtml" />
+    <Content Include="Views\Shared\_Blank.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

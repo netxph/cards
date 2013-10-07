@@ -3,11 +3,17 @@
     cards.Class.Session = ->
         self = this
 
-        self.repost = ->
-            href = window.location.href
-            href = href.replace("/create#", "/create?")
-            window.location.href = href
+        self.rootUrl = $("meta[name=cards-baseurl]").attr("content")
 
+        self.repost = ->
+            query = window.location.hash.replace('#', '?')
+
+            if query != ''
+                path = window.location.origin + self.rootUrl + "session/create" + query
+            else
+                path = window.location.origin + self.rootUrl
+                
+            window.location.replace(path)
             return
 
         self.onReady = ->
