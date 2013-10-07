@@ -30,13 +30,17 @@ namespace Cards.Web.Controllers
         {
             if (!string.IsNullOrEmpty(access_token))
             {
+                //TODO: move this to session
                 var userName = Provider.Authenticate(new TokenCredentials() { Token = access_token });
 
                 if (!string.IsNullOrEmpty(userName))
                 {
-                    FormsAuthentication.SetAuthCookie(userName, false);
+                    if (Account.VerifyUser(userName) != null)
+                    {
+                        FormsAuthentication.SetAuthCookie(userName, false);
 
-                    return RedirectToAction("index", "areas");
+                        return RedirectToAction("index", "areas");
+                    }
                 }
 
                 return RedirectToAction("index", "home");

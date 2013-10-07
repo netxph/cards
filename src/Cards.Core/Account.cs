@@ -118,5 +118,13 @@ namespace Cards.Core
 
             return accounts;
         }
+
+        public static Account VerifyUser(string identifier)
+        {
+            var db = DbFactory.Create();
+            var account = db.FindAccount(identifier);
+
+            return account;
+        }
     }
 }

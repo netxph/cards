@@ -79,6 +79,71 @@ namespace Cards.Tests.Core
 
         }
 
+        public class VerifyUserMethod : TestCase<Account>
+        {
+
+            protected override Func<Account> Given()
+            {
+                var repository = new Mock<ICardRepository>();
+                repository.Setup(d => d.FindAccount(It.IsAny<string>()))
+                    .Returns(new Account()
+                        {
+                            ID = 1,
+                            Name = "John Doe",
+                            Alias = "John",
+                            Email = "john.doe@company.com",
+                            IsActive = true
+                            
+                        });
+
+                var factory = new Mock<DbFactory>();
+
+                factory.Protected()
+                       .Setup<ICardRepository>("OnCreateDb")
+                       .Returns(repository.Object);
+
+                new DbFactory(factory.Object);
+
+                return () => Account.VerifyUser("john.doe@company.com");
+            }
+
+            [Fact]
+            public void ShouldNotReturnNull()
+            {
+                Subject().Should().NotBeNull();
+            }
+
+            [Fact]
+            public void ShouldIDHasValue()
+            {
+                Its.ID.Should().Be(1);
+            }
+
+            [Fact]
+            public void ShouldNameHasValue()
+            {
+                Its.Name.Should().Be("John Doe");
+            }
+
+            [Fact]
+            public void ShouldAliasHasValue()
+            {
+                Its.Alias.Should().Be("John");
+            }
+
+            [Fact]
+            public void ShouldEmailHasValue()
+            {
+                Its.Email.Should().Be("john.doe@company.com");
+            }
+
+            [Fact]
+            public void ShouldBeActive()
+            {
+                Its.IsActive.Should().BeTrue();
+            }
+        }
+
         public class GetAllMethod : TestCase<List<Account>>
         {
             protected override Func<List<Account>> Given()
@@ -126,6 +191,7 @@ namespace Cards.Tests.Core
             {
                 Its[0].Alias.Should().Be("John");
             }
+
         }
 
         public class InitializeAccountWithData : TestCase<Account>

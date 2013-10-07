@@ -166,7 +166,12 @@ namespace Cards.Core
 
         public Account FindAccount(string email)
         {
-            throw new NotImplementedException();
+            using (var db = new CardsDb())
+            {
+                var account = db.Accounts.FirstOrDefault(a => a.Email == email);
+
+                return account;
+            }
         }
 
         public Account UpdateAccount(Account user)
