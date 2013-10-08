@@ -15,6 +15,34 @@ button {
     vertical-align: bottom;
 }
 
+#dashboard {
+	margin: 24px;
+	font-family: "Segoe UI Light", Verdana, Helvetica, Sans-Serif;
+	font-size: 24px;
+}
+
+#dashboard h1 {
+    font-size: 36px;
+}
+
+#dashboard div {
+	margin-top: 24px;
+	margin-left: 24px;
+}
+
+#dashboard div ul li:nth-child(even) {
+	margin-left: 24px;
+}
+
+#dashboard span {
+	font-weight: normal;
+}
+
+#dashboard span.dashboard-number {
+    font-size: 36px;
+    font-weight: bold;
+}
+
 #login {
 	float: right;
 	margin: 12px;

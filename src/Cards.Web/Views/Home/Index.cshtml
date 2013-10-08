@@ -1,13 +1,41 @@
 ﻿@{
-    ViewBag.Title = "Index";
+ViewBag.Title = "Index";
 }
 <div id="login"><a href="https://www.facebook.com/dialog/oauth?client_id=621615007867225&redirect_uri=http://localhost:3000/session/callback&scope=email&response_type=token">Login with Facebook</a></div>
-<section id="repair">
-<h2>Site under repair</h2>
-<p>
-    The whales are still going to north pole to ask santa for materials.
-</p>
-<p>
-    Visit project's page at <a href="http://github.com/netxph/cards">http://github.com/netxph/cards</a>.
-</p>
+
+<section id="dashboard">
+	<header><h1>Today in cards</h1></header>
+
+	<div>
+		<ul>
+			<li>
+				<span class='dashboard-number'>2</span>
+				<span>new items</span>
+			</li>
+			<li>
+				<span class='dashboard-number'>3</span>
+				<span>aged</span>
+			</li>
+			<li>
+				<span class='dashboard-number'>3</span>
+				<span>stale items</span>
+			</li>
+			<li>
+				<span class='dashboard-number'>2</span>
+				<span>todo</span>
+			</li>
+			<li>
+				<span class='dashboard-number'>3</span>
+				<span>doing</span>
+			</li>
+			<li>
+				<span class='dashboard-number'>4</span>
+				<span >done</span>
+			</li>
+			<li>
+				<span class='dashboard-number'>4</span>
+				<span>assigned to you</span>
+			</li>
+		</ul>
+	</div>
 </section>
