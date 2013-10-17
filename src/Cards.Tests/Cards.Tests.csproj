@@ -63,6 +63,7 @@
     <Compile Include="Core\ActivityTests.cs" />
     <Compile Include="Core\LabelTests.cs" />
     <Compile Include="Core\AccountTests.cs" />
+    <Compile Include="Core\ReportTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

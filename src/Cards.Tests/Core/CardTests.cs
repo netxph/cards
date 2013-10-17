@@ -169,7 +169,7 @@ namespace Cards.Tests.Core
         {
             readonly DateTime NOW = new DateTime(2013, 12, 1);
 
-            protected override Func<Card> Given()
+            protected override void Initialize()
             {
                 var card = new Card()
                 {
@@ -181,23 +181,43 @@ namespace Cards.Tests.Core
                 };
 
                 var date = new Mock<IDateProvider>();
-                date
-                    .Setup(d => d.UtcNow())
-                    .Returns(NOW);
 
-                Card.DateProvider = date.Object;
+                Define<IDateProvider>(() =>
+                {
+                    date
+                        .Setup(d => d.UtcNow())
+                        .Returns(NOW);
+
+                    return date.Object;
+                });
 
                 var repository = new Mock<ICardRepository>();
-                repository
-                    .Setup(r => r.FindCard(It.IsAny<int>()))
-                    .Returns(card);
+
+                Define<ICardRepository>(() =>
+                {
+                    repository
+                        .Setup(r => r.FindCard(It.IsAny<int>()))
+                        .Returns(card);
+
+                    return repository.Object;
+                });
 
                 var factory = new Mock<DbFactory>();
-                factory.Protected()
-                    .Setup<ICardRepository>("OnCreateDb")
-                    .Returns(repository.Object);
 
-                new DbFactory(factory.Object);
+                Define<DbFactory>(() =>
+                {
+                    factory.Protected()
+                        .Setup<ICardRepository>("OnCreateDb")
+                        .Returns(New<ICardRepository>());
+
+                    return factory.Object;
+                });
+            }
+
+            protected override Func<Card> Given()
+            {
+                Card.DateProvider = New<IDateProvider>();
+                new DbFactory(New<DbFactory>());
 
                 return () => Card.Update(1, "Updated task", 2);
 
@@ -336,14 +356,19 @@ namespace Cards.Tests.Core
             {
                 readonly DateTime NOW = new DateTime(2013, 12, 1);
 
-                protected override Func<Card> Given()
+                protected override void Initialize()
                 {
-                    var dateProvider = new Mock<IDateProvider>();
-                    dateProvider
+                    UseContext(new UpdateMethod());
+
+                    Mock.Get(New<IDateProvider>())
                         .Setup(dp => dp.UtcNow())
                         .Returns(NOW);
+                }
 
-                    Activity.DateProvider = dateProvider.Object;
+                protected override Func<Card> Given()
+                {
+                    Activity.DateProvider = New<IDateProvider>();
+                    new DbFactory(New<DbFactory>());
 
                     return () => Card.Update(1, "Updated task", 2);
                 }
@@ -399,16 +424,20 @@ namespace Cards.Tests.Core
             {
                 readonly DateTime NOW = new DateTime(2013, 12, 1);
 
+                protected override void Initialize()
+                {
+                    UseContext(new UpdateMethod());
+
+                    Mock.Get(New<IDateProvider>())
+                        .Setup(dp => dp.UtcNow())
+                        .Returns(NOW);
+                }
+
                 protected override Func<Card> Given()
                 {
                     AccountCache.Reset();
-
-                    var dateProvider = new Mock<IDateProvider>();
-                    dateProvider
-                        .Setup(dp => dp.UtcNow())
-                        .Returns(NOW);
-
-                    Activity.DateProvider = dateProvider.Object;
+                    Activity.DateProvider = New<IDateProvider>();
+                    new DbFactory(New<DbFactory>());
 
                     return () => Card.Update(1, "Some update", 1);
                 }
@@ -426,104 +455,64 @@ namespace Cards.Tests.Core
 
         }
 
-        public class UpdateMethod_Invalid : TestCase
-        {
-            protected override void Initialize()
-            {
-                AccountCache.Reset();
-
-                var card = new Card()
-                {
-                    ID = 1,
-                    Name = "Card",
-                    AreaID = 1
-                };
-
-                var repository = new Mock<ICardRepository>();
-                repository
-                    .Setup(r => r.UpdateCard(It.IsAny<Card>()))
-                    .Callback<Card>(c =>
-                    {
-                        Validator.ValidateObject(c, new ValidationContext(c), true);
-                    });
-                repository
-                    .Setup(r => r.FindCard(1))
-                    .Returns(card);
-
-                var factory = new Mock<DbFactory>();
-                factory.Protected()
-                    .Setup<ICardRepository>("OnCreateDb")
-                    .Returns(repository.Object);
-
-                new DbFactory(factory.Object);
-            }
-
-            protected override Action Given()
-            {
-                return null;
-            }
-
-            [Fact]
-            public void ShouldReturnNullIfItemIsNotFound()
-            {
-                var card = Card.Update(99, "Not exist", 1);
-                card.Should().BeNull();
-            }
-
-            [Fact]
-            public void ShouldThrowValidationExceptionIfNameIsEmptyOrNull()
-            {
-                Action updateCard = () => Card.Update(1, string.Empty, 1);
-                updateCard.ShouldThrow<ValidationException>();
-            }
-
-            [Fact]
-            public void ShouldThrowValidationExceptionIfAreaIsMissing()
-            {
-                Action updateCard = () => Card.Update(1, "Valid", 0);
-                updateCard.ShouldThrow<ValidationException>();
-            }
-
-        }
-
         public class DeleteMethod : TestCase<Card>
         {
             readonly DateTime NOW = new DateTime(2013, 12, 1);
 
-            protected override Func<Card> Given()
+            protected override void Initialize()
             {
-                var date = new Mock<IDateProvider>();
-                date
-                    .Setup(d => d.UtcNow())
-                    .Returns(NOW);
+                var dateProvider = new Mock<IDateProvider>();
 
-                Card.DateProvider = date.Object;
+                Define<IDateProvider>(() =>
+                {
+                    dateProvider
+                        .Setup(d => d.UtcNow())
+                        .Returns(NOW);
+
+                    return dateProvider.Object;
+                });
 
                 var repository = new Mock<ICardRepository>();
-                repository
-                    .Setup(r => r.FindCard(1))
-                    .Returns(new Card()
-                    {
-                        ID = 1,
-                        AreaID = 1,
-                        CreatedDateUtc = DateTime.MinValue,
-                        ModifiedDateUtc = DateTime.MinValue,
-                        Name = "Card",
-                        IsActive = true
-                    });
-
                 Card card = null;
-                repository
-                    .Setup(r => r.UpdateCard(It.IsAny<Card>()))
-                    .Callback<Card>(c => card = c)
-                    .Returns(() => card);
+
+                Define<ICardRepository>(() =>
+                {
+                    repository
+                        .Setup(r => r.FindCard(1))
+                        .Returns(new Card()
+                        {
+                            ID = 1,
+                            AreaID = 1,
+                            CreatedDateUtc = DateTime.MinValue,
+                            ModifiedDateUtc = DateTime.MinValue,
+                            Name = "Card",
+                            IsActive = true
+                        });
+
+                    repository
+                        .Setup(r => r.UpdateCard(It.IsAny<Card>()))
+                        .Callback<Card>(c => card = c)
+                        .Returns(() => card);
+
+                    return repository.Object;
+                });
 
                 var factory = new Mock<DbFactory>();
-                factory.Protected()
-                    .Setup<ICardRepository>("OnCreateDb")
-                    .Returns(repository.Object);
 
-                new DbFactory(factory.Object);
+                Define<DbFactory>(() =>
+                {
+                    factory.Protected()
+                        .Setup<ICardRepository>("OnCreateDb")
+                        .Returns(New<ICardRepository>());
+
+                    return factory.Object;
+                });
+            }
+
+            protected override Func<Card> Given()
+            {
+                Card.DateProvider = New<IDateProvider>();
+                new DbFactory(New<DbFactory>());
 
                 return () => Card.Delete(1);
             }
@@ -568,14 +557,19 @@ namespace Cards.Tests.Core
             {
                 readonly DateTime NOW = new DateTime(2013, 12, 1);
 
-                protected override Func<Card> Given()
+                protected override void Initialize()
                 {
-                    var dateProvider = new Mock<IDateProvider>();
-                    dateProvider
+                    UseContext(new DeleteMethod());
+
+                    Mock.Get(New<IDateProvider>())
                         .Setup(dp => dp.UtcNow())
                         .Returns(NOW);
+                }
 
-                    Activity.DateProvider = dateProvider.Object;
+                protected override Func<Card> Given()
+                {
+                    Activity.DateProvider = New<IDateProvider>();
+                    new DbFactory(New<DbFactory>());
 
                     return () => Card.Delete(1);
                 }
@@ -636,29 +630,50 @@ namespace Cards.Tests.Core
 
             readonly DateTime NOW = new DateTime(2013, 12, 1);
 
-            protected override Func<Card> Given()
+            protected override void Initialize()
             {
-                Card card = null;
-
                 var dateProvider = new Mock<IDateProvider>();
-                dateProvider
-                    .Setup(dp => dp.UtcNow())
-                    .Returns(NOW);
 
-                Card.DateProvider = dateProvider.Object;
+                Define<IDateProvider>(() =>
+                {
+                    dateProvider
+                        .Setup(dp => dp.UtcNow())
+                        .Returns(NOW);
+
+                    return dateProvider.Object;
+                });
 
                 var repository = new Mock<ICardRepository>();
-                repository
-                    .Setup(r => r.CreateCard(It.IsAny<Card>()))
-                    .Callback<Card>((c) => card = c)
-                    .Returns(() => card);
+                Card card = null;
+
+                Define<ICardRepository>(() =>
+                {
+                    repository
+                        .Setup(r => r.CreateCard(It.IsAny<Card>()))
+                        .Callback<Card>((c) => card = c)
+                        .Returns(() => card);
+
+                    return repository.Object;
+                });
 
                 var factory = new Mock<DbFactory>();
-                factory.Protected()
-                    .Setup<ICardRepository>("OnCreateDb")
-                    .Returns(repository.Object);
 
-                new DbFactory(factory.Object);
+                Define<DbFactory>(() =>
+                {
+                    factory.Protected()
+                        .Setup<ICardRepository>("OnCreateDb")
+                        .Returns(New<ICardRepository>());
+
+                    return factory.Object;
+                });
+
+                
+            }
+
+            protected override Func<Card> Given()
+            {
+                Card.DateProvider = New<IDateProvider>();
+                new DbFactory(New<DbFactory>());
 
                 return () => Card.Create("Card", 1);
             }
@@ -806,14 +821,19 @@ namespace Cards.Tests.Core
             {
                 readonly DateTime NOW = new DateTime(2013, 12, 1);
 
-                protected override Func<Card> Given()
+                protected override void Initialize()
                 {
-                    var dateProvider = new Mock<IDateProvider>();
-                    dateProvider
+                    UseContext(new CreateMethod());
+
+                    Mock.Get(New<IDateProvider>())
                         .Setup(dp => dp.UtcNow())
                         .Returns(NOW);
+                }
 
-                    Activity.DateProvider = dateProvider.Object;
+                protected override Func<Card> Given()
+                {
+                    Card.DateProvider = New<IDateProvider>();
+                    new DbFactory(New<DbFactory>());
 
                     return () => Card.Create("Card", 1);
                 }
@@ -855,48 +875,6 @@ namespace Cards.Tests.Core
                 }
             }
 
-        }
-
-        public class CreateMethod_Invalid : TestCase
-        {
-            protected override void Initialize()
-            {
-                var repository = new Mock<ICardRepository>();
-                repository
-                    .Setup(r => r.CreateCard(It.IsAny<Card>()))
-                    .Callback<Card>(card =>
-                    {
-                        Validator.ValidateObject(card, new ValidationContext(card), true);
-                    });
-
-                var factory = new Mock<DbFactory>();
-                factory.Protected()
-                    .Setup<ICardRepository>("OnCreateDb")
-                    .Returns(repository.Object);
-
-                new DbFactory(factory.Object);
-            }
-
-            [Fact]
-            public void ShouldThrowValidationErrorWhenNameIsEmpty()
-            {
-                Action createCard = () => Card.Create(string.Empty, 1);
-
-                createCard.ShouldThrow<ValidationException>();
-            }
-
-            [Fact]
-            public void ShouldThrowValidationErrorWhenAreaIsMissing()
-            {
-                Action createCard = () => Card.Create("Test", 0);
-
-                createCard.ShouldThrow<ValidationException>();
-            }
-
-            protected override Action Given()
-            {
-                return null;
-            }
         }
 
         public class GetViewMethod : TestCase<CardView>
