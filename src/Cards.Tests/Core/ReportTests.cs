@@ -31,11 +31,11 @@ namespace Cards.Tests.Core
             Define<ICardRepository>(() =>
             {
                 var repository = new Mock<ICardRepository>();
-                
+
 
                 repository
                     .Setup(r => r.FindAllArea())
-                    .Returns(() => 
+                    .Returns(() =>
                     {
                         Card.DateProvider = New<IDateProvider>();
 
@@ -43,9 +43,24 @@ namespace Cards.Tests.Core
                         {
                             new Area() 
                             {
+                                Name = "Backlog",
                                 Cards = new List<Card>()
                                 {
-                                    new Card() { CreatedDateUtc = NOW }
+                                    new Card() 
+                                    { 
+                                        CreatedDateUtc = NOW,
+                                        ModifiedDateUtc = NOW
+                                    },
+                                    new Card() 
+                                    { 
+                                        CreatedDateUtc = NOW.AddDays(-30),
+                                        ModifiedDateUtc = NOW
+                                    },
+                                    new Card() 
+                                    { 
+                                        CreatedDateUtc = NOW.AddDays(-10),
+                                        ModifiedDateUtc = NOW.AddDays(-10)
+                                    }
                                 }
                             }
                         };
@@ -57,7 +72,7 @@ namespace Cards.Tests.Core
             Define<DbFactory>(() =>
             {
                 var factory = new Mock<DbFactory>();
-                
+
                 factory.Protected()
                     .Setup<ICardRepository>("OnCreateDb")
                     .Returns(New<ICardRepository>());
@@ -84,6 +99,42 @@ namespace Cards.Tests.Core
         public void ShouldNewItemsHasValue()
         {
             Its.NewItems.Should().Be(1);
+        }
+
+        [Fact]
+        public void ShouldAgedHasValue()
+        {
+            Its.Aged.Should().Be(1);
+        }
+
+        [Fact]
+        public void ShouldStaleItemsHasValue()
+        {
+            Its.StaleItems.Should().Be(1);
+        }
+
+        [Fact]
+        public void ShouldAreasIsNotNull()
+        {
+            Its.Areas.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void ShouldAreasIsNotEmpty()
+        {
+            Its.Areas.Count.Should().Be(1);
+        }
+        
+        [Fact]
+        public void ShouldAreasFirstItemNameHasValue()
+        {
+            Its.Areas.Keys.ToList()[0].Should().Be("Backlog");
+        }
+
+        [Fact]
+        public void ShouldAreasCountIs3()
+        {
+            Its.Areas["Backlog"].Should().Be(3);
         }
     }
 }

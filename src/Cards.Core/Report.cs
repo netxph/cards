@@ -9,7 +9,18 @@ namespace Cards.Core
     public class Report
     {
 
+        public Report()
+        {
+            Areas = new Dictionary<string, int>();
+        }
+
         public int NewItems { get; set; }
+
+        public int Aged { get; set; }
+
+        public int StaleItems { get; set; }
+
+        public Dictionary<string, int> Areas { get; set; }
 
         static IDateProvider _dateProvider = null;
         public static IDateProvider DateProvider
@@ -35,12 +46,21 @@ namespace Cards.Core
 
             if (areas != null)
             {
-                report.NewItems = areas.Sum(a => a.Cards.Count(c => c.GetView().Age == 0));
+                var cards = areas.SelectMany(a => a.Cards).ToList().ConvertAll(c => c.GetView()).ToList();
+                
+                report.NewItems = cards.Count(c => c.Age == Settings.NEW_AGE);
+                report.Aged = cards.Count(c => c.Age >= Settings.OLD_AGE);
+                report.StaleItems = cards.Count(c => c.DaysSinceLastUpdate >= Settings.STALE_AGE);
+
+                foreach (var area in areas)
+                {
+                    report.Areas.Add(area.Name, area.Cards.Count);
+                }
             }
 
             return report;
         }
 
-        
+
     }
 }
