@@ -461,10 +461,12 @@ namespace Cards.Tests.Core
 
             protected override void Initialize()
             {
-                var dateProvider = new Mock<IDateProvider>();
+                
 
                 Define<IDateProvider>(() =>
                 {
+                    var dateProvider = new Mock<IDateProvider>();
+
                     dateProvider
                         .Setup(d => d.UtcNow())
                         .Returns(NOW);
@@ -472,11 +474,11 @@ namespace Cards.Tests.Core
                     return dateProvider.Object;
                 });
 
-                var repository = new Mock<ICardRepository>();
-                Card card = null;
-
                 Define<ICardRepository>(() =>
                 {
+                    var repository = new Mock<ICardRepository>();
+                    Card card = null;
+
                     repository
                         .Setup(r => r.FindCard(1))
                         .Returns(new Card()
@@ -497,10 +499,10 @@ namespace Cards.Tests.Core
                     return repository.Object;
                 });
 
-                var factory = new Mock<DbFactory>();
-
                 Define<DbFactory>(() =>
                 {
+                     var factory = new Mock<DbFactory>();
+
                     factory.Protected()
                         .Setup<ICardRepository>("OnCreateDb")
                         .Returns(New<ICardRepository>());
@@ -561,7 +563,7 @@ namespace Cards.Tests.Core
                 {
                     UseContext(new DeleteMethod());
 
-                    Mock.Get(New<IDateProvider>())
+                    Mock.Get(Get<IDateProvider>())
                         .Setup(dp => dp.UtcNow())
                         .Returns(NOW);
                 }
