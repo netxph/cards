@@ -55,6 +55,7 @@
     <Compile Include="CardRepository.cs" />
     <Compile Include="CardsDb.cs" />
     <Compile Include="CardView.cs" />
+    <Compile Include="SSOConstants.cs" />
     <Compile Include="DateProvider.cs" />
     <Compile Include="DbFactory.cs" />
     <Compile Include="Activity.cs" />
@@ -99,12 +100,17 @@
     <Compile Include="Migrations\201309291354561_AddAccountTable.Designer.cs">
       <DependentUpon>201309291354561_AddAccountTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201310100700079_AddEmailToAccounts.cs" />
+    <Compile Include="Migrations\201310100700079_AddEmailToAccounts.Designer.cs">
+      <DependentUpon>201310100700079_AddEmailToAccounts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScriptHelper.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Account.cs" />
     <Compile Include="TokenCredentials.cs" />
+    <Compile Include="UserContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -134,6 +140,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201309291354561_AddAccountTable.resx">
       <DependentUpon>201309291354561_AddAccountTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201310100700079_AddEmailToAccounts.resx">
+      <DependentUpon>201310100700079_AddEmailToAccounts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

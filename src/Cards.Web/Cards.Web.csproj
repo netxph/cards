@@ -141,12 +141,15 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\WebHelpers.cs" />
+    <Compile Include="Models\FacebookUserProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\images\cards.ico" />
     <Content Include="Content\images\cards.png" />
     <Content Include="Content\images\load.gif" />
+    <Content Include="Content\images\Login.PNG" />
+    <Content Include="Content\images\Logout.PNG" />
     <Content Include="Content\Reset.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -294,10 +297,10 @@
     <Content Include="Views\Labels\Index.cshtml" />
     <Content Include="Views\Session\Callback.cshtml" />
     <Content Include="Views\Shared\_Blank.cshtml" />
+    <Content Include="Views\Shared\_login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

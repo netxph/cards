@@ -47,6 +47,14 @@ button {
 	float: right;
 	margin: 12px;
 	font-weight: bold;
+    position:absolute;
+    top:0px;
+    right: 0px;
+}
+
+#login img{
+	float: right;
+    height:45px;
 }
 
 #labels-manage header {
@@ -452,4 +460,10 @@ article footer textarea {
 
 .card-aged {
 	font-weight: bold;
+}
+
+.facebook-buttons
+{
+    width:auto;
+    height: 45px;
 }

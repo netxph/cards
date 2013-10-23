@@ -11,7 +11,7 @@ namespace Cards.Core
 
         string Name { get; }
 
-        string Authenticate(IUserCredentials credentials); 
+        UserContext Authenticate(IUserCredentials credentials); 
 
     }
 }
