@@ -7,36 +7,42 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Cards.Extensions.SSO
 {
     public class FacebookAuthProvider : IAuthenticationProvider
     {
-        const string PROVIDER_NAME = "FacebookSSO";
-        const string ACCESS_TOKEN_PARAM = "access_token";
-        const string USER_DATA_KEY = "email";
-        const string INFO_URL = "https://graph.facebook.com/me";
-
-        public string Authenticate(IUserCredentials credentials)
+        public UserContext Authenticate(IUserCredentials credentials)
         {
             var cred = credentials as TokenCredentials;
 
-            var client = new RestClient(INFO_URL);
+            var client = new RestClient(SSOConstants.INFO_URL);
             var request = new RestRequest(Method.GET);
-            request.AddParameter(ACCESS_TOKEN_PARAM, cred.Token);
+            request.AddParameter(SSOConstants.ACCESS_TOKEN_PARAM, cred.Token);
 
             var response = client.Execute<Dictionary<string, string>>(request);
 
-            if (response.Data != null && response.Data.ContainsKey(USER_DATA_KEY))
+            if (response.Data != null && response.Data.ContainsKey(SSOConstants.USER_DATA_KEY))
             {
-                return response.Data[USER_DATA_KEY];
+
+                var identifier = response.Data[SSOConstants.USER_DATA_KEY];
+
+                UserContext userContext = new UserContext()
+                {
+                    Identifier = identifier,
+                    IsAuthenticated = true,
+                    Data = response.Data
+                };
+
+                return userContext;
             }
 
-            return null;
+            return UserContext.FailedContext;
         }
 
         public string Name
         {
-            get { return PROVIDER_NAME; }
+            get { return SSOConstants.PROVIDER_NAME; }
         }
     }
 }

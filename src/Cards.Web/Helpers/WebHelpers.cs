@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Cards.Web.Models;
 
 namespace Cards.Web.Helpers
 {
@@ -19,6 +20,26 @@ namespace Cards.Web.Helpers
             }
 
             return root;
+        }
+
+        public static bool IsAuthenticated
+        {
+            get { return HttpContext.Current.User.Identity.IsAuthenticated; }
+        }
+
+        public static FacebookUserProfile CurrentUser
+        {
+            get { return HttpContext.Current.Session["Profile"] as FacebookUserProfile; }
+        }
+
+        public static string ProfilePicture 
+        {
+            get { return string.Format("https://graph.facebook.com/{0}/picture", CurrentUser.Id); }
+        }
+
+        public static string FullName
+        { 
+            get { return CurrentUser.Name ; }
         }
 
     }

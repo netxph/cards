@@ -14,7 +14,12 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <header id="banner"><h1>Cards</h1></header>
+    <header id="banner">
+        <h1>Cards</h1>
+        <div id="login">
+            @Html.Partial("_login")
+        </div>
+    </header>
     <section>
     @RenderBody()
     </section>

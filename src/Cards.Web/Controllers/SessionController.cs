@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Cards.Web.Models;
 
 namespace Cards.Web.Controllers
 {
@@ -31,13 +32,16 @@ namespace Cards.Web.Controllers
             if (!string.IsNullOrEmpty(access_token))
             {
                 //TODO: move this to session
-                var userName = Provider.Authenticate(new TokenCredentials() { Token = access_token });
+                var context = Provider.Authenticate(new TokenCredentials() { Token = access_token });
 
-                if (!string.IsNullOrEmpty(userName))
+                if (context.IsAuthenticated)
                 {
-                    if (Account.VerifyUser(userName) != null)
+                    if (Account.VerifyUser(context.Identifier) != null)
                     {
-                        FormsAuthentication.SetAuthCookie(userName, false);
+                        FormsAuthentication.SetAuthCookie(context.Identifier, false);
+
+                        var data = new FacebookUserProfile(context.Data);
+                        Session["Profile"] = data;
 
                         return RedirectToAction("index", "areas");
                     }
