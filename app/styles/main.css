@@ -1,0 +1,15 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    padding-top: 70px;
+    overflow: scroll;
+}
+
+#areas {
+    padding: 12px;
+}
+
+.navbar-text.navbar-right:last-child {
+    margin-right: 15px;
+}
