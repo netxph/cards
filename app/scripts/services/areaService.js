@@ -5,6 +5,9 @@ var cardsApp = angular.module('cardsApp');
 cardsApp.factory('areaService', function() {
     return {
         getAreas: function() {
+
+            var areas = []; 
+
             return [
             {
                 name: "Backlog",
