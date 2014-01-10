@@ -17,6 +17,7 @@ module.exports = function(config) {
       'app/vendor/angular/angular.js',
       'app/vendor/angular-route/angular-route.js',
       'app/vendor/angular-mocks/angular-mocks.js',
+      'app/vendor/angular-resource/angular-resource.js',
 
       {pattern: 'app/scripts/controllers/*.js', included: false},
       {pattern: 'app/scripts/services/*.js', included: false},

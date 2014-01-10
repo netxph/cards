@@ -4,15 +4,18 @@ describe('Controller: AreaListCtrl - Areas', function() {
 
     beforeEach(module('cardsApp'));
 
-    var subject, controller, scope;
+    var subject, controller, scope, $httpBackend;
 
-    beforeEach(inject(function ($controller, $rootScope) {
+    beforeEach(inject(function ($httpBackend, $controller, $rootScope) {
+        
+        $httpBackend.when('GET', 'http://localhost/areas').respond([{}]);
+
         scope = $rootScope.$new();
         controller = $controller('AreaListCtrl', {
             $scope: scope
         });
 
-        subject = scope.areas;
+        subject = scope.data.areas;
     }));
 
     it('should define areas', function() {
@@ -36,7 +39,7 @@ describe('Controller: AreaListCtrl - Area', function() {
             $scope: scope
         });
 
-        subject = scope.areas[0];
+        subject = scope.data.areas[0];
     }));
 
     it('should define name', function() {
@@ -68,7 +71,7 @@ describe('Controller: AreaListCtrl - Card', function() {
             $scope: scope
         });
 
-        subject = scope.areas[0].cards[0];
+        subject = scope.data.areas[0].cards[0];
     }));
 
     it('should define name', function() {
@@ -108,7 +111,7 @@ describe('Controller: AreaListCtrl - Label', function() {
             $scope: scope
         });
 
-        subject = scope.areas[0].cards[0].labels[0];
+        subject = scope.data.areas[0].cards[0].labels[0];
     }));
 
     it('should have value', function() {

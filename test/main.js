@@ -1,6 +1,6 @@
 'use strict'
 
-var cardsApp = angular.module('cardsApp',['ngRoute']);
+var cardsApp = angular.module('cardsApp',['ngRoute', 'ngResource']);
 
 var dependencies = [];
 
