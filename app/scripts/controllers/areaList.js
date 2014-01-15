@@ -2,10 +2,16 @@
 
 var cardsApp = angular.module('cardsApp');
 
-cardsApp.controller('AreaListCtrl', ['$scope', 'Areas', function($scope, Areas) {
+cardsApp.controller('AreaListCtrl', ['$scope', '$http', function($scope, $http) {
     $scope.data = {};
-    
-    Areas.query(function(response) {
-        $scope.data.areas = response; 
-    });
+
+    $http.jsonp('http://localhost/areas')
+        .success(function(data) {
+            if(data) {
+                $scope.data.areas = data;
+            }
+        })
+        .error(function(data) {
+            console.error('Error fetching data:', data);
+        });
 }]);

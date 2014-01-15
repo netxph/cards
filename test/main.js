@@ -1,3 +1,5 @@
+//bootstraps requirejs and angularjs app
+
 'use strict'
 
 var cardsApp = angular.module('cardsApp',['ngRoute', 'ngResource']);

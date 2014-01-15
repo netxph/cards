@@ -2,18 +2,19 @@
 
 describe('Controller: AreaListCtrl - Areas', function() {
 
-    beforeEach(module('cardsApp'));
-
     var subject, controller, scope, $httpBackend;
 
+    beforeEach(module('cardsApp'));
     beforeEach(inject(function ($httpBackend, $controller, $rootScope) {
-        
-        $httpBackend.when('GET', 'http://localhost/areas').respond([{}]);
+       
+        $httpBackend.whenJSONP('http://localhost/areas').respond([{}]);
 
         scope = $rootScope.$new();
         controller = $controller('AreaListCtrl', {
             $scope: scope
         });
+
+        $httpBackend.flush();
 
         subject = scope.data.areas;
     }));
@@ -28,6 +29,7 @@ describe('Controller: AreaListCtrl - Areas', function() {
 
 });
 
+/*
 describe('Controller: AreaListCtrl - Area', function() {
     beforeEach(module('cardsApp'));
 
@@ -118,3 +120,4 @@ describe('Controller: AreaListCtrl - Label', function() {
         expect(subject).toBe('Bug');
     });
 });
+*/
