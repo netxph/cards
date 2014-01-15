@@ -1,17 +1,11 @@
-'use strict'
+'use strict';
 
 var cardsApp = angular.module('cardsApp');
 
-cardsApp.controller('AreaListCtrl', ['$scope', '$http', function($scope, $http) {
+cardsApp.controller('AreaListCtrl', ['$scope', '$http', 'Areas', function($scope, $http, Areas) {
     $scope.data = {};
 
-    $http.jsonp('http://localhost/areas')
-        .success(function(data) {
-            if(data) {
-                $scope.data.areas = data;
-            }
-        })
-        .error(function(data) {
-            console.error('Error fetching data:', data);
-        });
+    Areas.getAll().success(function(data) {
+        $scope.data.areas = data;
+    });
 }]);

@@ -8,11 +8,12 @@ var dependencies = [];
 
 //patterns
 var tests = /base\/test\/spec.*js$/;
+var mocks = /base\/test\/mock.*js$/;
 var depends = /base\/app\/scripts.*js$/;
 
 for (var file in window.__karma__.files) {
   if (window.__karma__.files.hasOwnProperty(file)) {
-    if (tests.test(file) || depends.test(file)) {
+    if (tests.test(file) || depends.test(file) || mocks.test(file)) {
       dependencies.push(file);
     }
   }
