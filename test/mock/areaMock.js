@@ -4,5 +4,10 @@ var areas = angular.module('areaMock', [])
     .value('areasData', [
             {
                 name: 'Backlog',
-                cards: [{}]
+                cards: [
+                {
+                    name: 'Create a design template for cards',
+                    description: 'description goes here',
+                    labels: ['Bug'],
+                }]
             }]);

@@ -66,18 +66,20 @@ describe('Controller: AreaListCtrl - Area', function() {
 });
 
 
-/*
-
 describe('Controller: AreaListCtrl - Card', function() {
-    beforeEach(module('cardsApp'));
-
     var subject, controller, scope;
 
-    beforeEach(inject(function ($controller, $rootScope) {
+    beforeEach(module('cardsApp', 'areaMock'));
+    beforeEach(inject(function ($httpBackend, $controller, $rootScope, areasData) {
+
+        $httpBackend.whenJSONP('http://localhost/areas').respond(areasData);
+
         scope = $rootScope.$new();
         controller = $controller('AreaListCtrl', {
             $scope: scope
         });
+
+        $httpBackend.flush();
 
         subject = scope.data.areas[0].cards[0];
     }));
@@ -109,16 +111,20 @@ describe('Controller: AreaListCtrl - Card', function() {
 });
 
 describe('Controller: AreaListCtrl - Label', function() {
-    beforeEach(module('cardsApp'));
 
     var subject, controller, scope;
 
-    beforeEach(inject(function ($controller, $rootScope) {
+    beforeEach(module('cardsApp', 'areaMock'));
+    beforeEach(inject(function ($httpBackend, $controller, $rootScope, areasData) {
+
+        $httpBackend.whenJSONP('http://localhost/areas').respond(areasData);
+
         scope = $rootScope.$new();
         controller = $controller('AreaListCtrl', {
             $scope: scope
         });
 
+        $httpBackend.flush();
         subject = scope.data.areas[0].cards[0].labels[0];
     }));
 
@@ -126,4 +132,3 @@ describe('Controller: AreaListCtrl - Label', function() {
         expect(subject).toBe('Bug');
     });
 });
-*/
