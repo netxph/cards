@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 module.exports = function(grunt) {
    
@@ -49,7 +49,16 @@ module.exports = function(grunt) {
 
         grunt.task.run([
             'connect:livereload',
+            'api',
             'watch'
         ]);
     });
+
+    grunt.registerTask('api', 'Start mock API server.', function() {
+        grunt.log.write('Launching Cards 2.0.0 Mock REST API');
+        var server = require('./server/server.js');
+
+        server.listen(9002);
+    });
+
 }
