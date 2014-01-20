@@ -7,7 +7,7 @@ describe('Controller: AreaListCtrl - Areas', function() {
     beforeEach(module('cardsApp', 'areaMock'));
     beforeEach(inject(function ($httpBackend, $controller, $rootScope, areasData) {
        
-        $httpBackend.whenJSONP('http://localhost/areas').respond(areasData);
+        $httpBackend.whenGET('http://localhost/areas').respond(areasData);
 
         scope = $rootScope.$new();
         controller = $controller('AreaListCtrl', {
@@ -35,7 +35,7 @@ describe('Controller: AreaListCtrl - Area', function() {
     beforeEach(module('cardsApp', 'areaMock'));
     beforeEach(inject(function ($httpBackend, $controller, $rootScope, areasData) {
 
-        $httpBackend.whenJSONP('http://localhost/areas').respond(areasData);
+        $httpBackend.whenGET('http://localhost/areas').respond(areasData);
 
         scope = $rootScope.$new();
         controller = $controller('AreaListCtrl', {
@@ -72,7 +72,7 @@ describe('Controller: AreaListCtrl - Card', function() {
     beforeEach(module('cardsApp', 'areaMock'));
     beforeEach(inject(function ($httpBackend, $controller, $rootScope, areasData) {
 
-        $httpBackend.whenJSONP('http://localhost/areas').respond(areasData);
+        $httpBackend.whenGET('http://localhost/areas').respond(areasData);
 
         scope = $rootScope.$new();
         controller = $controller('AreaListCtrl', {
@@ -117,7 +117,7 @@ describe('Controller: AreaListCtrl - Label', function() {
     beforeEach(module('cardsApp', 'areaMock'));
     beforeEach(inject(function ($httpBackend, $controller, $rootScope, areasData) {
 
-        $httpBackend.whenJSONP('http://localhost/areas').respond(areasData);
+        $httpBackend.whenGET('http://localhost/areas').respond(areasData);
 
         scope = $rootScope.$new();
         controller = $controller('AreaListCtrl', {

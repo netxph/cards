@@ -19,6 +19,9 @@ cardsApp.config(
     }
 );
 
+//configurations
+cardsApp.constant('AppSettings', { 'serviceBaseUrl': 'http://localhost:9002/' });
+
 require([
     //controllers
     'scripts/controllers/areaList.js',

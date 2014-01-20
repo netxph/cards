@@ -4,6 +4,9 @@
 
 var cardsApp = angular.module('cardsApp',['ngRoute', 'ngResource']);
 
+//configurations
+cardsApp.constant('AppSettings', { 'serviceBaseUrl':'http://localhost/' })
+
 var dependencies = [];
 
 //patterns

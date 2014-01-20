@@ -2,6 +2,8 @@
 
 var cardsApp = angular.module('cardsApp');
 
-cardsApp.factory('Areas', function($resource) {
-    return $resource('http://localhost:9002/areas');
+cardsApp.factory('Areas', function($resource, AppSettings) {
+    var areasUrl = AppSettings.serviceBaseUrl + 'areas';
+
+    return $resource(areasUrl);
 });
