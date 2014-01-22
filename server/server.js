@@ -42,7 +42,5 @@
   };
   
   server.start();
-
-  return server;
 })();
 
