@@ -1,6 +1,6 @@
-'use strict';
-
 (function() {
+  'use strict';
+
   var express, app, server;
 
   express = require('express');
@@ -8,6 +8,7 @@
 
   server = {
     data: [],
+
     seed: function() {
       server.data.push({
             name: 'Backlog',
@@ -19,9 +20,8 @@
         }]
           });
     },
-    start: function() {
-      server.seed();
 
+    init: function() {
       app.use(function(request, response, next) {
         response.header('Access-Control-Allow-Origin', ['*'])
         response.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
@@ -33,9 +33,16 @@
       app.get('/areas', function(request, response) {
         response.send(server.data);
       });
+    },
+
+    start: function() {
+      server.seed();
+      server.init();
     }
   };
   
   server.start();
 
+  return server;
 })();
+
