@@ -39,7 +39,7 @@
     });
 
     describe('Controller: AreaAddCtrl - AddMethod', function() {
-        var subject, controller, scope, $httpBackend;
+        var subject, controller, scope, area;
 
         beforeEach(module('cardsApp'));
         beforeEach(inject(function ($controller, $rootScope) {
@@ -49,7 +49,19 @@
                 $scope: scope
             });
 
-            subject = scope.data.area;
+            area = scope.data.area;
+            area.name = "Todo";
+
+            subject = scope.addArea();
         }));
+
+        it('should not return nil', function() {
+            expect(subject).not.toBeNull();
+        });
+
+        it('should area name is todo', function() {
+            expect(subject.name).toBe('Todo');
+        });
+
     });
 })();
