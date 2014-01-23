@@ -13,7 +13,7 @@ cardsApp.config(
                 templateUrl: 'views/area-list.html',
                 controller: 'AreaListCtrl'
             })
-            .when('/areas/:id', {
+            .when('/areas/new', {
                 templateUrl: 'views/area-add.html',
                 controller: 'AreaAddCtrl'
             })
