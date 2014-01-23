@@ -37,4 +37,19 @@
         });
 
     });
+
+    describe('Controller: AreaAddCtrl - AddMethod', function() {
+        var subject, controller, scope, $httpBackend;
+
+        beforeEach(module('cardsApp'));
+        beforeEach(inject(function ($controller, $rootScope) {
+
+            scope = $rootScope.$new();
+            controller = $controller('AreaAddCtrl', {
+                $scope: scope
+            });
+
+            subject = scope.data.area;
+        }));
+    });
 })();

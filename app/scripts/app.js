@@ -29,6 +29,7 @@ cardsApp.constant('AppSettings', { 'serviceBaseUrl': 'http://localhost:9002/' })
 require([
     //controllers
     'scripts/controllers/areaList.js',
+    'scripts/controllers/areaAdd.js',
 
     //services
     'scripts/services/areaService.js'
