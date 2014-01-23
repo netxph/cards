@@ -1,16 +1,14 @@
-(function() {
+var cards;
+cards = global.cards = {};
+
+(function(cards) {
   'use strict';
 
-  var express, app, server;
+  cards.Server = function(app, data) {
+    var self = this;
 
-  express = require('express');
-  app = module.exports = express();
-
-  server = {
-    data: [],
-
-    seed: function() {
-      server.data.push({
+    self.seed = function() {
+      data.push({
             name: 'Backlog',
           cards: [
         {
@@ -19,28 +17,36 @@
           labels: ['Bug'],
         }]
           });
-    },
+    };
 
-    init: function() {
+    self.init = function() {
       app.use(function(request, response, next) {
         response.header('Access-Control-Allow-Origin', ['*'])
         response.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-      response.header('Access-Control-Allow-Headers', 'Content-Type');
+        response.header('Access-Control-Allow-Headers', 'Content-Type');
 
-      next();
+        next();
       });
 
       app.get('/areas', function(request, response) {
-        response.send(server.data);
+        response.send(data);
       });
-    },
+    };
 
-    start: function() {
-      server.seed();
-      server.init();
-    }
   };
+
+  if(!cards.data) {
+    var express;
+    var app;
+
+    express = require('express');
+    app = module.exports = express();
+
+    var data = cards.data = [];
+    var server = new cards.Server(app, data);
+    server.seed();
+    server.init();
+  }
   
-  server.start();
-})();
+})(cards);
 
