@@ -13,6 +13,10 @@ cardsApp.config(
                 templateUrl: 'views/area-list.html',
                 controller: 'AreaListCtrl'
             })
+            .when('/areas/:id', {
+                templateUrl: 'views/area-add.html',
+                controller: 'AreaAddCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });
