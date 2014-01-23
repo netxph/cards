@@ -13,3 +13,7 @@ body {
 .navbar-text.navbar-right:last-child {
     margin-right: 15px;
 }
+
+#area .form-control {
+  width: 75%;
+}
