@@ -4,7 +4,7 @@ cards = global.cards = {};
 (function(cards) {
   'use strict';
 
-  cards.Server = function(app, data) {
+  cards.Server = function(express, app, data) {
     var self = this;
 
     self.seed = function() {
@@ -17,9 +17,12 @@ cards = global.cards = {};
           labels: ['Bug'],
         }]
           });
+
+      console.log('seeded');
     };
 
     self.init = function() {
+      app.use(express.urlencoded());
       app.use(function(request, response, next) {
         response.header('Access-Control-Allow-Origin', ['*'])
         response.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
@@ -30,6 +33,13 @@ cards = global.cards = {};
 
       app.get('/areas', function(request, response) {
         response.send(data);
+      });
+      
+      app.post('/areas', function(request, response) {
+        var area = request.body;
+        data.push(area);
+
+        response.send(area);
       });
     };
 
@@ -43,7 +53,7 @@ cards = global.cards = {};
     app = module.exports = express();
 
     var data = cards.data = [];
-    var server = new cards.Server(app, data);
+    var server = new cards.Server(express, app, data);
     server.seed();
     server.init();
   }
