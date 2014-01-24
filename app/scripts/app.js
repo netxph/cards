@@ -17,6 +17,10 @@ cardsApp.config(
                 templateUrl: 'views/area-add.html',
                 controller: 'AreaAddCtrl'
             })
+            .when('/cards/new', {
+                templateUrl: 'views/card-add.html',
+                controller: 'CardAddCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });
