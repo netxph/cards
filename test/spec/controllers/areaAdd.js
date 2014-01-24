@@ -39,10 +39,14 @@
     });
 
     describe('Controller: AreaAddCtrl - AddMethod', function() {
-        var subject, controller, scope, area;
+        var http, subject, controller, scope, area;
 
         beforeEach(module('cardsApp'));
-        beforeEach(inject(function ($controller, $rootScope) {
+        beforeEach(inject(function ($controller, $rootScope, $httpBackend) {
+
+            http = $httpBackend;
+
+            http.whenPOST('http://localhost/areas').respond({});
 
             scope = $rootScope.$new();
             controller = $controller('AreaAddCtrl', {
@@ -52,15 +56,31 @@
             area = scope.data.area;
             area.name = "Todo";
 
-            subject = scope.addArea();
         }));
 
+        afterEach(function() {
+            http.verifyNoOutstandingExpectation();
+            http.verifyNoOutstandingRequest();
+        });
+
         it('should not return nil', function() {
+            subject = scope.addArea();
+            http.flush();
+            
             expect(subject).not.toBeNull();
         });
 
         it('should area name is todo', function() {
+            subject = scope.addArea();
+            http.flush();
+
             expect(subject.name).toBe('Todo');
+        });
+
+        it('should perform POST in api', function() {
+            http.expectPOST('http://localhost/areas');
+            subject = scope.addArea();
+            http.flush();
         });
 
     });
