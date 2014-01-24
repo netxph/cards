@@ -17,11 +17,10 @@ cards = global.cards = {};
           labels: ['Bug'],
         }]
           });
-
-      console.log('seeded');
     };
 
     self.init = function() {
+        app.use(express.json());
       app.use(express.urlencoded());
       app.use(function(request, response, next) {
         response.header('Access-Control-Allow-Origin', ['*'])
@@ -32,14 +31,19 @@ cards = global.cards = {};
       });
 
       app.get('/areas', function(request, response) {
-        response.send(data);
+          console.log('GET: invoked.');
+          response.send(data);
       });
       
       app.post('/areas', function(request, response) {
-        var area = request.body;
-        data.push(area);
+          console.log('POST: invoked.');
 
-        response.send(area);
+          var area = request.body;
+          console.log('DATA: ' + area);
+
+          data.push(area);
+
+          response.send(area);
       });
     };
 

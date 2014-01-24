@@ -12,15 +12,9 @@
         };
 
         $scope.addArea = function() {
-            var area = $scope.data.area;
+            Areas.save($scope.data.area);
 
-            var areaApi = new Areas();
-            areaApi.name = area.name;
-            areaApi.cards = area.cards;
-
-            areaApi.$save();
-
-            return area;
+            return $scope.data.area;
         };
 
     }]);
