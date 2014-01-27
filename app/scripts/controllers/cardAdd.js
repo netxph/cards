@@ -4,7 +4,7 @@
     var cardsApp = angular.module('cardsApp');
 
 
-    cardsApp.controller('CardAddCtrl', ['$scope', '$resource', function($scope, $resource) {
+    cardsApp.controller('CardAddCtrl', ['$scope', 'Cards', function($scope, Cards) {
         $scope.data = {};
 
         $scope.data.card = {
@@ -15,8 +15,7 @@
         };
 
         $scope.addCard = function() {
-            var cards = $resource('http://localhost/cards'); 
-            cards.save($scope.data.card);
+            Cards.save($scope.data.card);
 
             return $scope.data.card;
         };

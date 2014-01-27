@@ -1,9 +1,11 @@
-'use strict';
+(function(angular) {
+    'use strict';
 
-var cardsApp = angular.module('cardsApp');
+    var cardsApp = angular.module('cardsApp');
 
-cardsApp.factory('Areas', function($resource, AppSettings) {
-    var areasUrl = AppSettings.serviceBaseUrl + 'areas';
+    cardsApp.factory('Areas', function($resource, AppSettings) {
+        var areasUrl = AppSettings.serviceBaseUrl + 'areas';
 
-    return $resource(areasUrl);
-});
+        return $resource(areasUrl);
+    });
+})(angular);
