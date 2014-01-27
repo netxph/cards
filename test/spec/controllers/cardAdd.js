@@ -20,6 +20,14 @@
             expect(subject).toBeDefined();
         });
 
+        it('should define areaId', function() {
+            expect(subject.areaId).toBeDefined();
+        });
+
+        it('card.areaId should be zero', function() {
+            expect(subject.areaId).toBe(0);
+        });
+
         it('card should define name', function()  {
             expect(subject.name).toBeDefined();
         });
@@ -53,6 +61,51 @@
         });
     });
 
+    describe('Controller: CardAddCtrl - Label', function() {
+
+        var scope, controller, label;
+
+        beforeEach(module('cardsApp'));
+        beforeEach(inject(function ($controller, $rootScope) {
+            scope = $rootScope.$new();
+
+            controller = $controller('CardAddCtrl', {
+                $scope: scope
+            });
+
+        }));
+
+        it('should define label', function() {
+            expect(scope.data.label).toBeDefined();
+        });
+
+        it('label should be empty', function() {
+            expect(scope.data.label).toBe('');
+        });
+
+        it('should define addLabel', function() {
+            expect(scope.addLabel).toBeDefined();
+        });
+
+        it('should have addLabel as function', function() {
+            expect(scope.addLabel).toEqual(jasmine.any(Function));
+        });
+
+        it('labels count should be 1 when label is added', function() {
+            scope.data.label = 'Bug'; 
+            scope.addLabel();
+            
+            expect(scope.data.card.labels.length).toBe(1);
+        });
+
+        it('label[0] should have value', function() {
+            scope.data.label = 'Bug'; 
+            scope.addLabel();
+            
+            expect(scope.data.card.labels[0]).toBe('Bug');
+        });
+    });
+
     describe('Controller: CardAddCtrl - AddMethod', function() {
       
         var scope, subject, controller, card, http;
@@ -70,6 +123,7 @@
             });
 
             card = scope.data.card;
+            card.areaId = 1;
             card.name = 'Create a test';
             card.description = 'description goes here';
             card.assignedTo = 'me@cards.com';
@@ -92,6 +146,13 @@
         it('should not return nil', function() {
             var subject = scope.addCard();
             expect(subject).not.toBeNull();
+
+            http.flush();
+        });
+
+        it('card.areaId should return a valud', function() {
+            var subject = scope.addCard();
+            expect(subject.areaId).toBe(1);
 
             http.flush();
         });

@@ -8,10 +8,17 @@
         $scope.data = {};
 
         $scope.data.card = {
+            areaId: 0,
             name: '',
             description: '',
             assignedTo: '',
             labels: []
+        };
+
+        $scope.data.label = '';
+
+        $scope.addLabel = function() {
+            $scope.data.card.labels.push($scope.data.label);
         };
 
         $scope.addCard = function() {
