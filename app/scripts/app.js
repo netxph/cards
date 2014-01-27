@@ -34,9 +34,11 @@ require([
     //controllers
     'scripts/controllers/areaList.js',
     'scripts/controllers/areaAdd.js',
+    'scripts/controllers/cardAdd.js',
 
     //services
-    'scripts/services/areaService.js'
+    'scripts/services/areaService.js',
+    'scripts/services/cardService.js'
 ],
 function() {
     angular.bootstrap(document, ['cardsApp']);
