@@ -3,6 +3,7 @@
 var areas = angular.module('areaMock', [])
     .value('areasData', [
             {
+                id: 1, 
                 name: 'Backlog',
                 cards: [
                 {

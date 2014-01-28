@@ -48,6 +48,14 @@
             subject = scope.data.areas[0];
        }));
 
+        it('should define id', function() {
+            expect(subject.id).toBeDefined();
+        });
+
+        it('id has value', function() {
+            expect(subject.id).toBe(1);
+        });
+
         it('should define name', function() {
             expect(subject.name).toBeDefined();
         });
