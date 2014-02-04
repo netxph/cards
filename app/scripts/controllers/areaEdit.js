@@ -16,6 +16,16 @@
 
             $scope.data.area = self.getArea(areaId);
         };
+
+        $scope.editArea = function () {
+            var areaResource = $resource('http://localhost/areas/:id', null, {
+                'update': { method: 'PUT' }
+            });
+
+            areaResource.update({id: $routeParams.id}, $scope.data.area); 
+
+            return $scope.data.area;
+        };
         
         self.init();
     }]);

@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    describe('Controller: AreaEditCtrl - Area', function() {
+    describe('Controller: AreaEditCtrl - Get Area', function() {
 
         var subject, scope, controller, http;
 
@@ -40,6 +40,73 @@
 
         it('area.name should have value', function() {
             expect(subject.name).toBe('Backlog');
+        });
+
+    });
+
+    describe('Controller: AreaEditCtrl - Update Area', function() {
+
+        var scope, controller, area, http;
+
+        beforeEach(module('cardsApp'));
+        beforeEach(inject(function ($controller, $rootScope, $httpBackend, $routeParams) {
+
+            $routeParams.id = 1;
+
+            http = $httpBackend;
+            
+            http.whenGET('http://localhost/areas/1').respond({ id: 1, name: 'Backlog', cards: []});
+            http.whenPUT('http://localhost/areas/1').respond(200);
+
+            scope = $rootScope.$new();
+            controller = $controller('AreaEditCtrl', {
+                $scope: scope
+            });
+
+            area = scope.data.area;
+
+        }));
+
+        afterEach(function() {
+            http.verifyNoOutstandingExpectation();
+        });
+
+        it('should define updateArea()', function() {
+            expect(scope.editArea).toBeDefined();
+        });
+
+        it('updateArea should be a function', function() {
+            expect(scope.editArea).toEqual(jasmine.any(Function));
+        });
+
+        it('updateArea should not return nil', function() {
+            var subject = scope.editArea();
+            http.flush();
+            
+            expect(subject).not.toBeNull();
+        });
+
+        it('area.name should have value', function() {
+            http.flush();
+            area.name = 'Backlog2';
+
+            var subject = scope.editArea();
+
+            expect(subject.name).toBe('Backlog2');
+        });
+
+        it('area.id should have value', function() {
+            var subject = scope.editArea();
+            http.flush();
+
+            expect(subject.id).toBe(1);
+        });
+
+        it('should perform POST in api', function() {
+            http.expectPUT('http://localhost/areas/1', scope.data.area);
+
+            var subject = scope.editArea();
+            http.flush();
         });
 
     });
