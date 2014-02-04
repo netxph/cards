@@ -7,7 +7,7 @@
         var self = this;
 
         self.getArea = function(areaId) {
-            return Areas.getArea().get({id: areaId});
+            return Areas.get(areaId);
         };
 
         self.init = function() {

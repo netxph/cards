@@ -4,14 +4,18 @@
     var cardsApp = angular.module('cardsApp');
 
     cardsApp.factory('Areas', function($resource, AppSettings) {
+        var areasResource = $resource(AppSettings.serviceBaseUrl + 'areas');
+        var areaResource = $resource(AppSettings.serviceBaseUrl + 'areas/:id');
+
         return {
-            getAreas: function() {
-                var url = AppSettings.serviceBaseUrl + 'areas';
-                return $resource(url);
+            getAll: function() {
+                return areasResource.query();
             },
-            getArea: function() {
-                var url = AppSettings.serviceBaseUrl + 'areas/:id';
-                return $resource(url, { id: '@id' });
+            add: function(area) {
+                return areasResource.save(area);
+            },
+            get: function(areaId) {
+                return areaResource.get({id: areaId});
             }
         };
     });

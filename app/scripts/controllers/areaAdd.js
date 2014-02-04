@@ -12,8 +12,7 @@
         };
 
         $scope.addArea = function() {
-            Areas.getAreas().save($scope.data.area);
-
+            Areas.add($scope.data.area);
             return $scope.data.area;
         };
 

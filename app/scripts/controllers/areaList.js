@@ -6,8 +6,8 @@
     cardsApp.controller('AreaListCtrl', ['$scope', '$http', 'Areas', function($scope, $http, Areas) {
         $scope.data = {};
 
-        Areas.getAreas().query(function(data) {
-            $scope.data.areas = data;
+        Areas.getAll().$promise.then(function (result) {
+            $scope.data.areas = result;
         });
     }]);
 })(angular);
