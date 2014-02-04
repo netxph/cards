@@ -48,14 +48,14 @@
 
         var scope, controller, area, http;
 
-        beforeEach(module('cardsApp'));
-        beforeEach(inject(function ($controller, $rootScope, $httpBackend, $routeParams) {
+        beforeEach(module('cardsApp', 'areaMock'));
+        beforeEach(inject(function ($controller, $rootScope, $httpBackend, $routeParams, areaData) {
 
             $routeParams.id = 1;
 
             http = $httpBackend;
             
-            http.whenGET('http://localhost/areas/1').respond({ id: 1, name: 'Backlog', cards: []});
+            http.whenGET('http://localhost/areas/1').respond(areaData);
             http.whenPUT('http://localhost/areas/1').respond(200);
 
             scope = $rootScope.$new();

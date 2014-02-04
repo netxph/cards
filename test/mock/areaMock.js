@@ -1,7 +1,9 @@
+(function(angular) {
 'use strict';
 
-var areas = angular.module('areaMock', [])
-    .value('areasData', [
+var areaMock = angular.module('areaMock', []);
+
+areaMock.value('areasData', [
             {
                 id: 1, 
                 name: 'Backlog',
@@ -12,3 +14,11 @@ var areas = angular.module('areaMock', [])
                     labels: ['Bug'],
                 }]
             }]);
+
+areaMock.value('areaData', {
+    id: 1,
+    name: 'Backlog',
+    cards: []
+});
+
+})(angular);
