@@ -48,6 +48,21 @@ cards = global.cards = {};
                 };
             });
 
+            app.put('/areas/:id', function(request, response) {
+                var id = request.params.id;
+                var area = request.body;
+                console.log('/area/' + id + ' PUT: invoked.'); 
+
+                 for (var i = 0; i <data.length; i++) {
+                     if(data[i].id == id) {
+                         data[i].name = area.name;
+
+                         response.send(data[i]);
+                     };
+                 };
+
+            });
+
             app.post('/areas', function(request, response) {
                 console.log('/areas POST: invoked.');
 
