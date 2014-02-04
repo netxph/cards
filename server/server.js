@@ -37,6 +37,17 @@ cards = global.cards = {};
                 response.send(data);
             });
 
+            app.get('/areas/:id', function(request, response) {
+                var id = request.params.id;
+                console.log('/area/' + id + ' GET: invoked.');
+
+                for (var i = 0; i < data.length; i++) {
+                    if(data[i].id == id) {
+                        response.send(data[i]);
+                    }
+                };
+            });
+
             app.post('/areas', function(request, response) {
                 console.log('/areas POST: invoked.');
 

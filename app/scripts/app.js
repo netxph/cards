@@ -38,6 +38,7 @@ require([
     //controllers
     'scripts/controllers/areaList.js',
     'scripts/controllers/areaAdd.js',
+    'scripts/controllers/areaEdit.js',
     'scripts/controllers/cardAdd.js',
 
     //services
