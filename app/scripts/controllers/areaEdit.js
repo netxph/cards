@@ -3,13 +3,11 @@
 
     var cardsApp = angular.module('cardsApp');
 
-    cardsApp.controller('AreaEditCtrl', ['$scope', '$resource', '$routeParams', 'AppSettings', function($scope, $resource, $routeParams, AppSettings) {
+    cardsApp.controller('AreaEditCtrl', ['$scope', '$resource', '$routeParams', 'AppSettings', 'Areas', function($scope, $resource, $routeParams, AppSettings, Areas) {
         var self = this;
 
         self.getArea = function(areaId) {
-            var area = $resource(AppSettings.serviceBaseUrl + 'areas/:id', { id: '@id' });
-
-            return area.get({ id: areaId });
+            return Areas.getArea().get({id: areaId});
         };
 
         self.init = function() {
