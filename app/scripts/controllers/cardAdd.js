@@ -22,7 +22,7 @@
         };
 
         $scope.addCard = function() {
-            Cards.save($scope.data.card);
+            Cards.add($scope.data.card);
 
             return $scope.data.card;
         };
