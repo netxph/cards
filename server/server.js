@@ -72,7 +72,7 @@ cards = global.cards = {};
             app.put('/areas/:id', function(request, response) {
                 var id = request.params.id;
                 var area = request.body;
-                console.log('/area/' + id + ' PUT: invoked.'); 
+                console.log('/areas/' + id + ' PUT: invoked.'); 
 
                  for (var i = 0; i <data.length; i++) {
                      if(data[i].id == id) {
@@ -83,6 +83,29 @@ cards = global.cards = {};
                      };
                  };
 
+            });
+
+            app.put('/cards/:id', function(request, response) {
+                var id = request.params.id;
+                var item = request.body;
+
+                console.log('/cards/' + id + ' PUT: invoked.'); 
+
+                for(var i = 0; i < data.length; i++) {
+                    for(var j = 0; j < data[i].cards.length; j++) {
+                        var card = data[i].cards[j];
+
+                        if(card.id == id) {
+                            card.name = item.name;
+                            card.description = item.description;
+                            card.assignedTo = item.assignedTo;
+                            card.labels = item.labels;
+
+                            response.send(card);
+                            return;
+                        }
+                    }
+                };
             });
 
             app.post('/areas', function(request, response) {
