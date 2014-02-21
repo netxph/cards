@@ -1,11 +1,11 @@
 <div id="areas" class="row">
     <div class="area col-md-3" ng-repeat="area in data.areas">
-        <h2>{{area.name}}</h2>
+        <h3><span class="glyphicon glyphicon-tasks"></span> {{area.name}}</h3>
         <div class="cards" ng-repeat="card in area.cards">
             <div class="card panel panel-default">
                 <div class="panel-body">{{card.name}}</div>
                 <div class="panel-footer" ng-repeat="label in card.labels">
-                    <span>{{label}}</span>
+                    <span class="label label-info">{{label}}</span>
                 </div>
             </div>
         </div>

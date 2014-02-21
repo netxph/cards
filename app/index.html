@@ -8,7 +8,7 @@
         <meta name="description" content="" >
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css" >
+        <link rel="stylesheet" href="styles/bootstrap.css" >
         <link rel="stylesheet" href="styles/main.css" >
 
         <script src="vendor/modernizr/modernizr.js"></script>
@@ -22,17 +22,20 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#">Cards</a>
                 </div>
-                <form class="navbar-form navbar-left">
+                
+                <p class="navbar-text navbar-right">Signed in as <a href="#" class="navbar-link">Marc Vitalis</a></p>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Configure</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+
+                <form class="navbar-form navbar-right">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search">
                     </div>
                     <button type="submit" class="btn btn-default">Go</button>
                 </form>
-                <ul class="nav navbar-nav">
-                    <li><a href="#">Configure</a></li>
-                    <li><a href="#">About</a></li>
-                </ul>
-                <p class="navbar-text navbar-right">Signed in as <a href="#" class="navbar-link">Marc Vitalis</a></p>
+
             </nav>
             <div ng-view></div>
         </div>
