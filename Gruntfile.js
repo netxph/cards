@@ -44,7 +44,7 @@ module.exports = function(grunt) {
         ]);
     });
 
-    grunt.registerTask('server', 'About project.', function() {
+    grunt.registerTask('serve', 'About project.', function() {
         grunt.log.write('Launching Cards 2.0.0 Web Application');
 
         grunt.task.run([

@@ -37,15 +37,36 @@ cards = global.cards = {};
                 response.send(data);
             });
 
+            app.get('/cards/:id', function(request, response) {
+                var id = request.params.id;
+                console.log('/cards/' + id + ' GET: invoked.');
+
+                for(var i = 0; i < data.length; i++) {
+                    for(var j = 0; j < data[i].cards.length; j++) {
+                        var card = data[i].cards[j];
+
+                        if(card.id == id) {
+                            response.send(card);
+                            return;
+                        }
+                    }
+                };
+
+                response.send({});
+            });
+
             app.get('/areas/:id', function(request, response) {
                 var id = request.params.id;
-                console.log('/area/' + id + ' GET: invoked.');
+                console.log('/areas/' + id + ' GET: invoked.');
 
                 for (var i = 0; i < data.length; i++) {
                     if(data[i].id == id) {
                         response.send(data[i]);
+                        return;
                     }
                 };
+
+                response.send({});
             });
 
             app.put('/areas/:id', function(request, response) {
@@ -58,6 +79,7 @@ cards = global.cards = {};
                          data[i].name = area.name;
 
                          response.send(data[i]);
+                         return;
                      };
                  };
 

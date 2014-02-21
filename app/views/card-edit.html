@@ -1,0 +1,55 @@
+<div class="card">
+    <form class="form-horizontal">
+
+        <div class="form-group"> 
+           <label for="card-area-id" class="col-sm-2 control-label">Area ID</label>
+            <div class="col-sm-10">
+                <input type="text" id="card-area-id" class="form-control" ng-model="data.card.areaId"></input>
+            </div>
+         </div>
+
+        <div class="form-group"> 
+           <label for="card-name" class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-10">
+                <input type="text" id="card-name" class="form-control" placeholder="Enter name for card" ng-model="data.card.name"></input>
+            </div>
+         </div>
+
+         <div class="form-group"> 
+           <label for="card-description" class="col-sm-2 control-label">Description</label>
+            <div class="col-sm-10">
+                <textarea id="card-description" class="form-control" ng-model="data.card.description"></textarea>
+            </div>
+         </div>
+
+         <div class="form-group"> 
+           <label for="card-assigned-to" class="col-sm-2 control-label">Assigned To</label>
+            <div class="col-sm-10">
+                <input type="text" id="card-assigned-to" class="form-control" placeholder="Enter user assigned to" ng-model="data.card.assignedTo"></textarea>
+            </div>
+         </div>
+
+         <div class="form-group">
+           <label for="card-add-labels" class="col-sm-2 control-label">Labels</label>
+            <div class="col-sm-10">
+                <input type="text" id="card-add-labels" class="form-control" placeholder="Add label" ng-model="data.label"></textarea>
+                <buttn type="submit" class="btn btn-default" ng-click="addLabel()">Add</button>
+            </div>  
+         </div>
+         
+         <div class="form-group">
+           <label for="card-add-labels" class="col-sm-2 control-label"></label>
+            <div class="col-sm-10">
+                <select size="6" class="form-control" >
+                    <option ng-repeat="label in data.card.labels">{{label}}</option>
+                </select>
+            </div>  
+         </div>
+    
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default" ng-click="addCard()">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>

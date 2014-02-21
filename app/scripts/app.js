@@ -25,6 +25,10 @@ cardsApp.config(
                 templateUrl: 'views/card-add.html',
                 controller: 'CardAddCtrl'
             })
+            .when('/cards/:id', {
+                templateUrl: 'views/card-edit.html',
+                controller: 'CardEditCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });
@@ -40,6 +44,7 @@ require([
     'scripts/controllers/areaAdd.js',
     'scripts/controllers/areaEdit.js',
     'scripts/controllers/cardAdd.js',
+    'scripts/controllers/cardEdit.js',
 
     //services
     'scripts/services/areaService.js',
