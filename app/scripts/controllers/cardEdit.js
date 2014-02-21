@@ -17,6 +17,14 @@
             $scope.data.card = Cards.get(cardId);
         };
 
+        $scope.editCard = function() {
+            var cardId = $routeParams.id;
+
+            Cards.edit(cardId, $scope.data.card);
+
+            return $scope.data.card;
+        };
+
         self.init();
     }]);
 })(angular);

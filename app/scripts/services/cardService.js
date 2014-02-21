@@ -5,7 +5,9 @@
 
     cardsApp.factory('Cards', function($resource, AppSettings) {
         var cardsResource = $resource(AppSettings.serviceBaseUrl + 'cards');
-        var cardResource = $resource(AppSettings.serviceBaseUrl + 'cards/:id');
+        var cardResource = $resource(AppSettings.serviceBaseUrl + 'cards/:id', null, {
+            'update': { method: 'PUT' }
+        });
 
         return {
             getAll: function() {
@@ -17,6 +19,9 @@
             get: function(cardId) {
                 return cardResource.get({id: cardId});
             }, 
+            edit: function(cardId, card) {
+                return cardResource.update({id: cardId}, card); 
+            },
         };
     });
 })(angular);

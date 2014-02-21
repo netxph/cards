@@ -3,7 +3,7 @@
 
     cardMock.value('cardData', {
         areaId: 1,
-        cardId: 1,
+        id: 1,
         name: 'create todo',
         description: 'description goes here',
         assignedTo: 'me@cards.com',

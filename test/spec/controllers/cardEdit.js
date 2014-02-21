@@ -1,6 +1,71 @@
 (function() {
     'use strict';
 
+    describe('Controller: CardEditCtrl - Update Card - State', function() {
+
+        var scope, controller;
+
+        beforeEach(module('cardsApp'));
+        beforeEach(inject(function($controller, $rootScope) {
+
+            scope = $rootScope.$new();
+            controller = $controller('CardEditCtrl', {
+                $scope: scope
+            });
+
+        }));
+
+        it('should define editCard()', function() {
+            expect(scope.editCard).toBeDefined();
+        });
+
+        it('should define editCard as function', function() {
+            expect(scope.editCard).toEqual(jasmine.any(Function));
+        });
+
+    });
+
+    describe('Controller: CardEditCtrl - Update Card', function() {
+        
+        var subject, scope, controller, http;
+
+        beforeEach(module('cardsApp', 'cardMock'));
+        beforeEach(inject(function($controller, $rootScope, $httpBackend, $routeParams, cardData) {
+           
+            $routeParams.id = 1;
+            http = $httpBackend;
+            
+            http.whenGET('http://localhost/cards/1').respond(cardData);
+            http.whenPUT('http://localhost/cards/1').respond(200);
+
+            scope = $rootScope.$new(); 
+            controller = $controller('CardEditCtrl', {
+                $scope: scope
+            });
+
+            http.flush();
+
+            subject = scope.editCard();
+        }));
+
+        beforeEach(function() {
+            http.expectPUT('http://localhost/cards/1', scope.data.card);
+        });
+
+        afterEach(function() {
+            http.verifyNoOutstandingRequest();
+            http.verifyNoOutstandingExpectation();
+        });
+        
+        it('should not be null', function() {
+            expect(subject).not.toBeNull();
+        });
+
+        it('should card.id have value', function() {
+            expect(subject.id).toBe(1);
+        });
+    });
+
     describe('Controller: CardEditCtrl - Get Card', function() {
        
         var subject, scope, controller, http;
@@ -40,14 +105,14 @@
             expect(subject.areaId).toBe(1);
         });
 
-        it('should define cardId', function() {
+        it('should define id', function() {
             http.flush();
-            expect(subject.cardId).toBeDefined();
+            expect(subject.id).toBeDefined();
         });
 
-        it('cardId should have value', function() {
+        it('id should have value', function() {
             http.flush();
-            expect(subject.cardId).toBe(1);
+            expect(subject.id).toBe(1);
         });
 
         it('should define name', function() {
