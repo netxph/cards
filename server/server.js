@@ -18,6 +18,36 @@ cards = global.cards = {};
                     description: 'description goes here',
                     labels: ['Bug'],
                 }]
+            }, {
+                id: 2,
+                name: 'Todo',
+                cards: [{
+                    id: 2,
+                    areaId: 2,
+                    name: 'Finish all functionality',
+                    description: 'description goes here',
+                    labels: ['Feature'],
+                }]
+            }, {
+                id: 3,
+                name: 'Doing',
+                cards: [{
+                    id: 3,
+                    areaId: 3,
+                    name: 'Creating animations',
+                    description: 'description goes here',
+                    labels: ['Request'],
+                }]
+            }, {
+                id: 4,
+                name: 'Done',
+                cards: [{
+                    id: 4,
+                    areaId: 4,
+                    name: 'Creating project plan',
+                    description: 'description goes here',
+                    labels: ['Feature'],
+                }]
             });
         };
 
