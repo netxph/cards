@@ -1,9 +1,9 @@
 <div id="areas" class="row">
     <div class="area col-md-3" ng-repeat="area in data.areas">
-        <h4><a href="#/areas/{{area.id}}">{{area.name}}</a></h4>
+        <h4><a class='link link-unstyled' href="#/areas/{{area.id}}">{{area.name}}</a></h4>
         <div class="cards" ng-repeat="card in area.cards">
             <div class="card panel panel-default">
-                <div class="panel-body"><a href="#/cards/{{card.id}}">{{card.name}}</a></div>
+                <div class="panel-body"><a class='link link-unstyled' href="#/cards/{{card.id}}">{{card.name}}</a></div>
                 <div class="panel-footer" ng-repeat="label in card.labels">
                     <span class="label label-info">{{label}}</span>
                 </div>

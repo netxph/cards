@@ -3,7 +3,7 @@
 
     var cardsApp = angular.module('cardsApp');
 
-    cardsApp.controller('AreaEditCtrl', ['$scope', '$routeParams', 'AppSettings', 'Areas', function($scope, $routeParams, AppSettings, Areas) {
+    cardsApp.controller('AreaEditCtrl', ['$scope', '$location', '$routeParams', 'AppSettings', 'Areas', function($scope, $location, $routeParams, AppSettings, Areas) {
         var self = this;
 
         self.getArea = function(areaId) {
@@ -19,10 +19,9 @@
 
         $scope.editArea = function () {
             var areaId = $routeParams.id;
-
-            Areas.edit(areaId, $scope.data.area);
-
-            return $scope.data.area;
+            Areas.edit(areaId, $scope.data.area).$promise.then(function() {
+                $location.path('/');           
+            });
         };
         
         self.init();

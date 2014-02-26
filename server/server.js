@@ -187,8 +187,8 @@ cards = global.cards = {};
         app = module.exports = express();
 
         var data = cards.data = [];
-        cards.currentAreaId = 2;
-        cards.currentCardId = 2;
+        cards.currentAreaId = 5;
+        cards.currentCardId = 5;
 
         var server = new cards.Server(express, app, data);
         server.seed();

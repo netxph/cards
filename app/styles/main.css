@@ -21,3 +21,15 @@ body {
 .card .form-control {
     width: 75%;
 }
+
+.link {
+}
+
+.link-unstyled {
+    color: black;
+}
+
+.link-unstyled:hover {
+    color: black;
+    text-decoration: none;
+}
