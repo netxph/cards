@@ -70,13 +70,6 @@
             expect(subject).not.toBeNull();
         });
 
-        it('should area name is todo', function() {
-            subject = scope.addArea();
-            http.flush();
-
-            expect(subject.name).toBe('Todo');
-        });
-
         it('should perform POST in api', function() {
             http.expectPOST('http://localhost/areas');
             subject = scope.addArea();

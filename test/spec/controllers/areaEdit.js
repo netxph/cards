@@ -86,22 +86,6 @@
             expect(subject).not.toBeNull();
         });
 
-        it('area.name should have value', function() {
-            http.flush();
-            area.name = 'Backlog2';
-
-            var subject = scope.editArea();
-
-            expect(subject.name).toBe('Backlog2');
-        });
-
-        it('area.id should have value', function() {
-            var subject = scope.editArea();
-            http.flush();
-
-            expect(subject.id).toBe(1);
-        });
-
         it('should perform POST in api', function() {
             http.expectPUT('http://localhost/areas/1', scope.data.area);
 
