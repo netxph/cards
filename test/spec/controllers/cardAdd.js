@@ -19,8 +19,8 @@
                 $scope: scope
             });
 
-            subject = scope.data.areas;
             http.flush();
+            subject = scope.data.areas;
         }));
 
         afterEach(function() {
@@ -70,7 +70,7 @@
         });
 
         it('card.areaId should be zero', function() {
-            expect(subject.areaId).toBe(0);
+            expect(subject.areaId).toBe(1);
         });
 
         it('card should define name', function()  {
@@ -196,48 +196,6 @@
         it('should not return nil', function() {
             var subject = scope.addCard();
             expect(subject).not.toBeNull();
-
-            http.flush();
-        });
-
-        it('card.areaId should return a valud', function() {
-            var subject = scope.addCard();
-            expect(subject.areaId).toBe(1);
-
-            http.flush();
-        });
-
-        it('card.name should return a value', function() {
-            var subject = scope.addCard();
-            expect(subject.name).toBe('Create a test');
-
-            http.flush();
-        });
-
-        it('card.description should return a value', function() {
-            var subject = scope.addCard();
-            expect(subject.description).toBe('description goes here');
-
-            http.flush();
-        });
-
-        it('card.assignedTo should return a value', function() {
-            var subject = scope.addCard();
-            expect(subject.assignedTo).toBe('me@cards.com');
-
-            http.flush();
-        });
-
-        it('card.labels should not be empty', function() {
-            var subject = scope.addCard();
-            expect(subject.labels.length).toBe(1);
-
-            http.flush();
-        });
-
-        it('card.label[0] should return a value', function() {
-            var subject = scope.addCard();
-            expect(subject.labels[0]).toBe('Bug');
 
             http.flush();
         });
