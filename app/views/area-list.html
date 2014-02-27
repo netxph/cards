@@ -4,8 +4,8 @@
         <div class="cards" ng-repeat="card in area.cards">
             <div class="card panel panel-default">
                 <div class="panel-body"><a class='link link-unstyled' href="#/cards/{{card.id}}">{{card.name}}</a></div>
-                <div class="panel-footer" ng-repeat="label in card.labels">
-                    <span class="label label-info">{{label}}</span>
+                <div class="panel-footer">
+                    <span ng-repeat="label in card.labels" class="label label-info">{{label}}</span>
                 </div>
             </div>
         </div>

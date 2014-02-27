@@ -1,20 +1,23 @@
 (function(angular) {
+
     'use strict';
 
     var cardsApp = angular.module('cardsApp');
 
-    cardsApp.controller('CardAddCtrl', ['$scope', 'Cards', 'Areas', function($scope, Cards, Areas) {
+    cardsApp.controller('CardAddCtrl', ['$scope', '$location', 'Cards', 'Areas', function($scope, $location, Cards, Areas) {
 
         var self = this;
 
         self.init = function() {
             $scope.data = {};
-
-            $scope.data.areas = Areas.getAll();
-
+            
+            Areas.getAll().$promise.then(function(result) {
+                $scope.data.areas = result;
+            });
+            
             //convert card into class
             $scope.data.card = {
-                areaId: 0,
+                areaId: 1,
                 name: '',
                 description: '',
                 assignedTo: '',
@@ -26,12 +29,14 @@
 
         $scope.addLabel = function() {
             $scope.data.card.labels.push($scope.data.label);
+            $scope.data.label = '';
         };
 
-        $scope.addCard = function() {
-            Cards.add($scope.data.card);
 
-            return $scope.data.card;
+        $scope.addCard = function() {
+            Cards.add($scope.data.card).$promise.then(function() {
+                $location.path('/');
+            });
         };
 
         self.init();

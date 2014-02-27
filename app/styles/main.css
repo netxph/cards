@@ -1,7 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans);
 
 body {
-    font-family: 'Open Sans', sans-serif;
     padding-top: 60px;
     overflow: scroll;
 }
@@ -14,12 +13,18 @@ body {
     margin-right: 15px;
 }
 
-.area .form-control {
-  width: 75%;
+.area-form {
+    width: 75%;
+    margin: 0 auto;
 }
 
-.card .form-control {
+.card-form {
     width: 75%;
+    margin: 0 auto;
+}
+
+.label {
+    margin-right: 3px;
 }
 
 .link {
