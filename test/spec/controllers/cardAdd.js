@@ -1,6 +1,51 @@
 (function() {
     'use strict';
 
+    describe('Controller: CardAddCtrl - Areas', function() {
+
+        var subject, scope, controller, http;
+
+        beforeEach(module('cardsApp', 'areaMock'));
+        beforeEach(inject(function($controller, $rootScope, $httpBackend, areasData) {
+
+            http = $httpBackend;
+
+            http.expectGET('http://localhost/areas').respond(areasData);
+
+
+            scope = $rootScope.$new();
+
+            controller = $controller('CardAddCtrl', {
+                $scope: scope
+            });
+
+            subject = scope.data.areas;
+            http.flush();
+        }));
+
+        afterEach(function() {
+            http.verifyNoOutstandingRequest();
+            http.verifyNoOutstandingExpectation();
+        });
+
+        it('should define areas', function() {
+            expect(subject).toBeDefined();
+        });
+
+        it('should areas not empty', function() {
+            expect(subject.length).toBe(1);
+        });
+
+        it('should areas[0].id has value', function() {
+            expect(subject[0].id).toBe(1);
+        });
+
+        it('should areas[0].name has value', function() {
+            expect(subject[0].name).toBe('Backlog');
+        });
+
+    });
+
     describe('Controller: CardAddCtrl - Card', function() {
 
         var scope, subject, controller;
@@ -115,6 +160,7 @@
 
             http = $httpBackend;
             http.whenPOST('http://localhost/cards').respond({});
+            http.whenGET('http://localhost/areas').respond([]);
 
             scope = $rootScope.$new();
 
@@ -137,10 +183,14 @@
 
         it('should define addCard', function() {
             expect(scope.addCard).toBeDefined();
+
+            http.flush();
         });
 
         it('should have addCard as function', function() {
             expect(scope.addCard).toEqual(jasmine.any(Function))
+
+            http.flush();
         });
 
         it('should not return nil', function() {
