@@ -1,6 +1,80 @@
 (function() {
     'use strict';
 
+    describe('Controller: CardEditCtrl - Labels', function() {
+
+        var subject, scope, controller;
+
+        beforeEach(module('cardsApp'));
+        beforeEach(inject(function($controller, $rootScope) {
+
+            scope = $rootScope.$new();
+
+            controller = $controller('CardEditCtrl', {
+                $scope: scope
+            });
+
+            subject = scope.data.label;
+        }));
+
+        it('should define label', function() {
+            expect(subject).toBeDefined();
+        });
+
+        it('should label is empty', function() {
+            expect(subject).toBe('');
+        });
+
+    });
+
+    describe('Controller: CardEditCtrl - Add Label', function() {
+
+        var subject, scope, controller, http;
+
+        beforeEach(module('cardsApp', 'cardMock'));
+        beforeEach(inject(function($controller, $rootScope, $routeParams, $httpBackend, cardData) {
+
+            $routeParams.id = 1;
+
+            http = $httpBackend;
+            http.whenGET('http://localhost/cards/1').respond(cardData);
+            http.whenGET('http://localhost/areas').respond([]);
+
+            scope = $rootScope.$new();
+
+            controller = $controller('CardEditCtrl', {
+                $scope: scope
+            });
+
+            http.flush();
+
+            scope.data.label = 'Feature';
+            subject = scope.addLabel();
+        }));
+
+        afterEach(function() {
+            http.verifyNoOutstandingExpectation();
+            http.verifyNoOutstandingRequest();
+        });
+
+        it('should define addLabel', function() {
+            expect(scope.addLabel).toBeDefined();
+        });
+
+        it('should addLabel is function', function() {
+            expect(scope.addLabel).toEqual(jasmine.any(Function));
+        });
+
+        it('should labels contain item', function() {
+            expect(scope.data.card.labels[1]).toBe('Feature');
+        });
+
+        it('should label empty after add', function() {
+            expect(scope.data.label).toBe('');
+        });
+    });
+
+
     describe('Controller: CardEditCtrl - Areas', function() {
 
         var subject, scope, controller, http;
@@ -107,9 +181,6 @@
             expect(subject).not.toBeNull();
         });
 
-        it('should card.id have value', function() {
-            expect(subject.id).toBe(1);
-        });
     });
 
     describe('Controller: CardEditCtrl - Get Card', function() {
