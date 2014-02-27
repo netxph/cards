@@ -3,7 +3,7 @@
 
     var cardsApp = angular.module('cardsApp');
 
-    cardsApp.controller('CardEditCtrl', ['$scope', '$routeParams', 'Cards', function($scope, $routeParams, Cards) {
+    cardsApp.controller('CardEditCtrl', ['$scope', '$routeParams', 'Areas', 'Cards', function($scope, $routeParams, Areas, Cards) {
         var self = this;
 
         self.getCard = function () {
@@ -14,7 +14,14 @@
             var cardId = $routeParams.id;
 
             $scope.data = {};
-            $scope.data.card = Cards.get(cardId);
+
+            Cards.get(cardId).$promise.then(function(result) {
+                $scope.data.card = result;
+            });
+
+            Areas.getAll().$promise.then(function(result) {
+                $scope.data.areas = result;
+            });
         };
 
         $scope.editCard = function() {

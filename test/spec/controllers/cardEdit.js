@@ -1,6 +1,51 @@
 (function() {
     'use strict';
 
+    describe('Controller: CardEditCtrl - Areas', function() {
+
+        var subject, scope, controller, http;
+
+        beforeEach(module('cardsApp', 'areaMock'));
+        beforeEach(inject(function($controller, $rootScope, $httpBackend, $routeParams, areasData) {
+
+            $routeParams.id = 1;
+
+            http = $httpBackend;
+            http.expectGET('http://localhost/areas').respond(areasData);
+            http.whenGET('http://localhost/cards/1').respond({});
+
+            scope = $rootScope.$new();
+
+            controller = $controller('CardEditCtrl', {
+                $scope: scope
+            });
+
+            http.flush();
+            subject = scope.data.areas;
+        }));
+
+        afterEach(function() {
+            http.verifyNoOutstandingExpectation();
+        });
+
+        it('should define areas', function() {
+            expect(subject).toBeDefined();
+        });
+
+        it('should areas not empty', function() {
+            expect(subject.length).toBe(1);
+        });
+
+        it('should areas[0].id should have value', function() {
+            expect(subject[0].id).toBe(1);
+        });
+
+        it('should areas[0].name should have value', function() {
+            expect(subject[0].name).toBe('Backlog');
+        });
+
+    });
+
     describe('Controller: CardEditCtrl - Update Card - State', function() {
 
         var scope, controller;
@@ -34,7 +79,8 @@
            
             $routeParams.id = 1;
             http = $httpBackend;
-            
+           
+            http.whenGET('http://localhost/areas').respond([]);
             http.whenGET('http://localhost/cards/1').respond(cardData);
             http.whenPUT('http://localhost/cards/1').respond(200);
 
@@ -77,93 +123,78 @@
             scope = $rootScope.$new();
 
             http = $httpBackend;
+            http.whenGET('http://localhost/areas').respond([]);
             http.whenGET('http://localhost/cards/1').respond(cardData);
+            http.expectGET('http://localhost/cards/1');  
 
             controller = $controller('CardEditCtrl', {
                 $scope: scope
             });
 
+            http.flush();
             subject = scope.data.card;
         }));
 
         afterEach(function() {
             http.verifyNoOutstandingExpectation();
+            http.verifyNoOutstandingRequest();
         });
 
         it('should define card', function() {
-            http.flush();
             expect(subject).toBeDefined();
         });
 
         it('should define areaId', function() {
-            http.flush();
             expect(subject.areaId).toBeDefined();
         });
 
         it('areaId should have value', function() {
-            http.flush();
             expect(subject.areaId).toBe(1);
         });
 
         it('should define id', function() {
-            http.flush();
             expect(subject.id).toBeDefined();
         });
 
         it('id should have value', function() {
-            http.flush();
             expect(subject.id).toBe(1);
         });
 
         it('should define name', function() {
-            http.flush();
             expect(subject.name).toBeDefined();
         });
 
         it('name should have value', function() {
-            http.flush();
             expect(subject.name).toBe('create todo');
         });
 
 
         it('should define description', function() {
-            http.flush();
             expect(subject.description).toBeDefined();
         });
 
         it('description should have value', function() {
-            http.flush();
             expect(subject.description).toBe('description goes here');
         });
 
         it('should define assignedTo', function() {
-            http.flush();
             expect(subject.assignedTo).toBeDefined();
         });
 
         it('assignedTo should have value', function() {
-            http.flush();
             expect(subject.assignedTo).toBe('me@cards.com');
         });
 
         it('should define labels', function() {
-            http.flush();
             expect(subject.labels).toBeDefined();
         });
 
         it('labels should not be empty', function() {
-            http.flush();
             expect(subject.labels.length).toBe(1);
         });
 
         it('labels should contain a value', function() {
-            http.flush();
             expect(subject.labels[0]).toBe('bug');
-        });
-
-        it('should invoke card GET in API', function() {
-            http.expectGET('http://localhost/cards/1');  
-            http.flush();
         });
 
     });
