@@ -1,28 +1,36 @@
-<!DOCTYPE html>
-<html lang="en" class="no-js">
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
-        <meta charset="UTF-8">
+        <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Cards - Flexible visual task management [2.0]</title>
-
-        <meta name="description" content="" >
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <link rel="stylesheet" href="styles/bootstrap.css" >
-        <link rel="stylesheet" href="styles/main.css" >
-
-        <script src="vendor/modernizr/modernizr.js"></script>
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!-- build:css styles/vendor.css -->
+        <!-- bower:css -->
+        <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css" />
+        <!-- endbower -->
+        <!-- endbuild -->
+        <!-- build:css({.tmp,app}) styles/main.css -->
+        <link rel="stylesheet" href="styles/main.css">
+        <!-- endbuild -->
     </head>
-    <body>
+    <body ng-app="cardsApp">
         <!--[if lt IE 7]>
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+
+        <!-- Add your site or application content here -->
         <div>
             <nav id="menu" class="navbar navbar-default navbar-fixed-top navbar-inverse">
                 <div class="navbar-header">
-                <a class="navbar-brand" href="#"><span class='glyphicon glyphicon-stats'></span> Cards</a>
+                    <a class="navbar-brand" href="#"><span class='glyphicon glyphicon-stats'></span> Cards</a>
                 </div>
-                
+
                 <p class="navbar-text navbar-right">Signed in as <a href="#" class="navbar-link">Marc Vitalis</a></p>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#/areas/new"><span class='glyphicon glyphicon-plus'></span> Area</a></li>
@@ -37,16 +45,47 @@
                 </form>
 
             </nav>
-            <div ng-view></div>
+            <div class="container-fluid" ng-view=""></div>
         </div>
 
-        <!-- library scripts -->
-        <script src="vendor/angular/angular.js"></script>
-        <script src="vendor/angular-route/angular-route.js"></script>
-        <script src="vendor/angular-resource/angular-resource.js"></script>
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-        <!-- application scripts -->
-        <script src="vendor/requirejs/require.js" data-main="scripts/app.js"></script>
+ga('create', 'UA-XXXXX-X');
+ga('send', 'pageview');
+    </script>
 
-    </body>
+    <!--[if lt IE 9]>
+    <script src="vendor/es5-shim/es5-shim.js"></script>
+    <script src="vendor/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="vendor/jquery/jquery.js"></script>
+    <script src="vendor/angular/angular.js"></script>
+    <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="vendor/angular-resource/angular-resource.js"></script>
+    <script src="vendor/angular-cookies/angular-cookies.js"></script>
+    <script src="vendor/angular-sanitize/angular-sanitize.js"></script>
+    <script src="vendor/angular-route/angular-route.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/arealist.js"></script>
+    <script src="scripts/services/areas.js"></script>
+    <script src="scripts/services/appsettings.js"></script>
+    <script src="scripts/controllers/areaadd.js"></script>
+    <script src="scripts/controllers/cardadd.js"></script>
+    <script src="scripts/services/cards.js"></script>
+    <script src="scripts/controllers/areaedit.js"></script>
+    <script src="scripts/controllers/cardedit.js"></script>
+    <!-- endbuild -->
+</body>
 </html>

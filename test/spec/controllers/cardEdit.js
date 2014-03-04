@@ -32,11 +32,12 @@
         var subject, scope, controller, http;
 
         beforeEach(module('cardsApp', 'cardMock'));
-        beforeEach(inject(function($controller, $rootScope, $routeParams, $httpBackend, cardData) {
+        beforeEach(inject(function($controller, $rootScope, $routeParams, $httpBackend, AppSettings, cardData) {
 
             $routeParams.id = 1;
 
             http = $httpBackend;
+            AppSettings.serviceBaseUrl = 'http://localhost/';
             http.whenGET('http://localhost/cards/1').respond(cardData);
             http.whenGET('http://localhost/areas').respond([]);
 
@@ -80,11 +81,13 @@
         var subject, scope, controller, http;
 
         beforeEach(module('cardsApp', 'areaMock'));
-        beforeEach(inject(function($controller, $rootScope, $httpBackend, $routeParams, areasData) {
+        beforeEach(inject(function($controller, $rootScope, $httpBackend, $routeParams, AppSettings, areasData) {
 
             $routeParams.id = 1;
 
             http = $httpBackend;
+
+            AppSettings.serviceBaseUrl = 'http://localhost/';
             http.expectGET('http://localhost/areas').respond(areasData);
             http.whenGET('http://localhost/cards/1').respond({});
 
@@ -149,11 +152,11 @@
         var subject, scope, controller, http;
 
         beforeEach(module('cardsApp', 'cardMock'));
-        beforeEach(inject(function($controller, $rootScope, $httpBackend, $routeParams, cardData) {
+        beforeEach(inject(function($controller, $rootScope, $httpBackend, $routeParams, AppSettings, cardData) {
            
             $routeParams.id = 1;
             http = $httpBackend;
-           
+            AppSettings.serviceBaseUrl = 'http://localhost/';
             http.whenGET('http://localhost/areas').respond([]);
             http.whenGET('http://localhost/cards/1').respond(cardData);
             http.whenPUT('http://localhost/cards/1').respond(200);
@@ -188,12 +191,13 @@
         var subject, scope, controller, http;
 
         beforeEach(module('cardsApp', 'cardMock'));
-        beforeEach(inject(function ($controller, $rootScope, $httpBackend, $routeParams, cardData) {
+        beforeEach(inject(function ($controller, $rootScope, $httpBackend, $routeParams, AppSettings, cardData) {
             $routeParams.id = 1;
             
             scope = $rootScope.$new();
 
             http = $httpBackend;
+            AppSettings.serviceBaseUrl = 'http://localhost/';
             http.whenGET('http://localhost/areas').respond([]);
             http.whenGET('http://localhost/cards/1').respond(cardData);
             http.expectGET('http://localhost/cards/1');  

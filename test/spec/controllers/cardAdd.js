@@ -6,10 +6,11 @@
         var subject, scope, controller, http;
 
         beforeEach(module('cardsApp', 'areaMock'));
-        beforeEach(inject(function($controller, $rootScope, $httpBackend, areasData) {
+        beforeEach(inject(function($controller, $rootScope, $httpBackend, AppSettings, areasData) {
 
             http = $httpBackend;
 
+            AppSettings.serviceBaseUrl = 'http://localhost/';
             http.expectGET('http://localhost/areas').respond(areasData);
 
 
@@ -156,9 +157,10 @@
         var scope, subject, controller, card, http;
 
         beforeEach(module('cardsApp'));
-        beforeEach(inject(function ($controller, $rootScope, $httpBackend) {
+        beforeEach(inject(function ($controller, $rootScope, $httpBackend, AppSettings) {
 
             http = $httpBackend;
+            AppSettings.serviceBaseUrl = 'http://localhost/';
             http.whenPOST('http://localhost/cards').respond({});
             http.whenGET('http://localhost/areas').respond([]);
 

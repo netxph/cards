@@ -6,11 +6,12 @@
         var subject, scope, controller, http;
 
         beforeEach(module('cardsApp'));
-        beforeEach(inject(function ($controller, $rootScope, $routeParams, $httpBackend) {
+        beforeEach(inject(function ($controller, $rootScope, $routeParams, $httpBackend, AppSettings) {
             
             $routeParams.id = 1;
 
             http = $httpBackend;
+            AppSettings.serviceBaseUrl = 'http://localhost/';
             http.whenGET('http://localhost/areas/1').respond({
                 id: 1,
                 name: 'Backlog'
@@ -49,12 +50,13 @@
         var scope, controller, area, http;
 
         beforeEach(module('cardsApp', 'areaMock'));
-        beforeEach(inject(function ($controller, $rootScope, $httpBackend, $routeParams, areaData) {
+        beforeEach(inject(function ($controller, $rootScope, $httpBackend, $routeParams, AppSettings, areaData) {
 
             $routeParams.id = 1;
 
             http = $httpBackend;
             
+            AppSettings.serviceBaseUrl = 'http://localhost/';
             http.whenGET('http://localhost/areas/1').respond(areaData);
             http.whenPUT('http://localhost/areas/1').respond(200);
 

@@ -42,10 +42,11 @@
         var http, subject, controller, scope, area;
 
         beforeEach(module('cardsApp'));
-        beforeEach(inject(function ($controller, $rootScope, $httpBackend) {
+        beforeEach(inject(function ($controller, $rootScope, $httpBackend, AppSettings) {
 
             http = $httpBackend;
 
+            AppSettings.serviceBaseUrl = 'http://localhost/';
             http.whenPOST('http://localhost/areas').respond({});
 
             scope = $rootScope.$new();

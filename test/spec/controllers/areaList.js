@@ -1,13 +1,16 @@
 (function() {
     'use strict';
 
+    angular.module('cardsApp')
+
     describe('Controller: AreaListCtrl - Areas', function() {
 
         var subject, controller, scope, $httpBackend;
 
         beforeEach(module('cardsApp', 'areaMock'));
-        beforeEach(inject(function ($httpBackend, $controller, $rootScope, areasData) {
+        beforeEach(inject(function ($httpBackend, $controller, $rootScope, areasData, AppSettings) {
 
+            AppSettings.serviceBaseUrl = 'http://localhost/';
             $httpBackend.whenGET('http://localhost/areas').respond(areasData);
 
             scope = $rootScope.$new();
@@ -34,8 +37,9 @@
         var subject, controller, scope;
 
         beforeEach(module('cardsApp', 'areaMock'));
-        beforeEach(inject(function ($httpBackend, $controller, $rootScope, areasData) {
+        beforeEach(inject(function ($httpBackend, $controller, $rootScope, AppSettings, areasData) {
 
+            AppSettings.serviceBaseUrl = 'http://localhost/';
             $httpBackend.whenGET('http://localhost/areas').respond(areasData);
 
             scope = $rootScope.$new();
@@ -79,8 +83,9 @@
         var subject, controller, scope;
 
         beforeEach(module('cardsApp', 'areaMock'));
-        beforeEach(inject(function ($httpBackend, $controller, $rootScope, areasData) {
+        beforeEach(inject(function ($httpBackend, $controller, $rootScope, AppSettings, areasData) {
 
+            AppSettings.serviceBaseUrl = 'http://localhost/';
             $httpBackend.whenGET('http://localhost/areas').respond(areasData);
 
             scope = $rootScope.$new();
@@ -124,8 +129,9 @@
         var subject, controller, scope;
 
         beforeEach(module('cardsApp', 'areaMock'));
-        beforeEach(inject(function ($httpBackend, $controller, $rootScope, areasData) {
+        beforeEach(inject(function ($httpBackend, $controller, $rootScope, AppSettings, areasData) {
 
+            AppSettings.serviceBaseUrl = 'http://localhost/';
             $httpBackend.whenGET('http://localhost/areas').respond(areasData);
 
             scope = $rootScope.$new();
