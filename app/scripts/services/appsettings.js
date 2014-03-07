@@ -2,6 +2,10 @@
     'use strict';
 
     angular.module('cardsApp')
-        .constant('AppSettings', { 'serviceBaseUrl': 'http://localhost:9002/' });
+        .value('AppSettings', { 
+
+            'serviceBaseUrl': 'http://localhost:9002/' 
+
+        });
 
 })(angular);
