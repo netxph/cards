@@ -8,28 +8,11 @@ cards = global.cards = {};
         var self = this;
         var data = [];
 
-        var express = require('express');
-        var app = module.exports = express();
 
-        self.prototype.seed = function() {
-            var seed = require('./seed.json');
+        function seed() {
+            var areas = require('./seed.json');
 
-            data.push(seed);
-        };
-
-        self.prototype.init = function() {
-
-            app.use(express.json());
-            app.use(express.urlencoded());
-            app.use(function(request, response, next) {
-                response.header('Access-Control-Allow-Origin', ['*'])
-                response.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-                response.header('Access-Control-Allow-Headers', 'Content-Type');
-
-                next();
-            });
-
-            initRoutes(app); 
+            data.push(areas);
         };
 
         function initRoutes(app) {
@@ -147,12 +130,32 @@ cards = global.cards = {};
             });
         }
 
+        function init() {
 
-        self.init();
-        return self;
+            seed();
+            var express = require('express');
+            var app = express();
+
+            app.use(express.json());
+            app.use(express.urlencoded());
+            app.use(function(request, response, next) {
+                response.header('Access-Control-Allow-Origin', ['*'])
+                response.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+                response.header('Access-Control-Allow-Headers', 'Content-Type');
+
+                next();
+            });
+
+            initRoutes(app); 
+
+            module.exports = app;
+        };
+
+        init();
 
     };
 
+    var server = new cards.Server();
 
 })(cards);
 
