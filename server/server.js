@@ -4,54 +4,21 @@ cards = global.cards = {};
 (function(cards) {
     'use strict';
 
-    cards.Server = function(express, app, data) {
+    cards.Server = function() {
         var self = this;
+        var data = [];
 
-        self.seed = function() {
-            data.push({
-                id: 1,
-                name: 'Backlog',
-                cards: [{
-                    id: 1,
-                    areaId: 1,
-                    name: 'Create a design template for cards',
-                    description: 'description goes here',
-                    labels: ['Bug'],
-                }]
-            }, {
-                id: 2,
-                name: 'Todo',
-                cards: [{
-                    id: 2,
-                    areaId: 2,
-                    name: 'Finish all functionality',
-                    description: 'description goes here',
-                    labels: ['Feature'],
-                }]
-            }, {
-                id: 3,
-                name: 'Doing',
-                cards: [{
-                    id: 3,
-                    areaId: 3,
-                    name: 'Creating animations',
-                    description: 'description goes here',
-                    labels: ['Request'],
-                }]
-            }, {
-                id: 4,
-                name: 'Done',
-                cards: [{
-                    id: 4,
-                    areaId: 4,
-                    name: 'Creating project plan',
-                    description: 'description goes here',
-                    labels: ['Feature'],
-                }]
-            });
+        var express = require('express');
+        var app = module.exports = express();
+
+        self.prototype.seed = function() {
+            var seed = require('./seed.json');
+
+            data.push(seed);
         };
 
-        self.init = function() {
+        self.prototype.init = function() {
+
             app.use(express.json());
             app.use(express.urlencoded());
             app.use(function(request, response, next) {
@@ -62,6 +29,10 @@ cards = global.cards = {};
                 next();
             });
 
+            initRoutes(app); 
+        };
+
+        function initRoutes(app) {
             app.get('/areas', function(request, response) {
                 console.log('/areas GET: invoked.');
                 response.send(data);
@@ -174,26 +145,14 @@ cards = global.cards = {};
 
                 response.send(card);
             });
+        }
 
-        };
+
+        self.init();
+        return self;
 
     };
 
-    if(!cards.data) {
-        var express;
-        var app;
-
-        express = require('express');
-        app = module.exports = express();
-
-        var data = cards.data = [];
-        cards.currentAreaId = 5;
-        cards.currentCardId = 5;
-
-        var server = new cards.Server(express, app, data);
-        server.seed();
-        server.init();
-    }
 
 })(cards);
 
