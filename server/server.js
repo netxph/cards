@@ -8,11 +8,10 @@ cards = global.cards = {};
         var self = this;
         var data = [];
 
-
         function seed() {
             var areas = require('./seed.json');
 
-            data.push(areas);
+            data = areas;
         };
 
         function initRoutes(app) {
@@ -130,7 +129,7 @@ cards = global.cards = {};
             });
         }
 
-        function init() {
+        self.listen = function(port) {
 
             seed();
             var express = require('express');
@@ -148,14 +147,15 @@ cards = global.cards = {};
 
             initRoutes(app); 
 
-            module.exports = app;
+            app.listen(port);
+
         };
 
-        init();
-
+        return self;
     };
 
     var server = new cards.Server();
+    module.exports = server;
 
 })(cards);
 
