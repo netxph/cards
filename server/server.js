@@ -14,65 +14,81 @@ cards = global.cards = {};
             data = areas;
         };
 
+        function getAreas() {
+            return data;
+        }
+
+        function getCard(id) {
+            for(var i = 0; i < data.length; i++) {
+                for(var j = 0; j < data[i].cards.length; j++) {
+                    var card = data[i].cards[j];
+
+                    if(card.id == id) {
+                        return card;
+                    }
+                }
+            };
+
+            return {};
+        }
+
+        function getArea(id) {
+            for (var i = 0; i < data.length; i++) {
+                if(data[i].id == id) {
+                    return data[i];
+                }
+            };
+
+            return {};
+        }
+
+        function editArea(id, area) {
+            for (var i = 0; i <data.length; i++) {
+                if(data[i].id == id) {
+                    data[i].name = area.name;
+
+                    return data[i];
+                };
+            };
+
+            return {};
+        }
+
         function initRoutes(app) {
             app.get('/areas', function(request, response) {
-                console.log('/areas GET: invoked.');
-                response.send(data);
+                console.log('GET: /areas');
+                response.send(getAreas());
             });
 
             app.get('/cards/:id', function(request, response) {
                 var id = request.params.id;
-                console.log('/cards/' + id + ' GET: invoked.');
+                console.log('GET: /cards/' + id);
 
-                for(var i = 0; i < data.length; i++) {
-                    for(var j = 0; j < data[i].cards.length; j++) {
-                        var card = data[i].cards[j];
-
-                        if(card.id == id) {
-                            response.send(card);
-                            return;
-                        }
-                    }
-                };
-
-                response.send({});
+                var card = getCard(id);
+                response.send(card);
             });
 
             app.get('/areas/:id', function(request, response) {
                 var id = request.params.id;
-                console.log('/areas/' + id + ' GET: invoked.');
+                console.log('GET: /areas/' + id);
 
-                for (var i = 0; i < data.length; i++) {
-                    if(data[i].id == id) {
-                        response.send(data[i]);
-                        return;
-                    }
-                };
-
-                response.send({});
+                var area = getArea(id); 
+                response.send(area);
             });
 
             app.put('/areas/:id', function(request, response) {
                 var id = request.params.id;
                 var area = request.body;
-                console.log('/areas/' + id + ' PUT: invoked.'); 
+                console.log('PUT: /areas/' + id); 
 
-                 for (var i = 0; i <data.length; i++) {
-                     if(data[i].id == id) {
-                         data[i].name = area.name;
-
-                         response.send(data[i]);
-                         return;
-                     };
-                 };
-
+                 
             });
 
             app.put('/cards/:id', function(request, response) {
                 var id = request.params.id;
                 var item = request.body;
 
-                console.log('/cards/' + id + ' PUT: invoked.'); 
+                console.log('PUT: /cards/' + id); 
 
                 for(var i = 0; i < data.length; i++) {
                     for(var j = 0; j < data[i].cards.length; j++) {
@@ -92,7 +108,7 @@ cards = global.cards = {};
             });
 
             app.post('/areas', function(request, response) {
-                console.log('/areas POST: invoked.');
+                console.log('POST: /areas');
 
                 var area = request.body;
                 console.log('DATA: ' + area);
@@ -108,7 +124,7 @@ cards = global.cards = {};
             });
 
             app.post('/cards', function(request, response) {
-                console.log('/cards POST: invoked.');
+                console.log('POST: /cards');
 
                 var card = request.body;
                 console.log('DATA: ' + card);
@@ -130,7 +146,6 @@ cards = global.cards = {};
         }
 
         self.listen = function(port) {
-
             seed();
             var express = require('express');
             var app = express();
@@ -147,8 +162,8 @@ cards = global.cards = {};
 
             initRoutes(app); 
 
+            console.log("Cards API started.");
             app.listen(port);
-
         };
 
         return self;
