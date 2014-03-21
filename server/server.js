@@ -6,65 +6,20 @@ cards = global.cards = {};
 
     cards.Server = function() {
         var self = this;
-        var data = [];
-
-        function seed() {
-            var areas = require('./seed.json');
-
-            data = areas;
-        };
-
-        function getAreas() {
-            return data;
-        }
-
-        function getCard(id) {
-            for(var i = 0; i < data.length; i++) {
-                for(var j = 0; j < data[i].cards.length; j++) {
-                    var card = data[i].cards[j];
-
-                    if(card.id == id) {
-                        return card;
-                    }
-                }
-            };
-
-            return {};
-        }
-
-        function getArea(id) {
-            for (var i = 0; i < data.length; i++) {
-                if(data[i].id == id) {
-                    return data[i];
-                }
-            };
-
-            return {};
-        }
-
-        function editArea(id, area) {
-            for (var i = 0; i <data.length; i++) {
-                if(data[i].id == id) {
-                    data[i].name = area.name;
-
-                    return data[i];
-                };
-            };
-
-            return {};
-        }
+        var provider = require('./provider.js');
+        provider.seed();
 
         function initRoutes(app) {
             app.get('/areas', function(request, response) {
                 console.log('GET: /areas');
-                response.send(getAreas());
+                response.send(provider.getAreas());
             });
 
             app.get('/cards/:id', function(request, response) {
                 var id = request.params.id;
                 console.log('GET: /cards/' + id);
 
-                var card = getCard(id);
+                var card = provider.getCard(id);
                 response.send(card);
             });
 
@@ -72,7 +27,7 @@ cards = global.cards = {};
                 var id = request.params.id;
                 console.log('GET: /areas/' + id);
 
-                var area = getArea(id); 
+                var area = provider.getArea(id); 
                 response.send(area);
             });
 
@@ -81,30 +36,20 @@ cards = global.cards = {};
                 var area = request.body;
                 console.log('PUT: /areas/' + id); 
 
-                 
+                area = provider.editArea(id, area);
+                response.send(area); 
             });
 
             app.put('/cards/:id', function(request, response) {
+
                 var id = request.params.id;
-                var item = request.body;
+                var card = request.body;
 
                 console.log('PUT: /cards/' + id); 
 
-                for(var i = 0; i < data.length; i++) {
-                    for(var j = 0; j < data[i].cards.length; j++) {
-                        var card = data[i].cards[j];
+                card = provider.editCard(id, card); 
 
-                        if(card.id == id) {
-                            card.name = item.name;
-                            card.description = item.description;
-                            card.assignedTo = item.assignedTo;
-                            card.labels = item.labels;
-
-                            response.send(card);
-                            return;
-                        }
-                    }
-                };
+                response.send(card);
             });
 
             app.post('/areas', function(request, response) {
@@ -113,15 +58,12 @@ cards = global.cards = {};
                 var area = request.body;
                 console.log('DATA: ' + area);
 
-                area.id = cards.currentAreaId;
-
-                data.push(area);
-                console.log('area added with ID: ' + cards.currentAreaId); 
-
-                cards.currentAreaId++;
+                area = provider.addArea(area); 
 
                 response.send(area);
             });
+
+
 
             app.post('/cards', function(request, response) {
                 console.log('POST: /cards');
@@ -129,24 +71,13 @@ cards = global.cards = {};
                 var card = request.body;
                 console.log('DATA: ' + card);
 
-                for (var i = 0; i < data.length; i++) {
-
-                    if(data[i].id == card.areaId) {
-                        card.id = cards.currentCardId;
-                        data[i].cards.push(card);    
-
-                        console.log('card added to area with ID:' + cards.currentCardId);
-
-                        cards.currentCardId++;
-                    }
-                };
+                card = provider.addCard(card); 
 
                 response.send(card);
             });
         }
 
         self.listen = function(port) {
-            seed();
             var express = require('express');
             var app = express();
 
@@ -156,7 +87,6 @@ cards = global.cards = {};
                 response.header('Access-Control-Allow-Origin', ['*'])
                 response.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
                 response.header('Access-Control-Allow-Headers', 'Content-Type');
-
                 next();
             });
 
@@ -170,6 +100,7 @@ cards = global.cards = {};
     };
 
     var server = new cards.Server();
+
     module.exports = server;
 
 })(cards);

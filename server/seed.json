@@ -6,6 +6,7 @@
         "areaId": 1,
         "name": "Create a design template for cards",
         "description": "description goes here",
+        "assignedTo": "me@cards.com",
         "labels": ["Bug"]
     }]
 }, {
@@ -16,6 +17,7 @@
         "areaId": 2,
         "name": "Finish all functionality",
         "description": "description goes here",
+        "assignedTo": "me@cards.com",
         "labels": ["Feature"]
     }]
 }, {
@@ -26,6 +28,7 @@
         "areaId": 3,
         "name": "Creating animations",
         "description": "description goes here",
+        "assignedTo": "me@cards.com",
         "labels": ["Request"]
     }]
 }, {
@@ -36,6 +39,7 @@
         "areaId": 4,
         "name": "Creating project plan",
         "description": "description goes here",
+        "assignedTo": "me@cards.com",
         "labels": ["Feature"]
     }]
 }]

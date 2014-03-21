@@ -36,6 +36,8 @@
 
             Cards.edit(cardId, $scope.data.card).$promise.then(function() {
                 $location.path('/');
+            }, function(error) {
+                console.log(error);
             });
         };
 
