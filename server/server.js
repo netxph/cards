@@ -9,13 +9,34 @@ cards = global.cards = {};
         var provider = require('./provider.js');
         provider.seed();
 
+        function restrict(request, response, next) {
+            if(request.session.user) {
+                next();
+            } else {
+                request.session.error = "Access denied!";
+                response.send('Access denied!', 401);
+            }
+        }
+
         function initRoutes(app) {
-            app.get('/areas', function(request, response) {
+
+            app.post('/session', function(request, response) {
+                var session = request.body;
+
+                if(session.password == '@dm1N') {
+                    request.session.user = session.userId;
+                    response.send(request.session.user);
+                } else {
+                    response.send('Authentication failed!', 403);
+                }
+            });
+
+            app.get('/areas', restrict, function(request, response) {
                 console.log('GET: /areas');
                 response.send(provider.getAreas());
             });
 
-            app.get('/cards/:id', function(request, response) {
+            app.get('/cards/:id', restrict, function(request, response) {
                 var id = request.params.id;
                 console.log('GET: /cards/' + id);
 
@@ -23,7 +44,7 @@ cards = global.cards = {};
                 response.send(card);
             });
 
-            app.get('/areas/:id', function(request, response) {
+            app.get('/areas/:id', restrict, function(request, response) {
                 var id = request.params.id;
                 console.log('GET: /areas/' + id);
 
@@ -31,7 +52,7 @@ cards = global.cards = {};
                 response.send(area);
             });
 
-            app.put('/areas/:id', function(request, response) {
+            app.put('/areas/:id', restrict, function(request, response) {
                 var id = request.params.id;
                 var area = request.body;
                 console.log('PUT: /areas/' + id); 
@@ -40,7 +61,7 @@ cards = global.cards = {};
                 response.send(area); 
             });
 
-            app.put('/cards/:id', function(request, response) {
+            app.put('/cards/:id', restrict, function(request, response) {
 
                 var id = request.params.id;
                 var card = request.body;
@@ -52,7 +73,7 @@ cards = global.cards = {};
                 response.send(card);
             });
 
-            app.post('/areas', function(request, response) {
+            app.post('/areas', restrict, function(request, response) {
                 console.log('POST: /areas');
 
                 var area = request.body;
@@ -63,9 +84,7 @@ cards = global.cards = {};
                 response.send(area);
             });
 
-
-
-            app.post('/cards', function(request, response) {
+            app.post('/cards', restrict, function(request, response) {
                 console.log('POST: /cards');
 
                 var card = request.body;
@@ -83,6 +102,8 @@ cards = global.cards = {};
 
             app.use(express.json());
             app.use(express.urlencoded());
+            app.use(express.cookieParser());
+            app.use(express.session({ secret: 'gentle dog', key: 'sid', cookie: { maxAge: 60000 }}));
             app.use(function(request, response, next) {
                 response.header('Access-Control-Allow-Origin', ['*'])
                 response.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
