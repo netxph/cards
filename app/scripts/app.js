@@ -9,8 +9,8 @@ angular.module('cardsApp', [
 .config(function ($routeProvider) {
     $routeProvider
         .when('/', {
-            templateUrl: 'views/area-list.html',
-            controller: 'AreaListCtrl'
+            templateUrl: 'views/session-add.html',
+            controller: 'SessionAddCtrl'
         })
         .when('/areas', {
             templateUrl: 'views/area-list.html',

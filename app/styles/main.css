@@ -5,6 +5,11 @@ body {
     overflow: scroll;
 }
 
+#login {
+    margin: 0 auto;
+    width: 50%;
+}
+
 #areas {
     padding: 12px;
 }
