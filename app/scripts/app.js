@@ -39,4 +39,5 @@ angular.module('cardsApp', [
         .otherwise({
             redirectTo: '/'
         });
+
 });

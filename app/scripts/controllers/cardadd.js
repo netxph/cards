@@ -13,6 +13,10 @@
             
             Areas.getAll().$promise.then(function(result) {
                 $scope.data.areas = result;
+            }, function (error) {
+                if(error.status == 401) {
+                    $location.path('/session/new');
+                }
             });
             
             //convert card into class
@@ -36,6 +40,10 @@
         $scope.addCard = function() {
             Cards.add($scope.data.card).$promise.then(function() {
                 $location.path('/');
+            }, function (error) {
+                if(error.status == 401) {
+                    $location.path('/session/new');
+                }
             });
         };
 

@@ -15,7 +15,6 @@ cards = global.cards = {};
             if(loggedIn) {
                 next();
             } else {
-                request.session.error = "Access denied!";
                 response.send('Access denied!', 401);
             }
         }
