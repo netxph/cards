@@ -6,12 +6,13 @@ cards = global.cards = {};
 
     cards.Server = function() {
         var self = this;
+        var loggedIn = false;
+
         var provider = require('./provider.js');
         provider.seed();
 
         function restrict(request, response, next) {
-            console.log('SESSION: ' + request.session.id);
-            if(request.session.user) {
+            if(loggedIn) {
                 next();
             } else {
                 request.session.error = "Access denied!";
@@ -23,14 +24,13 @@ cards = global.cards = {};
 
             app.post('/session', function(request, response) {
                 console.log('POST: /session');
-                console.log('SESSION: ' + request.session.id);
                 var session = request.body;
 
-                if(session.password == 'P@ssw0rd!1') {
-                    request.session.user = session.userId;
+                if(session.password == 'P@ssw0rd!1' && session.userId == 'me@cards.com') {
+                    loggedIn = true;
 
-                    console.log('AUTH: ' + request.session.user);
-                    response.send(request.session.user);
+                    console.log('AUTH: ' + session.userId);
+                    response.send(session.userId);
                 } else {
                     response.send('Authentication failed!', 403);
                 }
@@ -106,7 +106,6 @@ cards = global.cards = {};
             var app = express();
 
             app.use(express.cookieParser());
-            app.use(express.session({ secret: 'gentle dog', key: 'sid', cookie: { maxAge: 60000 }}));
 
             app.use(express.json());
             app.use(express.urlencoded());
