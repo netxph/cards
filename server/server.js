@@ -10,6 +10,7 @@ cards = global.cards = {};
         provider.seed();
 
         function restrict(request, response, next) {
+            console.log('SESSION: ' + request.session.id);
             if(request.session.user) {
                 next();
             } else {
@@ -21,10 +22,14 @@ cards = global.cards = {};
         function initRoutes(app) {
 
             app.post('/session', function(request, response) {
+                console.log('POST: /session');
+                console.log('SESSION: ' + request.session.id);
                 var session = request.body;
 
-                if(session.password == '@dm1N') {
+                if(session.password == 'P@ssw0rd!1') {
                     request.session.user = session.userId;
+
+                    console.log('AUTH: ' + request.session.user);
                     response.send(request.session.user);
                 } else {
                     response.send('Authentication failed!', 403);
@@ -100,10 +105,11 @@ cards = global.cards = {};
             var express = require('express');
             var app = express();
 
-            app.use(express.json());
-            app.use(express.urlencoded());
             app.use(express.cookieParser());
             app.use(express.session({ secret: 'gentle dog', key: 'sid', cookie: { maxAge: 60000 }}));
+
+            app.use(express.json());
+            app.use(express.urlencoded());
             app.use(function(request, response, next) {
                 response.header('Access-Control-Allow-Origin', ['*'])
                 response.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');

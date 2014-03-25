@@ -3,7 +3,7 @@
 
     var cardsApp = angular.module('cardsApp');
 
-    cardsApp.factory('Areas', function($resource, AppSettings) {
+    cardsApp.factory('Areas', ['$resource', '$cookies', 'AppSettings', function($resource, $cookies, AppSettings) {
         var areasResource = $resource(AppSettings.serviceBaseUrl + 'areas');
         var areaResource = $resource(AppSettings.serviceBaseUrl + 'areas/:id', null, {
             'update': { method: 'PUT' }
@@ -23,6 +23,6 @@
                 return areaResource.update({id: areaId}, area);
             }
         };
-    });
+    }]);
 })(angular);
 
