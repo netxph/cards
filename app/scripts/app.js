@@ -1,13 +1,10 @@
-'use strict';
+(function(angular) {
+    'use strict';
 
-angular.module('cardsApp', [
-        'ngCookies',
-        'ngResource',
-        'ngSanitize',
-        'ngRoute'
-        ])
-.config(function ($routeProvider) {
-    $routeProvider
+    var cardsApp =  angular.module('cardsApp', ['ngCookies', 'ngResource', 'ngSanitize', 'ngRoute']);
+
+    cardsApp.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
+        $routeProvider
         .when('/', {
             templateUrl: 'views/area-list.html',
             controller: 'AreaListCtrl'
@@ -40,4 +37,24 @@ angular.module('cardsApp', [
             redirectTo: '/'
         });
 
-});
+        $httpProvider.responseInterceptors.push('SpinnerInterceptor');
+        $httpProvider.defaults.transformRequest.push(function(data, headersGetter) {
+            $('.loading').show();
+            return data;
+        });
+
+    }]);
+
+    cardsApp.factory('SpinnerInterceptor', ['$q', '$window', function($q, $window) {
+        return function(promise) {
+            return promise.then(function(response) {
+                $('.loading').hide();
+                return response;
+            }, function(response) {
+                $('.loading').hide();
+                return $q.reject(response);
+            });
+        };
+    }]);
+
+})(angular);
