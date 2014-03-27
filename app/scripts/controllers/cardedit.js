@@ -19,18 +19,10 @@
 
             Cards.get(cardId).$promise.then(function(result) {
                 $scope.data.card = result;
-            }, function (error) {
-                if(error.status == 401) {
-                    $location.path('/session/new');
-                }
             });
 
             Areas.getAll().$promise.then(function(result) {
                 $scope.data.areas = result;
-            }, function (error) {
-                if(error.status == 401) {
-                    $location.path('/session/new');
-                }
             });
         };
 
@@ -44,9 +36,8 @@
 
             Cards.edit(cardId, $scope.data.card).$promise.then(function() {
                 $location.path('/');
-            }, function(error) {
-                console.log(error);
             });
+
         };
 
         self.init();

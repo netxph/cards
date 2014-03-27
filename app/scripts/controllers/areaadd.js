@@ -14,10 +14,6 @@
         $scope.addArea = function() {
             Areas.add($scope.data.area).$promise.then(function() {
                 $location.path('/');
-            }, function (error) {
-                if(error.status == 401) {
-                    $location.path('/session/new');
-                }
             });
         };
 

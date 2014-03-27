@@ -8,10 +8,6 @@
 
         Areas.getAll().$promise.then(function (result) {
             $scope.data.areas = result;
-        }, function (error) {
-            if(error.status == 401) {
-                $location.path('/session/new');
-            }
         });
     }]);
 })(angular);

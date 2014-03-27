@@ -12,10 +12,6 @@
 
             Areas.get(areaId).$promise.then(function(result) {
                 $scope.data.area = result;
-            }, function (error) {
-                if(error.status == 401) {
-                    $location.path('/session/new');
-                }
             });
         };
 
@@ -23,10 +19,6 @@
             var areaId = $routeParams.id;
             Areas.edit(areaId, $scope.data.area).$promise.then(function() {
                 $location.path('/');           
-            }, function (error) {
-                if(error.status == 401) {
-                    $location.path('/session/new');
-                }
             });
         };
         
