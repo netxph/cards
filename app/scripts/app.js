@@ -87,22 +87,4 @@
         $httpProvider.responseInterceptors.push(interceptor);
     }]);
 
-    //TODO: separate entire error logic
-    cardsApp.directive('cdError', function() {
-        return {
-            restrict: 'A',
-            link: function($scope, element) {
-                element.hide();
-
-                $scope.$on('ajax_error', function() {
-                    return element.show();
-                });
-
-                $scope.$on('ajax_success', function() {
-                    return element.hide();
-                });
-            }
-        };
-    });
-
 })(angular);

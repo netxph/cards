@@ -48,8 +48,8 @@ body {
     display: none;
 }
 
-.loading-show {
-    display: inline;
+.cd-hide {
+    display: none;
 }
 
 .loading {
@@ -63,7 +63,6 @@ body {
   left: 0;
   bottom: 0;
   right: 0;
-  display: none;
 }
 
 .loading:before {

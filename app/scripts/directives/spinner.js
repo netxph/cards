@@ -7,12 +7,14 @@
         return {
             restrict: 'A',
         link: function ($scope, element) {
+            element.addClass('cd-hide');
+
             $scope.$on('ajax_start', function() {
-                return element.addClass('loading-show');
+                return element.removeClass('cd-hide');
             });
 
             $scope.$on('ajax_end', function () {
-                return element.removeClass('loading-show');
+                return element.addClass('cd-hide');
             });
         }
         };
