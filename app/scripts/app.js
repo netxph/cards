@@ -87,24 +87,6 @@
         $httpProvider.responseInterceptors.push(interceptor);
     }]);
 
-    //TODO: separate entire spinner logic
-    cardsApp.directive('cdSpinner', function() {
-        return {
-            restrict: 'A',
-            link: function ($scope, element) {
-                element.hide();
-
-                $scope.$on('ajax_start', function() {
-                    return element.show();
-                });
-
-                $scope.$on('ajax_end', function () {
-                    return element.hide();
-                });
-            }
-        };
-    });
-
     //TODO: separate entire error logic
     cardsApp.directive('cdError', function() {
         return {
