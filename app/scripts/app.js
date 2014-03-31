@@ -37,34 +37,90 @@
             redirectTo: '/'
         });
 
-        $httpProvider.responseInterceptors.push('SpinnerInterceptor');
-        $httpProvider.defaults.transformRequest.push(function(data, headersGetter) {
-            $('.error').hide();
-            $('.loading').show();
-            return data;
-        });
-
     }]);
 
-    cardsApp.factory('SpinnerInterceptor', ['$q', '$window', '$location', function($q, $window, $location) {
-        return function(promise) {
-            return promise.then(function(response) {
-                $('.loading').hide();
-                return response;
-            }, function(response) {
-                $('.loading').hide();
+    cardsApp.config(['$httpProvider', function($httpProvider){
+        var $http,
+            interceptor = ['$q', '$injector', '$location', function($q, $injector, $location) {
+                var rootScope;
 
-                if (response.status != 401) {
-                    console.log('ERROR:' + response.data);
-                    $('.error').show();
-                }
-                else {
-                    $location.path('/session/new'); 
+                function broadcast(message) {
+                    rootScope = rootScope || $injector.get('$rootScope');
+
+                    rootScope.$broadcast(message);
                 }
 
-                return $q.reject(response);
-            });
+                function success(response) {
+                    $http = $http || $injector.get('$http');
+                    broadcast('ajax_success');
+
+                    if($http.pendingRequests.length < 1) {
+                        broadcast('ajax_end');
+                    }
+
+                    return response;
+                };
+
+                function error(response) {
+                    $http = $http || injector.get('$http');
+                    broadcast('ajax_error');
+
+                    if($http.pendingRequests.length < 1) {
+                        broadcast('ajax_end'); 
+                    }
+
+                    if(response.status == 401) {
+                        $location.path('/session/new');
+                    }
+
+                    return $q.reject(response);
+
+                };
+
+                return function (promise) {
+                    broadcast('ajax_start');
+
+                    return promise.then(success, error);
+                }
+            }];
+
+        $httpProvider.responseInterceptors.push(interceptor);
+    }]);
+
+    //TODO: separate entire spinner logic
+    cardsApp.directive('cdSpinner', function() {
+        return {
+            restrict: 'A',
+            link: function ($scope, element) {
+                element.hide();
+
+                $scope.$on('ajax_start', function() {
+                    return element.show();
+                });
+
+                $scope.$on('ajax_end', function () {
+                    return element.hide();
+                });
+            }
         };
-    }]);
+    });
+
+    //TODO: separate entire error logic
+    cardsApp.directive('cdError', function() {
+        return {
+            restrict: 'A',
+            link: function($scope, element) {
+                element.hide();
+
+                $scope.$on('ajax_error', function() {
+                    return element.show();
+                });
+
+                $scope.$on('ajax_success', function() {
+                    return element.hide();
+                });
+            }
+        };
+    });
 
 })(angular);
