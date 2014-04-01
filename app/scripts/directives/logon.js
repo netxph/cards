@@ -17,7 +17,7 @@
                     if(userName == '') {
                         element.html(signIn);
                     } else {
-                        element.html(signOut);
+                        element.html('Hello ' + userName + '. ' + signOut);
                     }
                 });
 

@@ -21,7 +21,7 @@
 
             root.$broadcast('auth_changed');
 
-            expect(element.html()).toBe('<a href="#/session/new">Not Signed In</a>');
+            expect(element.html()).toMatch('Not Signed In');
         }));
 
         it('should contain sign out link', inject(function(State, $compile) {
@@ -32,7 +32,7 @@
 
             root.$broadcast('auth_changed');
 
-            expect(element.html()).toBe('<a href="#/session/delete">Sign Out</a>');
+            expect(element.html()).toMatch('Sign Out');
         }));
     });
 })();
