@@ -1,8 +1,12 @@
-'use strict';
+(function(angular) {
+    'use strict';
 
-angular.module('cardsApp')
-  .service('State', function State() {
-    var self = this;
+    var cardsApp = angular.module('cardsApp');
+    
+    cardsApp.service('State', function State() {
+        var self = this;
 
-    self.userName = '';
-  });
+        self.userName = '';
+    });
+
+})(angular);
