@@ -9,6 +9,9 @@
         return {
             add: function(session) {
                 return sessionResource.save(session);
+            },
+            delete: function() {
+                return sessionResource.delete();
             }
         };
     }]);
