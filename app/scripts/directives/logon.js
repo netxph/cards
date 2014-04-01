@@ -6,24 +6,9 @@
     cardsApp.directive('cdLogon', ['State', function (State) {
         return {
             restrict: 'A',
-            link: function (scope, element, attrs) {
-                var signIn = '<a href="#/session/new" class="navbar-link link-unstyled">Not Signed In</a>';
-                var signOut = '<a href="#" id="sign-out" class="navbar-link link-unstyled">Sign Out</a>'; 
-                element.html(signIn);
-
-                scope.$on('auth_changed', function() {
-                    var userName = scope.getUserName();
-
-                    if(userName == '') {
-                        element.html(signIn);
-                    } else {
-                        element.html('Hello ' + userName + '. ' + signOut);
-                    }
-                });
-
-                return element;
-            },
+            templateUrl: 'views/login-partial.html',             
             controller: 'LoginCtrl'
-        };
+        }
     }]);
 })(angular);
+

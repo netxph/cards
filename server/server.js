@@ -35,6 +35,13 @@ cards = global.cards = {};
                 }
             });
 
+            app.delete('/session', function(request, response) {
+                console.log('DELETE: /session');
+                loggedIn = false;
+
+                response.send(200);
+            });
+
             app.get('/areas', restrict, function(request, response) {
                 console.log('GET: /areas');
                 response.send(provider.getAreas());

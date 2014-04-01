@@ -9,8 +9,8 @@
         };
 
         $scope.signOut = function () {
-            State.userName = '';
             Session.delete().$promise.then(function() {
+                State.userName = '';
                 $location.path('/session/new');
             });
         };
