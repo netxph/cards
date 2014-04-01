@@ -7,8 +7,8 @@
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
-                var signIn = '<a href="#/session/new">Not Signed In</a>';
-                var signOut = '<a href="#/session/delete">Sign Out</a>'; 
+                var signIn = '<a href="#/session/new" class="navbar-link link-unstyled">Not Signed In</a>';
+                var signOut = '<a href="#/session/delete" class="navbar-link link-unstyled">Sign Out</a>'; 
                 element.html(signIn);
 
                 scope.$on('auth_changed', function() {
