@@ -1,34 +1,58 @@
 (function(angular) {
-'use strict';
+    'use strict';
 
-var cardsApp = angular.module('cardsApp')
+    var cardsApp = angular.module('cardsApp')
 
-cardsApp.directive('cdDraggable', function () {
+    cardsApp.directive('cdDraggable', function () {
+
+        function link(scope, element) {
+            var el = element[0];
+            var enabled = true;
+
+            if(scope.enabled != undefined) {
+                enabled = scope.enabled == 'true';
+            };
+
+            if(enabled) {
+
+                el.draggable = true;
     
-    return function(scope, element) {
-        var el = element[0];
+                el.addEventListener(
+                    'dragstart',
+                    function(e) {
+                        e.dataTransfer.effectAllowed = 'move';
+                        e.dataTransfer.setData('Text', this.id);
+                        this.classList.add('draggable-item');
+                        return false;
+                    },
+                    false
+                );
 
-        el.draggable = true;
+                el.addEventListener(
+                    'dragend',
+                    function(e) {
+                        this.classList.remove('draggable-item');
+                        return false;
+                    },
+                    false
+                );
+            } else {
+                e.addEventListener(
+                    'mouseDown',
+                    function(e) {
+                        e.preventDefault();
+                    },
+                    false
+                );
+            };
+        };
 
-        el.addEventListener(
-            'dragstart',
-            function(e) {
-                e.dataTransfer.effectAllowed = 'move';
-                e.dataTransfer.setData('Text', this.id);
-                this.classList.add('draggable-item');
-                return false;
+        return {
+            scope: {
+                enabled: '=cdDraggable' 
             },
-            false
-        );
+            link: link
+        };
+    });
 
-        el.addEventListener(
-            'dragend',
-            function(e) {
-                this.classList.remove('draggable-item');
-                return false;
-            },
-            false
-        );
-    };
-});
 })(angular);

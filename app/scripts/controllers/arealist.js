@@ -6,8 +6,16 @@
     cardsApp.controller('AreaListCtrl', ['$scope', '$http', '$location', 'Areas', function($scope, $http, $location, Areas) {
         $scope.data = {};
 
-        Areas.getAll().$promise.then(function (result) {
-            $scope.data.areas = result;
-        });
+        $scope.init = function() {
+            Areas.getAll().$promise.then(function (result) {
+                $scope.data.areas = result;
+            });
+        };
+
+        $scope.moveCard = function(cardId, areaId) {
+        };
+
+        $scope.init();
+
     }]);
 })(angular);

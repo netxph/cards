@@ -7,7 +7,6 @@
         return {
             scope: {
                 drop: '&',
-                bin: '='
             },
             link: function(scope, element) {
             // again we need the native object
@@ -22,7 +21,7 @@
                         this.classList.add('droppable-item');
                         return false;
                     },
-                    false
+                   false
                 );
 
                 el.addEventListener(
@@ -51,14 +50,17 @@
 
                         this.classList.remove('droppable-item');
 
-                        var binId = this.id;
                         var item = document.getElementById(e.dataTransfer.getData('Text'));
+
+                        var areaId = this.attributes["data-areaid"].value;
+                        var cardId = item.attributes["data-cardid"].value;
+
                         this.appendChild(item);
                         // call the passed drop function
                         scope.$apply(function(scope) {
                             var fn = scope.drop();
                             if ('undefined' !== typeof fn) {            
-                                fn(item.id, binId);
+                                fn(cardId, areaId);
                             }
                         });
 
