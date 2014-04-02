@@ -3,7 +3,7 @@
 
     var cardsApp = angular.module('cardsApp');
 
-    cardsApp.directive('droppable', function () {
+    cardsApp.directive('cdDroppable', function () {
         return {
             scope: {
                 drop: '&',

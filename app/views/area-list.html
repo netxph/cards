@@ -1,7 +1,7 @@
 <div id="areas" class="row">
-    <div class="area col-md-3" ng-repeat="area in data.areas">
+    <div class="area col-md-3" cd-droppable ng-repeat="area in data.areas">
         <h4><a class='link link-unstyled' href="#/areas/{{area.id}}">{{area.name}}</a></h4>
-        <div class="cards" ng-repeat="card in area.cards">
+        <div class="cards" id="card{{card.id}}" cd-draggable ng-repeat="card in area.cards">
             <div class="card panel panel-default">
                 <div class="panel-body"><a class='link link-unstyled' href="#/cards/{{card.id}}">{{card.name}}</a></div>
                 <div class="panel-footer">
