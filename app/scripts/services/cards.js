@@ -29,7 +29,8 @@
                 return cardResource.update({id: cardId}, card); 
             },
             move: function(cardId, areaId) {
-                return cardResource.move({id: cardId}, areaId);
+                var area = { areaId: areaId };
+                return cardResource.move({id: cardId}, area);
             }
         };
     });

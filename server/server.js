@@ -55,6 +55,18 @@ cards = global.cards = {};
                 response.send(card);
             });
 
+            app.put('/cards/:id/move', restrict, function(request, response) {
+                var id = request.params.id;
+                var dest = request.body;
+
+                console.log('PUT: /cards/' + id + '/move');
+
+                var card = provider.getCard(id);
+                card.areaId = dest.areaId;
+
+                response.send(card);
+            });
+
             app.get('/areas/:id', restrict, function(request, response) {
                 var id = request.params.id;
                 console.log('GET: /areas/' + id);
