@@ -1,4 +1,4 @@
-(function() {
+(function(jasmine) {
     'use strict';
 
     angular.module('cardsApp')
@@ -29,6 +29,39 @@
 
         it('areas not empty', function() {
             expect(subject.length).toBeGreaterThan(0);
+        });
+
+    });
+
+    describe('Controller: AreaListCtrl - MoveCard', function() {
+        var scope, controller, http, params;
+
+        beforeEach(module('cardsApp', 'areaMock'));
+        beforeEach(inject(function($controller, $rootScope, $httpBackend, $routeParams, areasData) {
+            params = $routeParams;
+
+            http = $httpBackend;
+            http.whenGET('http://localhost/areas').respond(areasData);
+
+            scope = $rootScope.$new();
+            controller = $controller('AreaListCtrl', {
+                $scope: scope
+            });
+        }));
+
+        it('should define moveCard() as function', function() {
+            expect(scope.moveCard).toEqual(jasmine.any(Function));
+        });
+
+        it('should invoke api move card', function() {
+            params.id = 1;
+            http.expectPUT('http://localhost/cards/1/move').respond(200);
+
+            scope.moveCard(1, 1);
+            http.flush();
+
+            http.verifyNoOutstandingExpectation();
+            http.verifyNoOutstandingRequest();
         });
 
     });
@@ -147,4 +180,4 @@
             expect(subject).toBe('Bug');
         });
     });
-})();
+})(jasmine);

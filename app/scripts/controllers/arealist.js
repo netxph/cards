@@ -3,7 +3,7 @@
 
     var cardsApp = angular.module('cardsApp');
 
-    cardsApp.controller('AreaListCtrl', ['$scope', '$http', '$location', 'Areas', function($scope, $http, $location, Areas) {
+    cardsApp.controller('AreaListCtrl', ['$scope', '$http', '$location', 'Areas', 'Cards', function($scope, $http, $location, Areas, Cards) {
         $scope.data = {};
 
         $scope.init = function() {
@@ -13,6 +13,7 @@
         };
 
         $scope.moveCard = function(cardId, areaId) {
+            Cards.move(cardId, areaId);
         };
 
         $scope.init();
