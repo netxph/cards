@@ -66,12 +66,12 @@
             expect(subject).toBeDefined();
         });
 
-        it('should define areaId', function() {
-            expect(subject.areaId).toBeDefined();
+        it('should define areaID', function() {
+            expect(subject.areaID).toBeDefined();
         });
 
-        it('card.areaId should be zero', function() {
-            expect(subject.areaId).toBe(1);
+        it('card.areaID should be zero', function() {
+            expect(subject.areaID).toBe(1);
         });
 
         it('card should define name', function()  {
@@ -171,7 +171,7 @@
             });
 
             card = scope.data.card;
-            card.areaId = 1;
+            card.areaID = 1;
             card.name = 'Create a test';
             card.description = 'description goes here';
             card.assignedTo = 'me@cards.com';

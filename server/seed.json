@@ -3,7 +3,7 @@
     "name": "Backlog",
     "cards": [{
         "id": 1,
-        "areaId": 1,
+        "areaID": 1,
         "name": "Create a design template for cards",
         "description": "description goes here",
         "assignedTo": "me@cards.com",
@@ -14,7 +14,7 @@
     "name": "Todo",
     "cards": [{
         "id": 2,
-        "areaId": 2,
+        "areaID": 2,
         "name": "Finish all functionality",
         "description": "description goes here",
         "assignedTo": "me@cards.com",
@@ -25,7 +25,7 @@
     "name": "Doing",
     "cards": [{
         "id": 3,
-        "areaId": 3,
+        "areaID": 3,
         "name": "Creating animations",
         "description": "description goes here",
         "assignedTo": "me@cards.com",
@@ -36,7 +36,7 @@
     "name": "Done",
     "cards": [{
         "id": 4,
-        "areaId": 4,
+        "areaID": 4,
         "name": "Creating project plan",
         "description": "description goes here",
         "assignedTo": "me@cards.com",

@@ -2,7 +2,7 @@
     var cardMock = angular.module('cardMock', []);
 
     cardMock.value('cardData', {
-        areaId: 1,
+        areaID: 1,
         id: 1,
         name: 'create todo',
         description: 'description goes here',

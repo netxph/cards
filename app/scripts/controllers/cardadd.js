@@ -17,7 +17,7 @@
             
             //convert card into class
             $scope.data.card = {
-                areaId: 1,
+                areaID: 1,
                 name: '',
                 description: '',
                 assignedTo: '',

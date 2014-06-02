@@ -37,7 +37,7 @@
                 for(var j = 0; j < cardKeys.length; j++) {
                     var card = cards[cardKeys[j]];
                     
-                    if(area.id == card.areaId) {
+                    if(area.id == card.areaID) {
                         area.cards.push(card);
                     }
                 }
@@ -61,7 +61,7 @@
             for(var i = 0; i < cardKeys.length; i++) {
                 var card = cards[cardKeys[i]];
 
-                if(area.id == card.areaId) {
+                if(area.id == card.areaID) {
                     area.cards.push(card);
                 }
             }
@@ -79,7 +79,7 @@
         self.editCard = function(id, card) {
             var result = cards[id];
 
-            result.areaId = card.areaId;
+            result.areaID = card.areaID;
             result.name = card.name;
             result.description = card.description;
             result.assignedTo = card.assignedTo;

@@ -17,12 +17,11 @@
 
             $scope.data.label = '';
 
-            Cards.get(cardId).$promise.then(function(result) {
-                $scope.data.card = result;
-            });
-
             Areas.getAll().$promise.then(function(result) {
                 $scope.data.areas = result;
+                return Cards.get(cardId).$promise;
+            }).then(function(result) {
+                $scope.data.card = result;
             });
         };
 

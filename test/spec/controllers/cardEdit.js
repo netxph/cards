@@ -219,12 +219,12 @@
             expect(subject).toBeDefined();
         });
 
-        it('should define areaId', function() {
-            expect(subject.areaId).toBeDefined();
+        it('should define areaID', function() {
+            expect(subject.areaID).toBeDefined();
         });
 
-        it('areaId should have value', function() {
-            expect(subject.areaId).toBe(1);
+        it('areaID should have value', function() {
+            expect(subject.areaID).toBe(1);
         });
 
         it('should define id', function() {
