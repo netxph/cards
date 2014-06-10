@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('cardsApp')
-  .directive('cardItem', function () {
+  .directive('cardItem', ['AppSettings', function (AppSettings) {
     return {
       restrict: 'E',
-      templateUrl: 'views/card-partial.html'
+      templateUrl: AppSettings.cardTemplate
     };
-  });
+  }]);
