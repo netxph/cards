@@ -5,8 +5,8 @@
         .constant('AppSettings', { 
 
             serviceBaseUrl: 'http://localhost:9002/' ,
-            cardTemplate: 'views/card-partial.html'
-
+            cardTemplate: 'views/card-partial.html',
+            menuTemplate: 'views/menu-partial.html'
         });
 
 })(angular);
