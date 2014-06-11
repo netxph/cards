@@ -2,7 +2,7 @@
     <div class="area col-md-3" cd-droppable drop="moveCard" data-areaid="{{area.id}}" ng-repeat="area in data.areas">
         <h4><a class='link link-unstyled' href="#/areas/{{area.id}}">{{area.name}}</a></h4>
         <div class="cards" id="card{{card.id}}" data-cardid="{{card.id}}" cd-draggable ng-repeat="card in area.cards">
-            <card-item></card-item> 
+            <cd-card></cd-card> 
         </div>
     </div>
 </div>
