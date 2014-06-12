@@ -1,37 +1,7 @@
 <div class="card-form">
     <form>
 
-        <div class="form-group"> 
-           <label for="card-area-id">Area ID</label>
-           <select class="form-control" ng-model="data.card.areaID" ng-options="a.id as a.name for a in data.areas"></select>
-         </div>
+        <cd-card-form></cd-card-form>
 
-        <div class="form-group"> 
-           <label for="card-name">Name</label>
-           <input type="text" id="card-name" class="form-control" placeholder="Enter name for card" ng-model="data.card.name"></input>
-         </div>
-
-         <div class="form-group"> 
-           <label for="card-description">Description</label>
-           <textarea id="card-description" class="form-control" ng-model="data.card.description"></textarea>
-         </div>
-
-         <div class="form-group"> 
-           <label for="card-assigned-to">Assigned To</label>
-           <input type="text" id="card-assigned-to" class="form-control" placeholder="Enter user assigned to" ng-model="data.card.assignedTo"></textarea>
-         </div>
-
-         <div class="form-group">
-
-           <label for="card-add-labels">Labels</label>
-           <span ng-repeat="label in data.card.labels" class="label label-info">{{label}}</span>
-
-           <div class="controls form-inline">
-               <input type="text" id="card-add-labels" class="form-control" placeholder="Add label" ng-model="data.label"></textarea>
-               <button type="submit" class="btn btn-default" ng-click="addLabel()">Add</button>
-           </div>
-         </div>
-         
-         <button type="submit" class="btn btn-default" ng-click="addCard()">Submit</button>
     </form>
 </div>
