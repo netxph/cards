@@ -14,7 +14,7 @@
                 $scope: scope
             });
 
-            subject = scope.data.label;
+            subject = scope.label;
         }));
 
         it('should define label', function() {
@@ -49,7 +49,7 @@
 
             http.flush();
 
-            scope.data.label = 'Feature';
+            scope.label = 'Feature';
             subject = scope.addLabel();
         }));
 
@@ -67,11 +67,11 @@
         });
 
         it('should labels contain item', function() {
-            expect(scope.data.card.labels[1]).toBe('Feature');
+            expect(scope.card.labels[1]).toBe('Feature');
         });
 
         it('should label empty after add', function() {
-            expect(scope.data.label).toBe('');
+            expect(scope.label).toBe('');
         });
     });
 
@@ -98,7 +98,7 @@
             });
 
             http.flush();
-            subject = scope.data.areas;
+            subject = scope.areas;
         }));
 
         afterEach(function() {
@@ -172,7 +172,7 @@
         }));
 
         beforeEach(function() {
-            http.expectPUT('http://localhost/cards/1', scope.data.card);
+            http.expectPUT('http://localhost/cards/1', scope.card);
         });
 
         afterEach(function() {
@@ -207,7 +207,7 @@
             });
 
             http.flush();
-            subject = scope.data.card;
+            subject = scope.card;
         }));
 
         afterEach(function() {

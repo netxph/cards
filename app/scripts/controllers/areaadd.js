@@ -4,15 +4,14 @@
     var cardsApp = angular.module('cardsApp');
 
     cardsApp.controller('AreaAddCtrl', ['$scope', '$location', 'Areas', function($scope, $location, Areas) {
-        $scope.data = {};
-
-        $scope.data.area = {
+        
+        $scope.area = {
             name: '',
             cards: []
         };
 
         $scope.addArea = function() {
-            Areas.add($scope.data.area).$promise.then(function() {
+            Areas.add($scope.area).$promise.then(function() {
                 $location.path('/');
             });
         };

@@ -20,7 +20,7 @@
 
             $httpBackend.flush();
 
-            subject = scope.data.areas;
+            subject = scope.areas;
         }));
 
         it('should define areas', function() {
@@ -82,7 +82,7 @@
 
             $httpBackend.flush();
 
-            subject = scope.data.areas[0];
+            subject = scope.areas[0];
        }));
 
         it('should define id', function() {
@@ -128,7 +128,7 @@
 
             $httpBackend.flush();
 
-            subject = scope.data.areas[0].cards[0];
+            subject = scope.areas[0].cards[0];
         }));
 
         it('should define name', function() {
@@ -173,7 +173,7 @@
             });
 
             $httpBackend.flush();
-            subject = scope.data.areas[0].cards[0].labels[0];
+            subject = scope.areas[0].cards[0].labels[0];
         }));
 
         it('should have value', function() {

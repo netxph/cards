@@ -9,14 +9,13 @@
         var self = this;
 
         self.init = function() {
-            $scope.data = {};
             
             Areas.getAll().$promise.then(function(result) {
-                $scope.data.areas = result;
+                $scope.areas = result;
             });
             
             //convert card into class
-            $scope.data.card = {
+            $scope.card = {
                 areaID: 1,
                 name: '',
                 description: '',
@@ -24,17 +23,17 @@
                 labels: []
             };
 
-            $scope.data.label = '';
+            $scope.label = '';
         }
 
         $scope.addLabel = function() {
-            $scope.data.card.labels.push($scope.data.label);
-            $scope.data.label = '';
+            $scope.card.labels.push($scope.label);
+            $scope.label = '';
         };
 
 
         $scope.addCard = function() {
-            Cards.add($scope.data.card).$promise.then(function() {
+            Cards.add($scope.card).$promise.then(function() {
                 $location.path('/');
             }); 
         };

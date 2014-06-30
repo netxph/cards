@@ -13,7 +13,7 @@
                 $scope: scope
             });
 
-            subject = scope.data.area;
+            subject = scope.area;
         }));
 
         it('should define area', function() {
@@ -54,7 +54,7 @@
                 $scope: scope
             });
 
-            area = scope.data.area;
+            area = scope.area;
             area.name = "Todo";
 
         }));

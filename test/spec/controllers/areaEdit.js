@@ -23,7 +23,7 @@
             });
 
             http.flush();
-            subject = scope.data.area;
+            subject = scope.area;
         }));
 
         afterEach(function() {
@@ -65,7 +65,7 @@
                 $scope: scope
             });
 
-            area = scope.data.area;
+            area = scope.area;
 
         }));
 
@@ -89,7 +89,7 @@
         });
 
         it('should perform POST in api', function() {
-            http.expectPUT('http://localhost/areas/1', scope.data.area);
+            http.expectPUT('http://localhost/areas/1', scope.area);
 
             var subject = scope.editArea();
             http.flush();

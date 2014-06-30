@@ -12,7 +12,7 @@
                 $scope: scope
             });
 
-            subject = scope.data.session;
+            subject = scope.session;
         }));
 
         it('should define session', function() {
@@ -76,7 +76,7 @@
             AppSettings.serviceBaseUrl = 'http://localhost/';
             http.expectPOST('http://localhost/session').respond(200);
 
-            scope.data.session = {
+            scope.session = {
                 userId: 'me@cards.com',
                 password: 'password'
             };

@@ -8,16 +8,15 @@
 
         self.init = function() {
             var areaId = $routeParams.id;
-            $scope.data = {};
 
             Areas.get(areaId).$promise.then(function(result) {
-                $scope.data.area = result;
+                $scope.area = result;
             });
         };
 
         $scope.editArea = function () {
             var areaId = $routeParams.id;
-            Areas.edit(areaId, $scope.data.area).$promise.then(function() {
+            Areas.edit(areaId, $scope.area).$promise.then(function() {
                 $location.path('/');           
             });
         };

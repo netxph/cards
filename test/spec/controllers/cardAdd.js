@@ -21,7 +21,7 @@
             });
 
             http.flush();
-            subject = scope.data.areas;
+            subject = scope.areas;
         }));
 
         afterEach(function() {
@@ -58,7 +58,7 @@
                 $scope: scope
             });
 
-            subject = scope.data.card;
+            subject = scope.card;
 
         }));
 
@@ -122,11 +122,11 @@
         }));
 
         it('should define label', function() {
-            expect(scope.data.label).toBeDefined();
+            expect(scope.label).toBeDefined();
         });
 
         it('label should be empty', function() {
-            expect(scope.data.label).toBe('');
+            expect(scope.label).toBe('');
         });
 
         it('should define addLabel', function() {
@@ -138,17 +138,17 @@
         });
 
         it('labels count should be 1 when label is added', function() {
-            scope.data.label = 'Bug'; 
+            scope.label = 'Bug'; 
             scope.addLabel();
             
-            expect(scope.data.card.labels.length).toBe(1);
+            expect(scope.card.labels.length).toBe(1);
         });
 
         it('label[0] should have value', function() {
-            scope.data.label = 'Bug'; 
+            scope.label = 'Bug'; 
             scope.addLabel();
             
-            expect(scope.data.card.labels[0]).toBe('Bug');
+            expect(scope.card.labels[0]).toBe('Bug');
         });
     });
 
@@ -170,7 +170,7 @@
                 $scope: scope
             });
 
-            card = scope.data.card;
+            card = scope.card;
             card.areaID = 1;
             card.name = 'Create a test';
             card.description = 'description goes here';
