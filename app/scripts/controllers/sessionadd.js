@@ -1,24 +1,30 @@
 (function(angular) {
-    'use strict';
+'use strict';
 
-    var cardsApp = angular.module('cardsApp');
+var cardsApp = angular.module('cardsApp');
 
-    cardsApp.controller('SessionAddCtrl', ['$scope', '$location', '$rootScope', 'AppSettings', 'Session', 'State', function ($scope, $location, $rootScope, AppSettings, Session, State) {
+cardsApp.controller('SessionAddCtrl', [
+    '$scope',
+    '$http',
+    '$location',
+    'Session',
+    'AppSettings',
+    function ($scope, $http, $location, Session, AppSettings) {
 
-        $scope.session = {
-            userId: '',
-            password: ''
-        };
+      var uri = AppSettings.serviceBaseUrl + 'session';
 
-        $scope.login = function () {
-            Session.add($scope.session).$promise.then(function () {
-                State.userName = $scope.session.userId;
-                $rootScope.$broadcast('auth_changed');
-                $location.path('/areas');
-            }, function () {
+      $scope.login = function(session) {
+
+        $http.post(uri, session)
+            .success(function(data) {
+                Session.create(data);
+
                 $location.path('/');
+            })
+            .error(function() {
+                Session.create(null);
             });
-        };
+      };
 
-    }]);
+  }]);
 })(angular);

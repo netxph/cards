@@ -1,19 +1,22 @@
 (function(angular) {
-'use strict';
+    'use strict';
 
     var cardsApp = angular.module('cardsApp');
-    
-    cardsApp.factory('Session', ['$resource', 'AppSettings', function($resource, AppSettings) {
-        var sessionResource = $resource(AppSettings.serviceBaseUrl + 'session');  
 
-        return {
-            add: function(session) {
-                return sessionResource.save(session);
-            },
-            delete: function() {
-                return sessionResource.delete();
-            }
-        };
+    cardsApp.factory('Session', [
+        function () {
+            var userName = null;
+
+            return {
+                create: function(user) {
+                    userName = user;
+                },
+                isAuthenticated: function() {
+                    return userName != null;
+                },
+                getCurrentUser: function() {
+                    return userName;
+                }
+            };
     }]);
-
 })(angular);
