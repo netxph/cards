@@ -22,7 +22,7 @@ cardsApp.controller('SessionAddCtrl', [
                 $location.path('/');
             })
             .error(function() {
-                Session.create(null);
+                Session.destroy();
             });
       };
 

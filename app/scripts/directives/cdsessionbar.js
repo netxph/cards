@@ -10,6 +10,7 @@ angular.module('cardsApp')
   .directive('cdSessionBar', function () {
     return {
       templateUrl: 'views/login-partial.html',
-      restrict: 'A'
+      restrict: 'A',
+      controller: 'SessionBarCtrl'
     };
   })

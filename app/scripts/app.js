@@ -39,7 +39,7 @@
 
     }]);
 
-    cardsApp.run(['$rootScope', '$location', 'Session', function($rootScope, $location, Session) {
+    cardsApp.run(['$window', '$rootScope', '$location', 'Session', function($window, $rootScope, $location, Session) {
         
         //intercept route changes and check if user is authenticated
         $rootScope.$on('$routeChangeStart', function(event) {

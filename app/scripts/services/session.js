@@ -4,18 +4,21 @@
     var cardsApp = angular.module('cardsApp');
 
     cardsApp.factory('Session', [
-        function () {
-            var userName = null;
-
+        '$window',
+        function ($window) {
             return {
-                create: function(user) {
-                    userName = user;
+                create: function(userName) {
+                    $window.sessionStorage.user = userName;
+                },
+                destroy: function() {
+                    delete $window.sessionStorage.user;
                 },
                 isAuthenticated: function() {
+                    var userName = $window.sessionStorage.user;
                     return userName != null;
                 },
                 getCurrentUser: function() {
-                    return userName;
+                    return $window.sessionStorage.user || null;
                 }
             };
     }]);

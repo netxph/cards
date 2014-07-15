@@ -1,1 +1,2 @@
-<a href="" class="navbar-link link-unstyled">Not Signed In</a>
+<a ng-href="#/session/new" ng-if="!isAuthenticated()" class="navbar-link link-unstyled">Not Signed In</a>
+<a href="" ng-if="isAuthenticated()" ng-click="logout()" class="navbar-link link-unstyled">{{getCurrentUser()}}</a>

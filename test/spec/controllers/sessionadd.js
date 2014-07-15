@@ -11,7 +11,10 @@
         http,
         location;
 
-        beforeEach(inject(function ($controller, $rootScope, $httpBackend, $location, Session) {
+        beforeEach(inject(function ($window, $controller, $rootScope, $httpBackend, $location, Session) {
+
+            delete $window.sessionStorage.user;
+
             location = $location;
             http = $httpBackend;
             scope = $rootScope.$new();
