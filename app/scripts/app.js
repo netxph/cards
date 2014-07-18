@@ -51,4 +51,13 @@
         });
     }]);
 
+    cardsApp.directive('cdNodrag', function() {
+        return function(scope, element, attr) {
+
+            element.on('dragstart', function() {
+                return false;
+            });
+        }
+    });
+
 })(angular);

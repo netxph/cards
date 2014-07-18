@@ -62,7 +62,7 @@ cards = global.cards = {};
                 console.log('PUT: /cards/' + id + '/move');
 
                 var card = provider.getCard(id);
-                card.areaID = dest.areaID;
+                card.areaID = dest.id;
 
                 response.send(card);
             });

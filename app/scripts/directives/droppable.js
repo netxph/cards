@@ -55,7 +55,6 @@
                         var areaId = this.attributes["data-areaid"].value;
                         var cardId = item.attributes["data-cardid"].value;
 
-                        this.appendChild(item);
                         // call the passed drop function
                         scope.$apply(function(scope) {
                             var fn = scope.drop();
@@ -64,6 +63,7 @@
                             }
                         });
 
+                        this.appendChild(item);
                         return false;
                     },
                     false
