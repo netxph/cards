@@ -10,12 +10,24 @@
         '$location', 
         'Areas', 
         'Cards', 
-        function($rootScope, $scope, $http, $location, Areas, Cards) {
+        'CardHelper',
+        function($rootScope, $scope, $http, $location, Areas, Cards, CardHelper) {
 
         $scope.init = function() {
             $rootScope.$broadcast('ajax_start');
             Areas.getAll().$promise.then(function (result) {
-                $scope.areas = result;
+                var areas = result;
+                for (var i = 0; i < areas.length; i++) {
+                    var area = areas[i];
+
+                    for(var j = 0; j < area.cards.length; j++) {
+                        var card = area.cards[j];
+                        
+                        card.labels = CardHelper.getLabels(card.name);
+                    }
+                }
+
+                $scope.areas = areas;
             }).finally(function() {
                 $rootScope.$broadcast('ajax_end');
             });

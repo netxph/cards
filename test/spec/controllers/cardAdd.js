@@ -152,6 +152,30 @@
         });
     });
 
+    describe('Controller: CardAddCtrl - GetLabels', function() {
+
+        var scope, controller;
+
+        beforeEach(module('cardsApp'));
+        beforeEach(inject(function($controller, $rootScope) {
+            scope = $rootScope.$new();
+
+            controller = $controller('CardAddCtrl', {
+                $scope: scope
+            });
+        }));
+
+        it('should define getLabels()', function() {
+            expect(scope.getLabels).toEqual(jasmine.any(Function));
+        });
+
+        it('should return value', function() {
+            var labels = scope.getLabels('test #test the #other');
+            expect(labels[0]).toBe('test');
+        });
+
+    });
+
     describe('Controller: CardAddCtrl - AddMethod', function() {
       
         var scope, subject, controller, card, http;

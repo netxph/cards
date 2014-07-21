@@ -8,6 +8,10 @@
     <input type="text" id="card-name" class="form-control" placeholder="Enter name for card" ng-model="card.name"></input>
 </div>
 
+<div class="form-group">
+<span ng-repeat="label in getLabels(card.name)" class="label label-info">{{label}}</span>
+</div>
+
 <div class="form-group"> 
     <label for="card-description">Description</label>
     <textarea id="card-description" class="form-control" ng-model="card.description"></textarea>
@@ -16,16 +20,6 @@
 <div class="form-group"> 
     <label for="card-assigned-to">Assigned To</label>
     <input type="text" id="card-assigned-to" class="form-control" placeholder="Enter user assigned to" ng-model="card.assignedTo"></textarea>
-         </div>
+</div>
 
-         <div class="form-group">
-
-<label for="card-add-labels">Labels</label>
-<span ng-repeat="label in card.labels" class="label label-info">{{label}}</span>
-
-<div class="controls form-inline">
-    <input type="text" id="card-add-labels" class="form-control" placeholder="Add label" ng-model="label"></textarea>
-<button type="submit" class="btn btn-default" ng-click="addLabel()">Add</button>
-           </div>
-         </div>
 

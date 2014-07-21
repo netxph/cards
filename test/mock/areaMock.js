@@ -9,9 +9,8 @@ areaMock.value('areasData', [
                 name: 'Backlog',
                 cards: [
                 {
-                    name: 'Create a design template for cards',
+                    name: 'Create a design template for cards #Bug',
                     description: 'description goes here',
-                    labels: ['Bug'],
                 }]
             }]);
 

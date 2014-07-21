@@ -10,7 +10,8 @@
         '$routeParams', 
         'Areas', 
         'Cards', 
-        function($rootScope, $scope, $location, $routeParams, Areas, Cards) {
+        'CardHelper',
+        function($rootScope, $scope, $location, $routeParams, Areas, Cards, CardHelper) {
         var self = this;
 
         self.getCard = function () {
@@ -27,10 +28,16 @@
                 $scope.areas = result;
                 return Cards.get(cardId).$promise;
             }).then(function(result) {
+                result.labels = CardHelper.getLabels(result.name);
+
                 $scope.card = result;
             }).finally(function() {
                 $rootScope.$broadcast('ajax_end');
             });
+        };
+
+        $scope.getLabels = function(text) {
+            return CardHelper.getLabels(text);
         };
 
         $scope.addLabel = function() {

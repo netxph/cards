@@ -4,10 +4,9 @@
     "cards": [{
         "id": 1,
         "areaID": 1,
-        "name": "Create a design template for cards",
+        "name": "Create a design template for cards #Bug",
         "description": "description goes here",
-        "assignedTo": "me@cards.com",
-        "labels": ["Bug"]
+        "assignedTo": "me@cards.com"
     }]
 }, {
     "id": 2,
@@ -15,10 +14,9 @@
     "cards": [{
         "id": 2,
         "areaID": 2,
-        "name": "Finish all functionality",
+        "name": "Finish all functionality #Feature",
         "description": "description goes here",
-        "assignedTo": "me@cards.com",
-        "labels": ["Feature"]
+        "assignedTo": "me@cards.com"
     }]
 }, {
     "id": 3,
@@ -26,10 +24,9 @@
     "cards": [{
         "id": 3,
         "areaID": 3,
-        "name": "Creating animations",
+        "name": "Creating animations #Question",
         "description": "description goes here",
-        "assignedTo": "me@cards.com",
-        "labels": ["Request"]
+        "assignedTo": "me@cards.com"
     }]
 }, {
     "id": 4,
@@ -37,9 +34,8 @@
     "cards": [{
         "id": 4,
         "areaID": 4,
-        "name": "Creating project plan",
+        "name": "Creating project plan #Request",
         "description": "description goes here",
-        "assignedTo": "me@cards.com",
-        "labels": ["Feature"]
+        "assignedTo": "me@cards.com"
     }]
 }]

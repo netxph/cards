@@ -136,7 +136,7 @@
         });
 
         it('name has value', function() {
-            expect(subject.name).toBe('Create a design template for cards');
+            expect(subject.name).toBe('Create a design template for cards #Bug');
         });
 
         it('should define description', function() {

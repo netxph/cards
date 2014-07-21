@@ -10,7 +10,8 @@
         '$location', 
         'Cards', 
         'Areas', 
-        function($rootScope, $scope, $location, Cards, Areas) {
+        'CardHelper',
+        function($rootScope, $scope, $location, Cards, Areas, CardHelper) {
 
         var self = this;
 
@@ -34,6 +35,10 @@
 
             $scope.label = '';
         }
+
+        $scope.getLabels = function(text) {
+            return CardHelper.getLabels(text);
+        };
 
         $scope.addLabel = function() {
             $scope.card.labels.push($scope.label);

@@ -27,54 +27,28 @@
 
     });
 
-    describe('Controller: CardEditCtrl - Add Label', function() {
+    describe('Controller: CardEditCtrl - GetLabels', function() {
 
-        var subject, scope, controller, http;
+        var controller, scope;
 
-        beforeEach(module('cardsApp', 'cardMock'));
-        beforeEach(inject(function($controller, $rootScope, $routeParams, $httpBackend, AppSettings, cardData) {
-
-            $routeParams.id = 1;
-
-            http = $httpBackend;
-            AppSettings.serviceBaseUrl = 'http://localhost/';
-            http.whenGET('http://localhost/cards/1').respond(cardData);
-            http.whenGET('http://localhost/areas').respond([]);
-
+        beforeEach(module('cardsApp'));
+        beforeEach(inject(function($controller, $rootScope) {
             scope = $rootScope.$new();
 
             controller = $controller('CardEditCtrl', {
                 $scope: scope
             });
-
-            http.flush();
-
-            scope.label = 'Feature';
-            subject = scope.addLabel();
         }));
 
-        afterEach(function() {
-            http.verifyNoOutstandingExpectation();
-            http.verifyNoOutstandingRequest();
+        it('should define getLabels()', function() {
+            expect(scope.getLabels).toEqual(jasmine.any(Function));
         });
 
-        it('should define addLabel', function() {
-            expect(scope.addLabel).toBeDefined();
-        });
-
-        it('should addLabel is function', function() {
-            expect(scope.addLabel).toEqual(jasmine.any(Function));
-        });
-
-        it('should labels contain item', function() {
-            expect(scope.card.labels[1]).toBe('Feature');
-        });
-
-        it('should label empty after add', function() {
-            expect(scope.label).toBe('');
+        it('should return a value', function() {
+            var labels = scope.getLabels('test #test the #other');
+            expect(labels[0]).toBe('test');
         });
     });
-
 
     describe('Controller: CardEditCtrl - Areas', function() {
 
@@ -240,7 +214,7 @@
         });
 
         it('name should have value', function() {
-            expect(subject.name).toBe('create todo');
+            expect(subject.name).toBe('create todo #bug');
         });
 
 
