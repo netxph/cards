@@ -10,4 +10,4 @@
             cardFormTemplate: 'views/cardform-partial.html'
         });
 
-})(angular);
+})(angular)

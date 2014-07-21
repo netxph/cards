@@ -1,0 +1,7 @@
+<button type="button" class="btn btn-link" ng-show="!state.isOpen" ng-click="showBox()">Add...</button>
+
+<form ng-show="state.isOpen" ng-submit="addCard(card)">
+    <div class="form-group" >
+        <input type="text" class="form-control" ng-blur="hideBox()" ng-model="card.name" cd-focus="state.isOpen"></input>
+    </div>
+</form>
