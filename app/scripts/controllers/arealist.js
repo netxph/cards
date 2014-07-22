@@ -4,8 +4,7 @@
     var cardsApp = angular.module('cardsApp');
 
     cardsApp.controller('AreaListCtrl', [
-        '$rootScope',
-        '$scope', 
+        '$rootScope', '$scope', 
         '$http', 
         '$location', 
         'Areas', 
@@ -39,6 +38,10 @@
                 $rootScope.$broadcast('ajax_end');
             });
         };
+
+        $rootScope.$on('onFilterCards', function(event, text) {
+            console.log(text);
+        });
 
         $scope.init();
 

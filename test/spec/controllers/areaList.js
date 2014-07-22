@@ -4,9 +4,7 @@
     angular.module('cardsApp')
 
     describe('Controller: AreaListCtrl - Areas', function() {
-
-        var subject, controller, scope, $httpBackend;
-
+var subject, controller, scope, $httpBackend; 
         beforeEach(module('cardsApp', 'areaMock'));
         beforeEach(inject(function ($httpBackend, $controller, $rootScope, areasData, AppSettings) {
 
@@ -180,4 +178,11 @@
             expect(subject).toBe('Bug');
         });
     });
+
+    describe('Controller: AreaListCtrl - Filter', function() {
+
+
+
+    });
+
 })(jasmine);
