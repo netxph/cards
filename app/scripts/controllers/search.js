@@ -8,7 +8,7 @@
         $scope.search.text = '';
 
         $scope.performSearch = function(text) {
-            $rootScope.$emit('onFilterCards', 'test');
+            $rootScope.$emit('onFilterCards', text);
         };
 
     }]);

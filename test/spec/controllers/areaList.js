@@ -181,7 +181,27 @@ var subject, controller, scope, $httpBackend;
 
     describe('Controller: AreaListCtrl - Filter', function() {
 
+        var scope,
+        controller,
+        root;
 
+        beforeEach(module('cardsApp'));
+        beforeEach(inject(function($controller, $rootScope) {
+            root = $rootScope;
+            scope = $rootScope.$new();
+            controller = $controller('AreaListCtrl', {
+                $scope: scope
+            });
+        }));
+
+        it('should searchText is empty', function() {
+            expect(scope.searchText).toBe('');
+        });
+
+        it('should searchText has value', function() {
+            root.$emit('onFilterCards', 'test');
+            expect(scope.searchText).toBe('test');
+        });
 
     });
 
