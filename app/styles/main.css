@@ -33,6 +33,10 @@ body {
     margin-right: 3px;
 }
 
+.panel-body {
+    overflow-wrap: break-word;
+}
+
 .link {
 }
 

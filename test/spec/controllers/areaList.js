@@ -205,4 +205,45 @@ var subject, controller, scope, $httpBackend;
 
     });
 
+    describe('Controller: AreaListCtrl - GetColumns', function() {
+
+        var controller, scope;
+        
+        beforeEach(module('cardsApp'));
+        beforeEach(inject(function($controller, $rootScope) {
+
+            scope = $rootScope.$new();
+            controller = $controller('AreaListCtrl', {
+                $scope: scope
+            });
+
+        }));
+
+        it('should define getColumns()', function() {
+            expect(scope.getColumns).toEqual(jasmine.any(Function));
+        });
+
+        it('should return 3 when areas.count == 3', function() {
+            scope.areas = [{},{},{}];
+            var columns = scope.getColumns();
+
+            expect(columns).toBe(3);
+        });
+
+        it('should return 2 when areas.count == 5', function() {
+            scope.areas = [{},{},{},{},{}];
+            var columns = scope.getColumns();
+
+            expect(columns).toBe(2);
+        });
+
+        it('should return 12 when areas.count == 7', function() {
+            scope.areas = [{},{},{},{},{},{},{}];
+            var columns = scope.getColumns();
+
+            expect(columns).toBe(12);
+        });
+
+    });
+
 })(jasmine);

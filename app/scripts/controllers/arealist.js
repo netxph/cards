@@ -40,6 +40,18 @@
                 });
             };
 
+            $scope.getColumns = function() {
+                var count = $scope.areas.length;
+
+                if(count > 4 && count < 7) {
+                    return Math.floor(12/count);
+                } else if(count > 6) {
+                    return 12;
+                } else {
+                    return 3;
+                }
+            };
+
             $rootScope.$on('onFilterCards', function(event, text) {
                 $scope.searchText = text;
             });
