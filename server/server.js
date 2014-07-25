@@ -55,6 +55,15 @@ cards = global.cards = {};
                 response.send(card);
             });
 
+            app.delete('/cards/:id', restrict, function(request, response) {
+                var id = request.params.id;
+                console.log('DELETE: /cards/' + id);
+
+                provider.deleteCard(id);
+
+                response.send(200);
+            });
+
             app.put('/cards/:id/move', restrict, function(request, response) {
                 var id = request.params.id;
                 var dest = request.body;

@@ -56,6 +56,16 @@
 
         };
 
+        $scope.deleteCard = function() {
+            var cardId = $routeParams.id;
+
+            $rootScope.$broadcast('ajax_start');
+            Cards.delete(cardId).$promise.then(function() {
+                $rootScope.$broadcast('ajax_end');
+                $location.path('/');
+            });
+        };
+
         self.init();
     }]);
 })(angular);

@@ -27,6 +27,53 @@
 
     });
 
+    describe('Controller: CardEditCtrl - DeleteCard', function() {
+
+        var controller, scope, location, http;
+
+        beforeEach(module('cardsApp', 'areaMock', 'cardMock'));
+        beforeEach(inject(function($controller, $rootScope, $location, $httpBackend, $routeParams, areasData, cardData) {
+            $routeParams.id = 1;
+            scope = $rootScope.$new();
+            location = $location;
+            http = $httpBackend;
+
+            controller = $controller('CardEditCtrl', {
+                $scope: scope
+            });
+
+            http.expectGET('http://localhost/areas').respond(areasData);
+            http.expectGET('http://localhost/cards/1').respond(cardData);
+            http.flush();
+        }));
+
+        afterEach(function() {
+            http.verifyNoOutstandingRequest();
+            http.verifyNoOutstandingExpectation();
+        });
+
+        it('should define deleteCard()', function() {
+            expect(scope.deleteCard).toEqual(jasmine.any(Function));
+        });
+
+        it('should be successful when delete', function() {
+            http.expectDELETE('http://localhost/cards/1').respond(200);
+
+            scope.deleteCard();
+            http.flush();
+        });
+
+        it('should redirect to home when delete', function() {
+            spyOn(location, 'path');
+            http.expectDELETE('http://localhost/cards/1').respond(200);
+
+            scope.deleteCard();
+            http.flush();
+
+            expect(location.path).toHaveBeenCalledWith('/');
+        });
+    });
+
     describe('Controller: CardEditCtrl - GetLabels', function() {
 
         var controller, scope;

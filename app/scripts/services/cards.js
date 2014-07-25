@@ -25,6 +25,9 @@
             get: function(cardId) {
                 return cardResource.get({id: cardId});
             }, 
+            delete: function(cardId) {
+                return cardResource.delete({id: cardId});
+            },
             edit: function(cardId, card) {
                 return cardResource.update({id: cardId}, card); 
             },

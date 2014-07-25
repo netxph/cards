@@ -54,6 +54,10 @@
             return card;
         }
 
+        self.deleteCard = function(id) {
+            delete cards[id];
+        }
+
         self.getArea = function(id) {
             var area = areas[id];
             var cardKeys = Object.keys(cards); 
