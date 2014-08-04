@@ -29,7 +29,7 @@ cards = global.cards = {};
                     loggedIn = true;
 
                     console.log('AUTH: ' + session.userId);
-                    response.send(session.userId);
+                    response.send({ name: session.userId });
                 } else {
                     response.send('Authentication failed!', 403);
                 }

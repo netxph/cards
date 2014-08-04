@@ -48,7 +48,7 @@
         });
 
         it('should store user name in session', function() {
-            http.expectPOST('http://localhost/session').respond('me@cards.com');
+            http.expectPOST('http://localhost/session').respond({ name: 'me@cards.com' });
             
             scope.login();
             http.flush();

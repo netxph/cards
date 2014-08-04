@@ -52,7 +52,7 @@
         });
 
         it('should getCurrentUser has value', function() {
-            session.create('me@cards.com');
+            session.create({ name: 'me@cards.com' });
 
             expect(scope.getCurrentUser()).toBe('me@cards.com');
         });

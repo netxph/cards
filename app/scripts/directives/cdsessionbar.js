@@ -7,10 +7,10 @@
  * # cdSessionBar
  */
 angular.module('cardsApp')
-  .directive('cdSessionBar', function () {
+  .directive('cdSessionBar',['AppSettings', function (AppSettings) {
     return {
-      templateUrl: 'views/login-partial.html',
+      templateUrl: AppSettings.sessionTemplate,
       restrict: 'A',
       controller: 'SessionBarCtrl'
     };
-  })
+  }]);

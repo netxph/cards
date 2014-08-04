@@ -45,9 +45,7 @@
         $rootScope.$on('$routeChangeStart', function(event) {
             event.preventDefault();
 
-            if(!Session.isAuthenticated()) {
-                $location.path('/session/new');
-            };
+            Session.checkAuthentication();
         });
     }]);
 

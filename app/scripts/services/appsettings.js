@@ -7,7 +7,8 @@
             serviceBaseUrl: 'http://localhost:9002/' ,
             cardTemplate: 'views/card-partial.html',
             menuTemplate: 'views/menu-partial.html',
-            cardFormTemplate: 'views/cardform-partial.html'
+            cardFormTemplate: 'views/cardform-partial.html',
+            sessionTemplate: 'views/login-partial.html'
         });
 
 })(angular)

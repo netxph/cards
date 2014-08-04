@@ -5,10 +5,11 @@
 
     cardsApp.factory('Session', [
         '$window',
-        function ($window) {
+        '$location',
+        function ($window, $location) {
             return {
-                create: function(userName) {
-                    $window.sessionStorage.user = userName;
+                create: function(session) {
+                    $window.sessionStorage.user = session.name;
                 },
                 destroy: function() {
                     delete $window.sessionStorage.user;
@@ -19,6 +20,11 @@
                 },
                 getCurrentUser: function() {
                     return $window.sessionStorage.user || null;
+                },
+                checkAuthentication: function() {
+                    if(!$window.sessionStorage.user) {
+                        $location.path('/session/new');
+                    };
                 }
             };
     }]);
