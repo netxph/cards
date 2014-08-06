@@ -5,23 +5,20 @@
     var cardsApp = angular.module('cardsApp');
 
     cardsApp.controller('CardAddCtrl', [
-        '$rootScope',
         '$scope', 
         '$location', 
         'Cards', 
         'Areas', 
         'CardHelper',
-        function($rootScope, $scope, $location, Cards, Areas, CardHelper) {
+        'Rest',
+        function($scope, $location, Cards, Areas, CardHelper, Rest) {
 
         var self = this;
 
         self.init = function() {
            
-            $rootScope.$broadcast('ajax_start');
-            Areas.getAll().$promise.then(function(result) {
+            Rest.invoke(Areas.getAll().$promise, function(result) {
                 $scope.areas = result;
-            }).finally(function() {
-                $rootScope.$broadcast('ajax_end');
             });
             
             //convert card into class
@@ -46,9 +43,7 @@
         };
 
         $scope.addCard = function() {
-            $rootScope.$broadcast('ajax_start');
-            Cards.add($scope.card).$promise.then(function() {
-                $rootScope.$broadcast('ajax_end');
+            Rest.invoke(Cards.add($scope.card).$promise, function() {
                 $location.path('/');
             }); 
         };

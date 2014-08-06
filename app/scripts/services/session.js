@@ -6,7 +6,11 @@
     cardsApp.factory('Session', [
         '$window',
         '$location',
-        function ($window, $location) {
+        '$http',
+        'AppSettings',
+        function ($window, $location, $http, AppSettings) {
+            var sessionUri = AppSettings.serviceBaseUrl + 'session';
+
             return {
                 create: function(session) {
                     $window.sessionStorage.user = session.name;
@@ -25,6 +29,9 @@
                     if(!$window.sessionStorage.user) {
                         $location.path('/session/new');
                     };
+                },
+                newSession: function(session) {
+                    return $http.post(sessionUri, session);
                 }
             };
     }]);

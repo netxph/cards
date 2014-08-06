@@ -6,14 +6,14 @@
     cardsApp.directive('cdError', function() {
         return {
             restrict: 'A',
-            link: function($scope, element) {
+            link: function($rootScope, element) {
                 element.addClass('cd-hide');
 
-                $scope.$on('ajax_error', function() {
+                $rootScope.$on('ajax_error', function() {
                     return element.removeClass('cd-hide');
                 });
 
-                $scope.$on('ajax_success', function() {
+                $rootScope.$on('ajax_success', function() {
                     return element.addClass('cd-hide');
                 });
             }

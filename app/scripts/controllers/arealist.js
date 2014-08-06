@@ -4,18 +4,19 @@
     var cardsApp = angular.module('cardsApp');
 
     cardsApp.controller('AreaListCtrl', [
-        '$rootScope', '$scope', 
+        '$rootScope', 
+        '$scope', 
         '$http', 
         '$location', 
         'Areas', 
         'Cards', 
         'CardHelper',
-        function($rootScope, $scope, $http, $location, Areas, Cards, CardHelper) {
+        'Rest',
+        function($rootScope, $scope, $http, $location, Areas, Cards, CardHelper, Rest) {
             $scope.searchText = '';
 
             $scope.init = function() {
-                $rootScope.$broadcast('ajax_start');
-                Areas.getAll().$promise.then(function (result) {
+                Rest.invoke(Areas.getAll().$promise, function (result) {
                     var areas = result;
                     for (var i = 0; i < areas.length; i++) {
                         var area = areas[i];
@@ -28,16 +29,11 @@
                     }
 
                     $scope.areas = areas;
-                }).finally(function() {
-                    $rootScope.$broadcast('ajax_end');
                 });
             };
 
             $scope.moveCard = function(cardId, areaId) {
-                $rootScope.$broadcast('ajax_start');
-                Cards.move(cardId, areaId).$promise.then(function (result) {
-                    $rootScope.$broadcast('ajax_end');
-                });
+                Rest.invoke(Cards.move(cardId, areaId).$promise);
             };
 
             $scope.getColumns = function() {

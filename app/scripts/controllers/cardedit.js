@@ -4,14 +4,14 @@
     var cardsApp = angular.module('cardsApp');
 
     cardsApp.controller('CardEditCtrl', [
-        '$rootScope',
         '$scope', 
         '$location', 
         '$routeParams', 
         'Areas', 
         'Cards', 
         'CardHelper',
-        function($rootScope, $scope, $location, $routeParams, Areas, Cards, CardHelper) {
+        'Rest',
+        function($scope, $location, $routeParams, Areas, Cards, CardHelper, Rest) {
         var self = this;
 
         self.getCard = function () {
@@ -23,17 +23,16 @@
 
             $scope.label = '';
 
-            $rootScope.$broadcast('ajax_start');
-            Areas.getAll().$promise.then(function(result) {
+            Rest.invoke(Areas.getAll().$promise, function(result) {
                 $scope.areas = result;
-                return Cards.get(cardId).$promise;
-            }).then(function(result) {
-                result.labels = CardHelper.getLabels(result.name);
 
-                $scope.card = result;
-            }).finally(function() {
-                $rootScope.$broadcast('ajax_end');
+                Rest.invoke(Cards.get(cardId).$promise, function(result) {
+                    result.labels = CardHelper.getLabels(result.name);
+
+                    $scope.card = result;
+                });
             });
+
         };
 
         $scope.getLabels = function(text) {
@@ -48,9 +47,7 @@
         $scope.editCard = function() {
             var cardId = $routeParams.id;
 
-            $rootScope.$broadcast('ajax_start');
-            Cards.edit(cardId, $scope.card).$promise.then(function() {
-                $rootScope.$broadcast('ajax_end');
+            Rest.invoke(Cards.edit(cardId, $scope.card).$promise, function() {
                 $location.path('/');
             });
 
@@ -59,13 +56,11 @@
         $scope.deleteCard = function() {
             var cardId = $routeParams.id;
 
-            $rootScope.$broadcast('ajax_start');
-            Cards.delete(cardId).$promise.then(function() {
-                $rootScope.$broadcast('ajax_end');
+            Rest.invoke(Cards.delete(cardId).$promise, function() {
                 $location.path('/');
             });
         };
 
         self.init();
-    }]);
+        }]);
 })(angular);

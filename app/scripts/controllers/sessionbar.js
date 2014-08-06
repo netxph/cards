@@ -9,7 +9,8 @@
         '$http',
         'AppSettings',
         'Session',
-        function ($scope, $location, $http, AppSettings, Session) {
+        'Rest',
+        function ($scope, $location, $http, AppSettings, Session, Rest) {
             var uri = AppSettings.serviceBaseUrl + 'session'; 
 
             $scope.isAuthenticated = function() {
@@ -22,11 +23,10 @@
 
             $scope.logout = function() {
 
-                $http.delete(uri)
-                    .success(function() {
-                        Session.destroy(); 
-                        $location.path('/session/new');
-                    })
+                Rest.invoke($http.delete(uri),function() {
+                    Session.destroy(); 
+                    $location.path('/session/new');
+                });
             };
 
         }]);

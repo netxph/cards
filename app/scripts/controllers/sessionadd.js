@@ -4,30 +4,20 @@
 var cardsApp = angular.module('cardsApp');
 
 cardsApp.controller('SessionAddCtrl', [
-    '$rootScope',
     '$scope',
     '$http',
     '$location',
     'Session',
-    'AppSettings',
-    function ($rootScope, $scope, $http, $location, Session, AppSettings) {
-
-      var uri = AppSettings.serviceBaseUrl + 'session';
-
+    'Rest',
+    function ($scope, $http, $location, Session, Rest) {
       $scope.login = function(session) {
 
-        $rootScope.$broadcast('ajax_start');
-        $http.post(uri, session)
-            .success(function(data) {
-                Session.create(data);
-                $rootScope.$broadcast('ajax_end');
-
-                $location.path('/');
-            })
-            .error(function() {
-                Session.destroy();
-                $rootScope.$broadcast('ajax_end');
-            });
+        Rest.invoke(Session.newSession(session), function(result) {
+            Session.create(result.data);
+            $location.path('/');
+        }, function() {
+            Session.destroy();
+        });
       };
 
   }]);
