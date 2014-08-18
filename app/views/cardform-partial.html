@@ -3,12 +3,12 @@
     <select class="form-control" ng-model="card.areaID" ng-options="a.id as a.name for a in areas"></select>
 </div>
 
-<div class="form-group"> 
+<div class="form-group" ng-class="{'has-error': !cardForm.name.$valid && cardForm.name.$dirty }"> 
     <label for="card-name">Name</label>
-    <input type="text" id="card-name" class="form-control" placeholder="Enter name for card" ng-model="card.name"></input>
+    <input type="text" id="card-name" name="name" class="form-control" placeholder="Enter name for card" ng-model="card.name" required></input>
 </div>
 
-<div class="form-group">
+<div class="form-group" >
 <span ng-repeat="label in getLabels(card.name)" class="label label-info">{{label}}</span>
 </div>
 
