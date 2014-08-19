@@ -11,4 +11,4 @@
             sessionTemplate: 'views/login-partial.html'
         });
 
-})(angular)
+})(angular);
