@@ -1,7 +1,7 @@
 <div id="areas" class="row">
     <div ng-class="'area col-md-' + getColumns()" ng-repeat="area in areas">
         <div cd-droppable drop="moveCard" data-areaid="{{area.id}}">
-            <h4><a class='link link-unstyled' href="#/areas/{{area.id}}">{{area.name}}</a></h4>
+            <h3><a class='link link-unstyled' href="#/areas/{{area.id}}">{{area.name}}</a></h3>
             <div class="cards" id="card{{card.id}}" data-cardid="{{card.id}}" cd-draggable ng-repeat="card in area.cards | cardFilter: { label: searchText }">
                 <cd-card></cd-card> 
             </div>

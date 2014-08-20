@@ -1,4 +1,4 @@
-<button type="button" class="btn btn-link" ng-show="!state.isOpen" ng-click="showBox()">Add...</button>
+<button type="button" class="btn-quickadd btn btn-sm btn-block btn-primary" ng-show="!state.isOpen" ng-click="showBox()">Add</button>
 
 <form ng-show="state.isOpen" ng-submit="quickAddForm.$valid && addCard(card)" name="quickAddForm" novalidate>
     <div class="form-group" ng-class="{'has-error': !quickAddForm.$valid}" >
