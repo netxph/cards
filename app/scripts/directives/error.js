@@ -13,7 +13,7 @@
                     return element.removeClass('cd-hide');
                 });
 
-                $rootScope.$on('ajax_success', function() {
+                $rootScope.$on('ajax_start', function() {
                     return element.addClass('cd-hide');
                 });
             }
